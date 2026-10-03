@@ -91,7 +91,7 @@ To try it with no account and no key (the rules choose; with a key, the model wr
 
 ```bash
 git clone https://github.com/wubian87/dresser && cd dresser
-./demo.sh                              # prints suggestions from the example wardrobe
+./demo.sh                        # prints suggestions from the example wardrobe
 python -m dresser --demo serve   # the web page, on the example wardrobe
 ```
 
