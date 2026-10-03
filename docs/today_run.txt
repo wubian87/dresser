@@ -1,0 +1,17 @@
+# Real run, 2026-10-03 (about 19:35 Beijing time, UTC+8): example wardrobe + SYNTHETIC 14-day history (demo_data), real Open-Meteo forecast, real SiliconFlow model
+$ todays-outfit --demo today --occasion commute
+Today in Shanghai: 18-23 °C, rain 84%  ->  occasion: commute
+
+  Top pick: white t-shirt + black trousers + brown ankle boots
+    Brown ankle boots provide essential waterproofing and warmth for rainy weather. The white t-shirt and black trousers create a clean, versatile look that remains stylish yet practical for a wet commute.
+    Rotation: Brings back white t-shirt (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
+
+  Alternative 1: white t-shirt + maroon skirt + brown ankle boots
+    Brown ankle boots keep feet dry and warm in the rain. The maroon skirt adds a pop of color to the white t-shirt, creating a chic, weather-appropriate outfit for the commute.
+    Rotation: Brings back white t-shirt (no wear logged in 14 days), maroon skirt (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
+
+  Alternative 2: light blue button-down shirt + black trousers + black high heels
+    Right weight for 20.5 °C and within the commute dress code; no rain-sensitive shoes (rule-based pick).
+    Rotation: Nothing in it was worn in the last 3 days.
+
+Wearing the top pick? todays-outfit wear white-tee black-trousers brown-ankle-boots
