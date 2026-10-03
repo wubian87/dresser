@@ -15,7 +15,7 @@ import httpx
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from todays_outfit import weather as wx  # noqa: E402
+from dresser import weather as wx  # noqa: E402
 
 
 def main(city: str) -> None:

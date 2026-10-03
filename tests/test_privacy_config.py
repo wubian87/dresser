@@ -1,7 +1,7 @@
 import pytest
 
-from todays_outfit.config import Endpoint, load_config
-from todays_outfit.llm import LLMClient, PrivacyError, check_privacy, is_local
+from dresser.config import Endpoint, load_config
+from dresser.llm import LLMClient, PrivacyError, check_privacy, is_local
 
 
 def test_is_local():
@@ -52,7 +52,7 @@ def test_per_step_override_and_bad_values(tmp_path):
 
 
 def test_missing_key_env_is_reported_without_leaking(monkeypatch):
-    from todays_outfit.llm import LLMError
+    from dresser.llm import LLMError
     monkeypatch.delenv("SOME_KEY", raising=False)
     c = LLMClient(Endpoint("https://api.example.com/v1", "m", "SOME_KEY"))
     with pytest.raises(LLMError, match="SOME_KEY"):

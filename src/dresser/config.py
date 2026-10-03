@@ -63,13 +63,13 @@ def _endpoint(kind: str, section: dict, llm: dict) -> Endpoint:
 
 
 def load_config(path: str | os.PathLike | None = None, privacy: str | None = None) -> Config:
-    path = path or os.environ.get("TODAYS_OUTFIT_CONFIG") or "config.toml"
+    path = path or os.environ.get("DRESSER_CONFIG") or "config.toml"
     data: dict = {}
     if Path(path).is_file():
         data = tomllib.loads(Path(path).read_text(encoding="utf-8"))
     llm = dict(data.get("llm", {}))
-    if os.environ.get("TODAYS_OUTFIT_PRESET"):
-        llm["preset"] = os.environ["TODAYS_OUTFIT_PRESET"]
+    if os.environ.get("DRESSER_PRESET"):
+        llm["preset"] = os.environ["DRESSER_PRESET"]
     cfg = Config(
         vision=_endpoint("vision", data.get("vision", {}), llm),
         text=_endpoint("text", data.get("text", {}), llm),

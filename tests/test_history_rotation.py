@@ -1,10 +1,10 @@
 from datetime import date, timedelta
 
 from conftest import FakeText, TODAY, make_stylist
-from todays_outfit.history import History
-from todays_outfit.rotation import Rotation, RotationPolicy, history_claims
-from todays_outfit.rules import build_outfits
-from todays_outfit.style import suggest
+from dresser.history import History
+from dresser.rotation import Rotation, RotationPolicy, history_claims
+from dresser.rules import build_outfits
+from dresser.style import suggest
 
 
 def d(n):

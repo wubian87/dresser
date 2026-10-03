@@ -16,10 +16,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from todays_outfit import linkimport as li  # noqa: E402
-from todays_outfit.config import load_config  # noqa: E402
-from todays_outfit.service import Stylist  # noqa: E402
-from todays_outfit.wardrobe import save_wardrobe  # noqa: E402
+from dresser import linkimport as li  # noqa: E402
+from dresser.config import load_config  # noqa: E402
+from dresser.service import Stylist  # noqa: E402
+from dresser.wardrobe import save_wardrobe  # noqa: E402
 
 
 def main(urls: list[str]) -> None:

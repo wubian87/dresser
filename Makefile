@@ -13,7 +13,7 @@ demo:
 	./demo.sh
 
 serve: install        # your own wardrobe in ./data (created empty on first run)
-	$(PY) -m todays_outfit serve
+	$(PY) -m dresser serve
 
 serve-demo: install   # writable copy of the example wardrobe + SYNTHETIC 14-day history in ./demo_data
-	$(PY) -m todays_outfit --demo serve
+	$(PY) -m dresser --demo serve

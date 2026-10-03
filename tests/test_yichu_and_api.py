@@ -3,8 +3,8 @@ import sqlite3
 from fastapi.testclient import TestClient
 from PIL import Image
 
-from todays_outfit import api
-from todays_outfit.sources.yichu import import_yichu
+from dresser import api
+from dresser.sources.yichu import import_yichu
 
 
 def test_import_yichu_synthetic_db(tmp_path):

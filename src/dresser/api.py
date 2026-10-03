@@ -19,15 +19,15 @@ from .service import NotFound, ReadOnlyError, Stylist
 
 STATIC = Path(__file__).parent / "static"
 MAX_UPLOAD = 30 * 1024 * 1024
-app = FastAPI(title="Today's Outfit")
+app = FastAPI(title="Dresser")
 _state: dict = {}
 
 
 def stylist() -> Stylist:
     if "s" not in _state:
-        cfg = load_config(os.environ.get("TODAYS_OUTFIT_CONFIG"), os.environ.get("TODAYS_OUTFIT_PRIVACY"))
-        _state["s"] = Stylist(cfg, os.environ.get("TODAYS_OUTFIT_WARDROBE", "sample_wardrobe/wardrobe.json"),
-                              os.environ.get("TODAYS_OUTFIT_CACHE", "cache/descriptions.json"))
+        cfg = load_config(os.environ.get("DRESSER_CONFIG"), os.environ.get("DRESSER_PRIVACY"))
+        _state["s"] = Stylist(cfg, os.environ.get("DRESSER_WARDROBE", "sample_wardrobe/wardrobe.json"),
+                              os.environ.get("DRESSER_CACHE", "cache/descriptions.json"))
     return _state["s"]
 
 

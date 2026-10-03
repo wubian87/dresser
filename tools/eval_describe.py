@@ -13,9 +13,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from todays_outfit.config import Endpoint, PRESETS  # noqa: E402
-from todays_outfit.describe import describe_image  # noqa: E402
-from todays_outfit.llm import LLMClient, LLMError  # noqa: E402
+from dresser.config import Endpoint, PRESETS  # noqa: E402
+from dresser.describe import describe_image  # noqa: E402
+from dresser.llm import LLMClient, LLMError  # noqa: E402
 
 MODELS = ["Qwen/Qwen3-VL-8B-Instruct", "Qwen/Qwen3-VL-30B-A3B-Instruct", "Qwen/Qwen3-VL-32B-Instruct", "zai-org/GLM-4.5V"]
 SYN = {"t-shirt": ["tee", "t shirt", "tshirt", "t-shirt"], "button-up shirt": ["shirt", "button", "oxford", "blouse"],

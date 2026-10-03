@@ -2,9 +2,9 @@
 
 "yichu" is the author's own self-hosted wardrobe app. This adapter is deliberately small and
 schema-agnostic: you tell it the table and column names, it copies the rows into a wardrobe.json
-that the rest of Today's Outfit understands. Photos are *referenced*, never uploaded anywhere.
+that the rest of Dresser understands. Photos are *referenced*, never uploaded anywhere.
 
-    python -m todays_outfit import-yichu --db /path/db.sqlite --uploads /path/uploads \
+    python -m dresser import-yichu --db /path/db.sqlite --uploads /path/uploads \
         --table items --image-col image_path --name-col name --out my_wardrobe/wardrobe.json
 
 NOTE: the defaults below are guesses; they were NOT verified against a real yichu database

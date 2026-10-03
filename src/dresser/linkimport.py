@@ -22,7 +22,7 @@ from urllib.parse import urljoin, urlparse
 
 import httpx
 
-UA = "Mozilla/5.0 (compatible; TodaysOutfit/0.3; personal wardrobe app; single page fetch)"
+UA = "Mozilla/5.0 (compatible; Dresser/0.3; personal wardrobe app; single page fetch)"
 MAX_HTML = 2 * 1024 * 1024
 MAX_IMAGE = 12 * 1024 * 1024
 TIMEOUT = 10.0

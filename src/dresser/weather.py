@@ -73,7 +73,7 @@ class Forecast:
 
 
 def make_client() -> httpx.Client:
-    return httpx.Client(timeout=6.0, headers={"User-Agent": "todays-outfit/0.2 (personal wardrobe app)"})
+    return httpx.Client(timeout=6.0, headers={"User-Agent": "dresser/0.2 (personal wardrobe app)"})
 
 
 RETRY_DELAY_S = 1.5

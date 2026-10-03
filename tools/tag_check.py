@@ -12,10 +12,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from todays_outfit.config import load_config  # noqa: E402
-from todays_outfit.llm import LLMClient  # noqa: E402
-from todays_outfit.service import Stylist  # noqa: E402
-from todays_outfit.tags import infer_tags, suggest_with_model  # noqa: E402
+from dresser.config import load_config  # noqa: E402
+from dresser.llm import LLMClient  # noqa: E402
+from dresser.service import Stylist  # noqa: E402
+from dresser.tags import infer_tags, suggest_with_model  # noqa: E402
 
 PIECES = ["beige-trench", "grey-knit-sweater", "yellow-rain-boots", "navy-dress"]
 

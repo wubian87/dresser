@@ -1,8 +1,8 @@
 import pytest
 
-from todays_outfit.describe import normalize
-from todays_outfit.jsonparse import extract_json
-from todays_outfit.style import parse_choice
+from dresser.describe import normalize
+from dresser.jsonparse import extract_json
+from dresser.style import parse_choice
 
 
 def test_plain_json():

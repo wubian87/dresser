@@ -46,8 +46,8 @@ def _fmt(res: dict, temp, rain, occ) -> str:
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(prog="todays-outfit", description="Outfit suggestions from clothes you already own.")
-    ap.add_argument("--config", help="path to config.toml (default ./config.toml or $TODAYS_OUTFIT_CONFIG)")
+    ap = argparse.ArgumentParser(prog="dresser", description="Outfit suggestions from clothes you already own.")
+    ap.add_argument("--config", help="path to config.toml (default ./config.toml or $DRESSER_CONFIG)")
     ap.add_argument("--wardrobe", help=f"path to wardrobe.json (default: ./data/wardrobe.json if it exists, else {SAMPLE})")
     ap.add_argument("--data-dir", help="folder holding wardrobe.json, images/, history.json, settings.json (default ./data)")
     ap.add_argument("--demo", action="store_true",
@@ -115,14 +115,14 @@ def main(argv=None):
     if a.cmd == "serve":
         import os
         import uvicorn
-        os.environ["TODAYS_OUTFIT_WARDROBE"] = a.wardrobe
-        os.environ["TODAYS_OUTFIT_CACHE"] = a.cache
+        os.environ["DRESSER_WARDROBE"] = a.wardrobe
+        os.environ["DRESSER_CACHE"] = a.cache
         if a.config:
-            os.environ["TODAYS_OUTFIT_CONFIG"] = a.config
+            os.environ["DRESSER_CONFIG"] = a.config
         if a.privacy:
-            os.environ["TODAYS_OUTFIT_PRIVACY"] = a.privacy
+            os.environ["DRESSER_PRIVACY"] = a.privacy
         print(f"wardrobe: {a.wardrobe}")
-        uvicorn.run("todays_outfit.api:app", host=a.host, port=a.port)
+        uvicorn.run("dresser.api:app", host=a.host, port=a.port)
         return 0
 
     st = Stylist(cfg, a.wardrobe, a.cache)
@@ -132,7 +132,7 @@ def main(argv=None):
         print(f"refused: {e}", file=sys.stderr)
         return 2
     except NotFound as e:
-        print(f"no such piece: {e.args[0]} (see `todays-outfit wardrobe`)", file=sys.stderr)
+        print(f"no such piece: {e.args[0]} (see `dresser wardrobe`)", file=sys.stderr)
         return 1
 
 
@@ -177,7 +177,7 @@ def _run(a, cfg, st: Stylist) -> int:
                 print(f"    Rotation: {sg['note']}")
         if v["suggestions"]:
             ids = " ".join(i["id"] for i in v["suggestions"][0]["items"])
-            print(f"\nWearing the top pick? todays-outfit wear {ids}")
+            print(f"\nWearing the top pick? dresser wear {ids}")
         return 0
     if a.cmd == "season":
         if a.set:
@@ -191,7 +191,7 @@ def _run(a, cfg, st: Stylist) -> int:
             print("removed" if st.unwear(day) else "nothing logged for that day")
             return 0
         if not a.items:
-            print("give piece ids (see `todays-outfit wardrobe`), or --undo", file=sys.stderr)
+            print("give piece ids (see `dresser wardrobe`), or --undo", file=sys.stderr)
             return 1
         e = st.wear(a.items, None, day)
         print(f"logged {e['date']}: " + ", ".join(e["items"]))

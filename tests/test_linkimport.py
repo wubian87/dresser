@@ -9,9 +9,9 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 from conftest import FakeVision, make_stylist
-from todays_outfit import api
-from todays_outfit import linkimport as li
-from todays_outfit.config import load_config
+from dresser import api
+from dresser import linkimport as li
+from dresser.config import load_config
 from conftest import ROOT
 
 
@@ -202,7 +202,7 @@ def test_request_carries_an_honest_user_agent_and_no_cookies():
     c = li.make_client()
     c._transport = httpx.MockTransport(handler)
     li.read_page("https://shop.example/p", c, resolver)
-    assert "TodaysOutfit" in seen["user-agent"] and "cookie" not in seen and "authorization" not in seen
+    assert "Dresser" in seen["user-agent"] and "cookie" not in seen and "authorization" not in seen
 
 
 # ---------------- service flow ----------------
@@ -238,7 +238,7 @@ def test_vision_failure_falls_back_to_page_text_and_says_so(tmp_path):
         ep = type("E", (), {"model": "m", "base_url": "http://x/v1"})()
 
         def chat(self, *a, **k):
-            from todays_outfit.llm import LLMError
+            from dresser.llm import LLMError
             raise LLMError("request failed: ReadTimeout")
     st = wire(make_stylist(tmp_path, demo=False, vision=Down()))
     r = st.import_link("https://shop.example/p")
@@ -256,7 +256,7 @@ def test_local_only_refuses_without_touching_the_network(tmp_path):
 
 
 def test_images_local_fetches_the_page_but_never_sends_the_picture_to_the_cloud(tmp_path):
-    from todays_outfit.llm import LLMClient
+    from dresser.llm import LLMClient
     cfg = load_config(ROOT / "config.example.toml", "images-local")
     st = wire(make_stylist(tmp_path, demo=False, cfg=cfg))
     st.vision = LLMClient(cfg.vision, cfg.privacy)       # real client, cloud endpoint: must refuse before any request is sent
@@ -267,7 +267,7 @@ def test_images_local_fetches_the_page_but_never_sends_the_picture_to_the_cloud(
 def test_readonly_example_wardrobe_refuses_import(tmp_path):
     st = wire(make_stylist(tmp_path, demo=False))
     st.readonly = True
-    from todays_outfit.service import ReadOnlyError
+    from dresser.service import ReadOnlyError
     with pytest.raises(ReadOnlyError):
         st.import_link("https://shop.example/p")
 

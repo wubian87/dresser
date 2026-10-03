@@ -5,10 +5,10 @@ from datetime import date
 import pytest
 
 from conftest import FakeText, TODAY, make_stylist
-from todays_outfit.llm import LLMError
-from todays_outfit.rules import build_outfits
-from todays_outfit.seasons import SEASONS, hemisphere, in_room, infer_seasons, suggest_season
-from todays_outfit.tags import clean_tag, infer_tags, merge_tags, parse_model_tags, suggest_with_model
+from dresser.llm import LLMError
+from dresser.rules import build_outfits
+from dresser.seasons import SEASONS, hemisphere, in_room, infer_seasons, suggest_season
+from dresser.tags import clean_tag, infer_tags, merge_tags, parse_model_tags, suggest_with_model
 
 
 # ---------------- seasons ----------------
@@ -70,7 +70,7 @@ def test_season_defaults_from_date_then_override_persists(tmp_path):
 
 
 def test_southern_hemisphere_city_flips_the_suggestion(tmp_path):
-    from todays_outfit import weather as wx
+    from dresser import weather as wx
     st = make_stylist(tmp_path)
     st.set_location(wx.Location("Sydney", -33.87, 151.2))
     info = st.season_info()
@@ -233,8 +233,8 @@ def test_service_stage2_success_failure_and_privacy(tmp_path):
 
 
 def test_stage2_refused_by_privacy_mode_but_stage1_works(tmp_path):
-    from todays_outfit.config import load_config
-    from todays_outfit.llm import LLMClient
+    from dresser.config import load_config
+    from dresser.llm import LLMClient
     from conftest import ROOT
     cfg = load_config(ROOT / "config.example.toml", "local-only")
     st = make_stylist(tmp_path, cfg=cfg)

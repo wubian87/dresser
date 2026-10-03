@@ -7,10 +7,10 @@ from pathlib import Path
 
 import pytest
 
-from todays_outfit.config import load_config
-from todays_outfit.describe import describe_image
-from todays_outfit.llm import LLMClient, LLMError
-from todays_outfit.service import Stylist
+from dresser.config import load_config
+from dresser.describe import describe_image
+from dresser.llm import LLMClient, LLMError
+from dresser.service import Stylist
 
 ROOT = Path(__file__).resolve().parent.parent
 pytestmark = pytest.mark.skipif(not os.environ.get("SILICONFLOW_API_KEY"), reason="no SILICONFLOW_API_KEY")
@@ -41,7 +41,7 @@ def test_style_for_real_picks_via_model_not_fallback(tmp_path):
 
 def test_tag_suggestions_for_real(tmp_path):
     """Stage 2 of the auto tags: one real call to the text model; only NEW, well-formed tags come back."""
-    from todays_outfit.tags import infer_tags, suggest_with_model
+    from dresser.tags import infer_tags, suggest_with_model
     cfg = load_config(ROOT / "config.example.toml")
     item = {"category": "outer", "type": "trench coat", "color": "beige", "material": "cotton blend", "warmth": 3, "formality": 4, "notes": ""}
     tags = suggest_with_model(LLMClient(cfg.text), item)

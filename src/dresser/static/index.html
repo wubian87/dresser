@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>Today's Outfit</title>
+<title>Dresser</title>
 <style>
 :root{--bg:#fbfaf8;--fg:#17181a;--mute:#74777c;--line:#e8e6e1;--card:#fff;--soft:#f1efea;--accent:#1d1f23;--onaccent:#fff;--ok:#2f7d4f;--warn:#9a5b00;--warnbg:#fff4e0;--danger:#b3261e;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.06)}
 @media (prefers-color-scheme:dark){:root{--bg:#111214;--fg:#f0efec;--mute:#9a9da3;--line:#2a2c30;--card:#18191c;--soft:#202226;--accent:#f0efec;--onaccent:#111214;--ok:#6cc08b;--warn:#f0b35a;--warnbg:#2a2214;--danger:#ff8a80;--shadow:none}}
@@ -465,7 +465,7 @@ async function renderSettings() {
       <dt>Saved descriptions</dt><dd>${d.cached_descriptions} cached</dd>
       <dt>Data folder</dt><dd>${esc(d.data_dir)}${d.readonly ? " (read-only example)" : ""}</dd>
       <dt>Date used</dt><dd>${esc(d.today)}</dd>
-      <dt>Version</dt><dd>${esc(d.version)}</dd></dl>
+      <dt>App</dt><dd>Dresser ${esc(d.version)}</dd></dl>
       <p class="mute small">Wear history and settings stay in local files next to the wardrobe. Rule badges and sources are shown under “Details” on the Today card.</p></details>`;
   $("#v-settings").innerHTML = h;
   $$(".opt").forEach(o => o.onclick = async () => {

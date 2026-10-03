@@ -22,10 +22,10 @@ from datetime import date
 import httpx
 from PIL import Image
 
-from todays_outfit import weather as wx
-from todays_outfit.config import load_config
-from todays_outfit.demo import init_demo
-from todays_outfit.service import Stylist
+from dresser import weather as wx
+from dresser.config import load_config
+from dresser.demo import init_demo
+from dresser.service import Stylist
 
 TODAY = date(2026, 10, 3)
 
@@ -98,7 +98,7 @@ def make_stylist(tmp_path, mock: MockWeather | None = None, text=None, vision=No
     if demo:
         path = init_demo(tmp_path / "data", cfg, cache, today=TODAY, with_location=False)   # tests choose their own weather
     else:
-        from todays_outfit.wardrobe import save_wardrobe
+        from dresser.wardrobe import save_wardrobe
         path = tmp_path / "data" / "wardrobe.json"
         path.parent.mkdir(parents=True)
         save_wardrobe(path, [])

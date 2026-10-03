@@ -5,8 +5,8 @@ from datetime import date
 import pytest
 
 from conftest import ROOT, MockWeather, TODAY, forecast_json, make_stylist
-from todays_outfit import weather as wx
-from todays_outfit.config import load_config
+from dresser import weather as wx
+from dresser.config import load_config
 
 SH = wx.Location("Shanghai, China", 31.22, 121.46)
 

@@ -3,12 +3,12 @@ import random
 from datetime import timedelta
 
 from conftest import ROOT, TODAY, make_stylist
-from todays_outfit.config import load_config
-from todays_outfit.demo import init_demo
-from todays_outfit.history import History
-from todays_outfit.rules import build_outfits
-from todays_outfit.service import Stylist
-from todays_outfit.simulate import make_weather, seed_habit_history, simulate
+from dresser.config import load_config
+from dresser.demo import init_demo
+from dresser.history import History
+from dresser.rules import build_outfits
+from dresser.service import Stylist
+from dresser.simulate import make_weather, seed_habit_history, simulate
 
 
 def test_demo_copy_is_writable_and_history_is_marked_synthetic(tmp_path):

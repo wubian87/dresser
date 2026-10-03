@@ -10,12 +10,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
-from todays_outfit.config import Endpoint, PRESETS  # noqa: E402
-from todays_outfit.llm import LLMClient, LLMError  # noqa: E402
-from todays_outfit.rules import build_outfits  # noqa: E402
-from todays_outfit.service import Stylist  # noqa: E402
-from todays_outfit.config import load_config  # noqa: E402
-from todays_outfit.style import build_prompt, parse_choice  # noqa: E402
+from dresser.config import Endpoint, PRESETS  # noqa: E402
+from dresser.llm import LLMClient, LLMError  # noqa: E402
+from dresser.rules import build_outfits  # noqa: E402
+from dresser.service import Stylist  # noqa: E402
+from dresser.config import load_config  # noqa: E402
+from dresser.style import build_prompt, parse_choice  # noqa: E402
 
 SCENARIOS = [(12, True, "commute"), (26, False, "date"), (5, False, "casual"), (20, False, "formal"), (30, False, "casual")]
 # thinking ON gets a big token budget (reasoning tokens count against max_tokens); thinking OFF uses the app default

@@ -1,5 +1,5 @@
-from todays_outfit.llm import LLMError
-from todays_outfit.style import suggest
+from dresser.llm import LLMError
+from dresser.style import suggest
 
 
 class FakeClient:
@@ -46,8 +46,8 @@ def test_nothing_fits(items):
 
 
 def test_ungrounded_reason_is_dropped(items):
-    from todays_outfit.rules import build_outfits
-    from todays_outfit.style import ungrounded_terms
+    from dresser.rules import build_outfits
+    from dresser.style import ungrounded_terms
     o = build_outfits(items, 16, False, "commute")[0]
     assert ungrounded_terms("Looks smart with the " + o.items[0]["type"], o.items) == []
     assert ungrounded_terms("Much better than a puffer jacket and sandals", [i for i in o.items if i["category"] == "top"]) == ["jacket", "sandal"]
@@ -59,7 +59,7 @@ def test_all_ungrounded_falls_back(items):
 
 
 def test_mixed_picks_keep_grounded_only(items):
-    from todays_outfit.rules import build_outfits
+    from dresser.rules import build_outfits
     cands = build_outfits(items, 20, False, "formal")
     ok = "Elegant: " + cands[1].items[0]["type"]
     res = suggest(items, 20, False, "formal", FakeClient('{"outfits":[{"candidate":0,"reason":"Great with jeans."},{"candidate":1,"reason":"%s"}]}' % ok))
@@ -67,6 +67,6 @@ def test_mixed_picks_keep_grounded_only(items):
 
 
 def test_ungrounded_has_no_false_positives(items):
-    from todays_outfit.style import ungrounded_terms
+    from dresser.style import ungrounded_terms
     shoes = [i for i in items if i["id"] == "black-flats"]
     assert ungrounded_terms("It flatters the dress code and is dressy enough.", shoes) == []

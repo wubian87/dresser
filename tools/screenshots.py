@@ -29,7 +29,7 @@ CITY = os.environ.get("SHOT_CITY", "Shanghai")
 
 
 def start(port: int, data: Path, cache: Path, extra=()) -> subprocess.Popen:
-    p = subprocess.Popen([PY, "-m", "todays_outfit", "--config", str(ROOT / "config.example.toml"), "--data-dir", str(data),
+    p = subprocess.Popen([PY, "-m", "dresser", "--config", str(ROOT / "config.example.toml"), "--data-dir", str(data),
                           "--cache", str(cache), *extra, "serve", "--port", str(port)], cwd=ROOT,
                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(60):

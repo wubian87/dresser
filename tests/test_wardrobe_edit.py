@@ -3,10 +3,10 @@ import json
 import pytest
 
 from conftest import FakeVision, ROOT, TODAY, make_stylist, photo_bytes
-from todays_outfit.cli import main
-from todays_outfit.config import load_config
-from todays_outfit.service import NotFound, ReadOnlyError, Stylist
-from todays_outfit.wardrobe import is_example, photo_to_jpeg
+from dresser.cli import main
+from dresser.config import load_config
+from dresser.service import NotFound, ReadOnlyError, Stylist
+from dresser.wardrobe import is_example, photo_to_jpeg
 
 
 def test_photo_is_reencoded_upright_without_metadata():
@@ -54,7 +54,7 @@ def test_multi_upload_gets_unique_ids_and_duplicate_warning(tmp_path):
 def test_vision_failure_still_lets_user_fill_in_by_hand(tmp_path):
     class Boom(FakeVision):
         def chat(self, *a, **k):
-            from todays_outfit.llm import LLMError
+            from dresser.llm import LLMError
             raise LLMError("HTTP 500")
     st = make_stylist(tmp_path, demo=False, vision=Boom())
     s = st.stage_photo(photo_bytes())
@@ -139,7 +139,7 @@ def test_wear_stats_in_wardrobe_view(tmp_path):
 
 
 def test_cli_add_wear_and_wardrobe(tmp_path, monkeypatch, capsys):
-    from todays_outfit import service
+    from dresser import service
     monkeypatch.setattr(service, "describe_image", lambda client, path: (FakeVision().desc, 0.1))
     p = tmp_path / "a.png"
     p.write_bytes(photo_bytes("red"))
@@ -159,7 +159,7 @@ def test_cli_add_wear_and_wardrobe(tmp_path, monkeypatch, capsys):
 
 
 def test_add_form_uses_a_shorter_vision_timeout_than_batch_describe(tmp_path, monkeypatch):
-    from todays_outfit import service
+    from dresser import service
     seen = []
     monkeypatch.setattr(service, "describe_image", lambda client, path: (seen.append(client.timeout), (FakeVision().desc, 0.1))[1])
     st = make_stylist(tmp_path, demo=False)

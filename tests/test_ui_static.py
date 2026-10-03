@@ -3,7 +3,7 @@ import json
 import re
 from pathlib import Path
 
-HTML = (Path(__file__).resolve().parent.parent / "src/todays_outfit/static/index.html").read_text(encoding="utf-8")
+HTML = (Path(__file__).resolve().parent.parent / "src/dresser/static/index.html").read_text(encoding="utf-8")
 
 
 def test_three_tabs_and_single_column():
@@ -25,7 +25,7 @@ def test_add_sheet_offers_photos_and_paste_a_link():
 
 
 def test_all_api_routes_used_by_the_page_exist():
-    from todays_outfit.api import app
+    from dresser.api import app
     routes = {r.path for r in app.routes}
     for used in set(re.findall(r'["`](/api/[a-z\-/]+)', HTML)):
         assert used.rstrip("/") in routes or any(r.startswith(used.rstrip("/")) for r in routes), used
@@ -35,7 +35,7 @@ def test_page_and_command_line_round_the_temperature_the_same_way(tmp_path):
     """A forecast low of 18.5 is printed 18 by the CLI label (Python rounds half to even); the page must show the same."""
     from conftest import MockWeather, forecast_json, make_stylist
     st = make_stylist(tmp_path, mock=MockWeather(forecast_json(hi=22.8, lo=18.5, prob=98)))
-    st.set_location(__import__("todays_outfit.weather", fromlist=["Location"]).Location("Shanghai, China", 31.2, 121.5))
+    st.set_location(__import__("dresser.weather", fromlist=["Location"]).Location("Shanghai, China", 31.2, 121.5))
     w = st.weather_info()
     assert w["label"] == "Today in Shanghai: 18-23 °C, rain 98%" and (w["low_r"], w["high_r"]) == (18, 23)
     assert "w.low_r ??" in HTML and "w.high_r ??" in HTML
@@ -43,7 +43,7 @@ def test_page_and_command_line_round_the_temperature_the_same_way(tmp_path):
 
 def test_link_import_closes_keyboard_and_drops_old_failures():
     """Found on a real phone: the on-screen keyboard hid the result, and old failed cards piled up under a new one."""
-    html = (Path(__file__).resolve().parent.parent / "src" / "todays_outfit" / "static" / "index.html").read_text(encoding="utf-8")
+    html = (Path(__file__).resolve().parent.parent / "src" / "dresser" / "static" / "index.html").read_text(encoding="utf-8")
     assert '$("#url").blur()' in html
     assert '.draft.failed' in html and 'classList.add("failed")' in html
 
@@ -62,7 +62,7 @@ def test_touch_targets_are_at_least_40px_high():
 
 def test_index_is_served_with_no_cache_and_status_reports_key_state(tmp_path, monkeypatch):
     from fastapi.testclient import TestClient
-    from todays_outfit import api
+    from dresser import api
     from conftest import make_stylist
     st = make_stylist(tmp_path)
     monkeypatch.delenv(st.cfg.vision.api_key_env, raising=False)

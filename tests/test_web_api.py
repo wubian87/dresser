@@ -2,7 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from conftest import FakeText, TODAY, make_stylist, photo_bytes
-from todays_outfit import api
+from dresser import api
 
 
 @pytest.fixture
@@ -97,8 +97,8 @@ def test_upload_rejects_garbage_and_discard_works(client):
 
 def test_readonly_example_returns_403(tmp_path):
     from conftest import ROOT
-    from todays_outfit.config import load_config
-    from todays_outfit.service import Stylist
+    from dresser.config import load_config
+    from dresser.service import Stylist
     api._state["s"] = Stylist(load_config(ROOT / "config.example.toml"), ROOT / "sample_wardrobe" / "wardrobe.json",
                               tmp_path / "c.json")
     try:

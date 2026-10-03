@@ -1,6 +1,6 @@
 import pytest
 
-from todays_outfit.rules import OCCASION_RULES, build_outfits, rain_unfriendly, target_warmth
+from dresser.rules import OCCASION_RULES, build_outfits, rain_unfriendly, target_warmth
 
 
 def by_id(items, i):

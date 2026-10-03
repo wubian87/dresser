@@ -1,6 +1,6 @@
 """Simulate 14 days of rotation on the example wardrobe and print REAL computed numbers.
 
-SIMULATION ON EXAMPLE DATA. No person is involved: the "habit" user is a made-up picker that mostly reaches for one
+SIMULATION ON EXAMPLE DATA. No person is involved: the "habit" user is a simulated picker that mostly reaches for one
 favourite per category, and the app arms always take the app's top pick (they never skip or override it). Rules-only
 ranking (no language model, no network), so it is deterministic and reproducible:
 
@@ -20,14 +20,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from todays_outfit.config import load_config  # noqa: E402
-from todays_outfit.rotation import RotationPolicy  # noqa: E402
-from todays_outfit.service import Stylist  # noqa: E402
-from todays_outfit.simulate import simulate  # noqa: E402
+from dresser.config import load_config  # noqa: E402
+from dresser.rotation import RotationPolicy  # noqa: E402
+from dresser.service import Stylist  # noqa: E402
+from dresser.simulate import simulate  # noqa: E402
 
 SEEDS = range(50)
 STRENGTHS = {"mild habit (favourite piece ~4x as likely)": 1.4, "strong habit (~12x)": 2.5}
-ARMS = [("habit", "made-up habit user keeps choosing as before"), ("no_rot", "app top pick, no rotation"),
+ARMS = [("habit", "simulated habit user keeps choosing as before"), ("no_rot", "app top pick, no rotation"),
         ("rotation", "app top pick, with rotation")]
 METRICS = [("share_of_wardrobe_worn", "Pieces worn at least once in 14 days", "pieces"),
            ("share_of_reachable_worn", "... of the pieces the rules allow in that weather", "pct"),
@@ -49,11 +49,11 @@ def main() -> None:
     items = st.room("autumn")          # the simulated weather is autumn-like, so the app would style from the autumn room
     size = len(items)
     policy = RotationPolicy()
-    out = {"note": "SIMULATION on the autumn room of the example wardrobe (synthetic illustrations), rules-only, not data about any person",
+    out = {"note": "SIMULATION on the autumn room of the example wardrobe (example illustrations), rules-only, not data about any person",
            "wardrobe_size": size, "seeds": len(SEEDS), "policy": policy.__dict__, "results": {}}
     md = ["# Rotation simulation (example data, rules only)", "",
-          f"**This is a simulation, not a user study.** The wardrobe is the autumn room ({size} of the 21 synthetic illustrations in `sample_wardrobe/`; the weather below is autumn-like, and the app only styles from the current room); "
-          "the \"habit user\" is a made-up picker; the app arms always accept the app's top pick. Reproduce: "
+          f"**This is a simulation, not a user study.** The wardrobe is the autumn room ({size} of the 21 example illustrations in `sample_wardrobe/`; the weather below is autumn-like, and the app only styles from the current room); "
+          "the \"habit user\" is a simulated picker; the app arms always accept the app's top pick. Reproduce: "
           "`python tools/simulate_rotation.py`. No language model and no network are used, so the numbers are exactly repeatable.", "",
           f"Setup per run: 14 days of habit history, then 14 new days of weather (random, autumn-like 5-26 °C, ~30% rainy days, "
           f"weekdays commute / weekends casual) under three policies that start from the same history. {len(SEEDS)} runs "
@@ -62,9 +62,9 @@ def main() -> None:
           f"long-unworn bonus up to +{policy.neglect_bonus} per piece (full at {policy.neglect_full_days} days). "
           "For scale, rule scores of the best candidates are typically within 1-3 points of each other.", "",
           "How to read it: `no_rotation` takes the same best-scoring outfit whenever the weather repeats, which is why it repeats a lot; "
-          "that is the baseline the rotation changes, not a claim about how anyone dresses. The made-up habit user did **not** reproduce "
-          "a \"half the closet is never worn\" pattern (it wears ~70-80% of the pieces in a fortnight, because weather and the rules already force "
-          "some variety), so these numbers say nothing about how much of a real closet sits unused.", ""]
+          "that is the baseline the rotation changes, not a claim about how anyone dresses. The simulated habit user wore "
+          "~70-80% of the pieces in a fortnight (weather and the rules already force some variety), so it did not reproduce a \"many clothes never worn\" "
+          "pattern, and these numbers say nothing about how much of a real closet sits unused.", ""]
     for label, strength in STRENGTHS.items():
         runs = [simulate(items, s, strength=strength) for s in SEEDS]
         out["results"][label] = {"strength": strength, "runs": [{k: v for k, v in r.items() if k != "weather2"} for r in runs]}
