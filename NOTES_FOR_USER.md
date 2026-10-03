@@ -7,7 +7,7 @@ Do these before submitting. Deadline: **Mon 2026-10-05 14:59 Beijing time (06:59
 2. **Repo URL**: create the public GitHub repo yourself (I pushed nothing), push, then replace every `TODO repo url` in `README.md` (clone line) and `ARTICLE.md` (Demo, Code).
    - Check `git log --format='%an <%ae>'`: commits use author `bian wu <noreply@example.invalid>`. Rewrite or set your real git identity if you care before pushing (rewriting history is your call; I did not do it).
 3. **Screenshots**: upload `docs/screenshot_rainy_commute.png` (and optionally `docs/screenshot_warm_date.png`) to DEV and paste the URL in `ARTICLE.md` (Demo + `cover_image`). I could not upload anything.
-4. **DEV handle / team**, and the `published: false` flag in the front matter (set to true or paste into DEV's submission template; the template adds the three required tags itself, tags in the file are a 4-tag max).
+4. **DEV handle / team**, and the `published: false` flag in the front matter (set to true or paste into DEV's submission template; the template adds the three required tags itself; DEV allows 4 tags max and the file has the 3 required + `opensource`).
 5. **Your own voice** in `ARTICLE.md`: the TODO about her mornings, whether yichu holds her photos (I assumed it from your brief and marked it TODO), and one honest sentence about your part in the build.
 6. **AI-assistance disclosure**: the article and README say the code was written with an AI coding agent under your direction. Keep, edit, or remove as true; AI use is allowed by the rules.
 

@@ -2,7 +2,7 @@
 title: "12 °C, raining, office at 9: an outfit picker built from my wife's own closet and open-weight models"
 published: false
 tags: devchallenge, weekendchallenge, hf26challenge, opensource
-cover_image: TODO-upload-docs/screenshot_rainy_commute.png-and-paste-url-here
+# cover_image: TODO (optional) URL of docs/screenshot_rainy_commute.png after uploading it to DEV
 ---
 
 *This is a submission for the [Hacktoberfest Weekend Challenge: Build for a Friend](https://dev.to/challenges/hacktoberfest-weekend-2026-10-01)*
@@ -21,7 +21,7 @@ Outfit 3: navy blue maxi dress + black blazer + yellow rain boots
   ...Yellow rain boots provide essential waterproof protection against the rain...
 ```
 
-Every piece in those outfits is in the wardrobe. The tan suede loafers are not, because it is raining and a rule I wrote throws suede out before any AI is asked. On a 26 °C date night the same wardrobe gives a yellow dress with heels instead. Pick the weather and the occasion yourself in the demo below; one command runs it on your machine.
+Every piece in those outfits is in the wardrobe. The tan suede loafers are not, because it is raining and a rule I wrote throws suede out before any AI is asked. On a 26 °C date night the same wardrobe gives a yellow dress with heels instead. The demo section below has the one command that reproduces this on your own machine.
 
 ## What I Built
 
@@ -76,7 +76,7 @@ With `--privacy images-local` the program refuses to send a photo to anything th
 | Qwen3-VL-32B | 6.0 | 95% | 90% | 95% |
 | GLM-4.5V | 9.2 | 90% | 90% | 95% |
 
-The 8B is the fastest and the worst: it called a black ballet flat a hoodie. The 30B-A3B was 1.3 seconds slower per photo and noticeably better on the numbers the rules depend on (warmth, colour), so it became the default. For the text step, **Qwen3.6-35B-A3B** with its "thinking" mode off answered 5 out of 5 scenarios in a median of 2.5 s. The same model with thinking on took a median of 22 s and gave one unusable answer out of five, and Qwen3.5-27B with thinking on timed out twice at my 180 s limit (so I stopped). Only because I could read the model card and flip that switch did I find out that "thinking" is pure cost for choosing one outfit from a list.
+The 8B is the fastest and the worst: it called a black ballet flat a hoodie. The 30B-A3B was 1.3 seconds slower per photo and noticeably better on the numbers the rules depend on (warmth, colour), so it became the default. For the text step, **Qwen3.6-35B-A3B** with its "thinking" mode off answered 5 out of 5 scenarios in a median of 2.5 s. The same model with thinking on took a median of 22 s and gave one unusable answer out of five, and Qwen3.5-27B with thinking on timed out twice at my 180 s limit (so I stopped). Timing the switch was how I learned that "thinking" is pure cost for choosing one outfit from a list.
 
 **Where I think open beats closed here, and where I can't say.** I did not run a closed model, so I can't tell you it reads clothes worse; I would not be surprised if the best closed vision models do better on blurry photos. What I can say from this build:
 
@@ -86,13 +86,13 @@ The 8B is the fastest and the worst: it called a black ballet flat a hoodie. The
 
 ## How I Built It
 
-The code was written with an AI coding agent under my direction. [TODO: one honest sentence about your part: what you specified, reviewed and changed.] Python 3.11+, FastAPI, one static HTML page, `httpx` and Pillow; nothing else. About 1,350 lines including tests.
+The code was written with an AI coding agent under my direction. [TODO: one honest sentence about your part: what you specified, reviewed and changed.] Python 3.11+, FastAPI, one static HTML page, `httpx` and Pillow; nothing else. About 1,800 lines including tests and tools.
 
 1. **Describe.** A vision model turns each photo into JSON: category, type, colour, material, warmth 1-5, formality 1-5, season. Results are cached by image hash and model, so each photo is paid for once.
 2. **Filter, with no AI.** Temperature becomes a warmth target. Rain removes suede, canvas, satin and similar shoes. The occasion bounds formality. An outfit is top + bottom or a dress, plus shoes, plus an optional outer layer. If a small wardrobe leaves nothing, the rules relax in steps and the result is labelled "loosest match" rather than pretending.
 3. **Style.** A text model chooses the best one to three of the surviving candidates and writes the reason. If its answer is not valid JSON, points at nothing real, or names a garment the outfit does not contain, that pick is dropped; if nothing survives, the app serves the rule-based ranking. It never shows an error screen to someone who just wants to leave the house.
 
-There are 48 offline tests (rules, parsing, fallbacks, privacy guard, config switch, importer, web API) and 2 real end-to-end tests against SiliconFlow; 50 passed on my last run. Describing all 21 example photos took 94 s, and a full suggestion about 3 s.
+There are 48 offline tests (rules, parsing, fallbacks, privacy guard, config switch, importer, web API) and 2 real end-to-end tests against SiliconFlow; 50 passed on my last run. Describing all 21 example photos took 94 s once, and a full suggestion about 3 s.
 
 ## Limits
 
@@ -100,7 +100,7 @@ There are 48 offline tests (rules, parsing, fallbacks, privacy guard, config swi
 - The model's reasons are fluent, not guaranteed true: materials like "silk" are the vision model's guess, and my check only catches garments that do not exist in the outfit.
 - Rules-only mode is dull: it respects weather and dress code but once paired a shirt with shorts and heels for a date. The model step earns its keep.
 - Weather is typed in by hand; there is no forecast lookup or outfit history.
-- Describing photos in parallel gave me no speedup on SiliconFlow (4 workers: 94 s for 21; one at a time: about 92 s). I did not investigate why.
+- Reading a whole wardrobe is slow once, then cached: 94 s for 21 photos with 4 parallel workers versus 118 s one at a time. Parallel requests helped by only ~20% on SiliconFlow and I did not investigate why.
 
 ## Prize Categories
 
