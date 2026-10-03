@@ -5,109 +5,360 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Today's Outfit</title>
 <style>
-  :root { --bg:#faf7f2; --ink:#2b2622; --muted:#7b726a; --accent:#b4573d; --card:#fff; --line:#e8e0d5; }
+  :root { --bg:#faf7f2; --ink:#2b2622; --muted:#7b726a; --accent:#b4573d; --card:#fff; --line:#e8e0d5; --amber:#c47f17; --red:#b4402d; --ok:#2f7d4f; }
   * { box-sizing: border-box; }
   body { margin:0; font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; background:var(--bg); color:var(--ink); }
-  main { max-width:560px; margin:0 auto; padding:16px 16px 48px; }
-  h1 { font-size:1.5rem; margin:8px 0 2px; }
-  .sub { color:var(--muted); font-size:.9rem; margin-bottom:14px; }
-  .panel { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:14px; }
-  label { font-weight:600; display:block; margin-bottom:6px; }
-  .temp { display:flex; align-items:center; gap:12px; }
-  input[type=range] { flex:1; accent-color:var(--accent); }
-  .tempval { min-width:4.2rem; text-align:right; font-weight:700; font-size:1.2rem; }
-  .chips { display:flex; flex-wrap:wrap; gap:8px; }
-  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:9px 16px; font-size:1rem; cursor:pointer; color:var(--ink); }
+  main { max-width:560px; margin:0 auto; padding:14px 14px 96px; }
+  h1 { font-size:1.35rem; margin:4px 0 2px; }
+  h2 { font-size:1.05rem; margin:0; }
+  .sub { color:var(--muted); font-size:.78rem; margin-bottom:10px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:14px; }
+  .muted { color:var(--muted); font-size:.85rem; }
+  button { font:inherit; color:inherit; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:8px 14px; font-size:.92rem; cursor:pointer; min-height:38px; }
   .chip[aria-pressed=true] { background:var(--accent); border-color:var(--accent); color:#fff; }
-  .row { margin-top:14px; }
-  button.go { width:100%; padding:14px; font-size:1.1rem; border:0; border-radius:12px; background:var(--ink); color:#fff; cursor:pointer; }
-  button.go:disabled { opacity:.5; }
-  .outfit { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px; margin-bottom:12px; }
-  .pieces { display:flex; gap:6px; overflow-x:auto; }
-  .piece { flex:0 0 auto; width:92px; text-align:center; font-size:.72rem; color:var(--muted); }
-  .piece img { width:92px; height:92px; border-radius:10px; background:#f4f1ec; object-fit:cover; display:block; }
-  .reason { margin:10px 2px 2px; }
+  .link { background:none; border:0; color:var(--accent); padding:6px 2px; cursor:pointer; text-decoration:underline; font-size:.88rem; }
+  .btn { border:0; border-radius:12px; padding:13px 14px; font-size:1.02rem; cursor:pointer; min-height:48px; }
+  .btn.primary { background:var(--ink); color:#fff; flex:1.3; }
+  .btn.second { background:#efe7dc; flex:1; }
+  .btn.danger { background:#fbe9e5; color:var(--red); }
+  .btn:disabled { opacity:.5; }
+  .row { display:flex; gap:8px; margin-top:12px; }
+  /* Today */
+  .wx { display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .wx b { font-size:1.02rem; }
+  .wxedit { border-top:1px dashed var(--line); margin-top:10px; padding-top:10px; }
+  .temp { display:flex; align-items:center; gap:12px; margin:6px 0 10px; }
+  input[type=range] { flex:1; accent-color:var(--accent); }
+  .tempval { min-width:4.4rem; text-align:right; font-weight:700; }
+  input[type=text], select, textarea { font:inherit; width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+  .occ { margin:12px 0 4px; }
+  .pieces { display:flex; gap:8px; overflow-x:auto; padding:4px 0; }
+  .piece { flex:0 0 auto; width:96px; text-align:center; font-size:.74rem; color:var(--muted); }
+  .piece img { width:96px; height:96px; border-radius:12px; background:#f4f1ec; object-fit:cover; display:block; }
+  .reason { margin:8px 2px 2px; }
+  .rot { margin:6px 2px 0; font-size:.86rem; color:#4a5b3a; background:#eef3e8; border-radius:10px; padding:6px 10px; }
   .tag { display:inline-block; font-size:.7rem; padding:2px 8px; border-radius:99px; background:#efe7dc; color:var(--muted); margin-top:6px; }
-  .warn { color:#8a4b00; background:#fff3e0; border-radius:10px; padding:8px 12px; font-size:.9rem; margin-bottom:12px; }
-  footer { color:var(--muted); font-size:.8rem; text-align:center; margin-top:24px; }
+  .warn { color:#8a4b00; background:#fff3e0; border-radius:10px; padding:8px 12px; font-size:.88rem; margin:8px 0; }
+  .ok { color:var(--ok); background:#e8f4ec; border-radius:10px; padding:8px 12px; font-size:.92rem; margin:8px 0; }
+  /* Wardrobe */
+  .whead { display:flex; justify-content:space-between; align-items:baseline; margin:4px 0 4px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px; }
+  .tile { background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; padding:0; text-align:left; position:relative; }
+  .tile img { width:100%; aspect-ratio:1; object-fit:cover; display:block; background:#f4f1ec; }
+  .tile .cap { padding:4px 6px 6px; font-size:.7rem; line-height:1.25; color:var(--muted); }
+  .tile .cap b { display:block; color:var(--ink); font-size:.76rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .badge { position:absolute; left:4px; top:4px; right:4px; font-size:.66rem; font-weight:600; color:#fff; padding:2px 6px; border-radius:8px; width:fit-content; max-width:calc(100% - 8px); }
+  .badge.mid { background:var(--amber); } .badge.long { background:var(--red); }
+  .empty { text-align:center; padding:24px 8px; color:var(--muted); }
+  .fab { position:fixed; right:16px; bottom:16px; background:var(--accent); color:#fff; border:0; border-radius:999px; padding:15px 22px; font-size:1.02rem; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer; z-index:5; }
+  /* Sheets */
+  .sheet { position:fixed; inset:0; background:var(--bg); z-index:10; overflow-y:auto; display:none; }
+  .sheet.open { display:block; }
+  .sheet .inner { max-width:560px; margin:0 auto; padding:12px 14px 40px; }
+  .sheet header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .field { margin-bottom:9px; } .field label { display:block; font-size:.78rem; color:var(--muted); margin-bottom:2px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .draft { display:flex; gap:10px; }
+  .draft img.photo { width:92px; height:122px; object-fit:cover; border-radius:10px; background:#f4f1ec; flex:0 0 auto; }
+  .draft .f { flex:1; min-width:0; }
+  .big { width:100%; max-height:46vh; object-fit:contain; border-radius:14px; background:#f4f1ec; }
+  .seasons { display:flex; gap:6px; flex-wrap:wrap; }
+  .seasons .chip { padding:6px 11px; min-height:34px; font-size:.85rem; }
+  .spin { color:var(--muted); font-style:italic; }
+  footer { color:var(--muted); font-size:.74rem; text-align:center; margin-top:20px; }
 </style>
 </head>
 <body>
 <main>
   <h1>Today's Outfit</h1>
   <div class="sub" id="status">…</div>
+  <div id="ro" class="warn" hidden></div>
 
-  <div class="panel">
-    <label for="temp">Temperature</label>
-    <div class="temp"><input id="temp" type="range" min="-5" max="38" value="16"><span class="tempval" id="tempval">16 °C</span></div>
-    <div class="row"><label>Rain?</label>
-      <div class="chips" id="rain"><button class="chip" data-v="false" aria-pressed="true">Dry</button><button class="chip" data-v="true" aria-pressed="false">Rain</button></div></div>
-    <div class="row"><label>Occasion</label>
-      <div class="chips" id="occ"></div></div>
-    <div class="row"><button class="go" id="go">What should I wear?</button></div>
-  </div>
+  <section class="panel" id="today" aria-label="Today"></section>
 
-  <div id="out"></div>
-  <footer>Example wardrobe: synthetic illustrations. Open-weight models, your choice of cloud or local.</footer>
+  <section aria-label="Wardrobe">
+    <div class="whead"><h2>Your wardrobe</h2><span class="muted" id="wsum"></span></div>
+    <div class="chips" id="filters"></div>
+    <div class="row" style="margin-top:8px;align-items:center"><span class="muted">Sort</span>
+      <select id="sort" style="width:auto"><option value="unworn">Longest unworn first</option><option value="recent">Worn most recently</option><option value="name">Name</option></select></div>
+    <div class="grid" id="grid"></div>
+  </section>
+  <footer id="foot"></footer>
 </main>
+<button class="fab" id="addbtn">+ Add clothes</button>
+
+<div class="sheet" id="itemsheet"><div class="inner" id="itembody"></div></div>
+<div class="sheet" id="addsheet"><div class="inner">
+  <header><h2>Add clothes</h2><button class="link" id="addclose">Done</button></header>
+  <p class="muted" id="addinfo"></p>
+  <div class="row" style="margin-top:0">
+    <button class="btn primary" id="pick">Choose photos</button>
+    <button class="btn second" id="snap">Take photo</button>
+  </div>
+  <input type="file" id="fpick" accept="image/*" multiple hidden>
+  <input type="file" id="fsnap" accept="image/*" capture="environment" hidden>
+  <p class="muted">One piece per photo, laid flat or hung up. Check the fields, fix anything wrong, then save each piece.</p>
+  <div id="drafts"></div>
+</div></div>
+
 <script>
 const $ = s => document.querySelector(s);
-let rain = false, occasion = "commute";
-const labels = {commute:"Commute", casual:"Casual", date:"Date", formal:"Formal"};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CATS = [["top","Tops"],["bottom","Bottoms"],["dress","Dresses"],["outer","Outerwear"],["shoes","Shoes"],["accessory","Other"]];
+const SEASONS = ["spring","summer","autumn","winter"];
+let status = {}, items = [], filter = "all", today = null, idx = 0, occasion = null, wxOpen = false, justWorn = false, forceNext = false;
+let manual = JSON.parse(sessionStorage.getItem("manualWx") || "null");
 
-function chips(el, onpick) {
-  el.addEventListener("click", e => {
-    const b = e.target.closest(".chip"); if (!b) return;
-    el.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
-    onpick(b.dataset.v);
-  });
+async function api(path, opts = {}) {
+  const r = await fetch(path, opts);
+  let d = null; try { d = await r.json(); } catch (e) {}
+  if (!r.ok) throw new Error((d && d.detail) || ("server said " + r.status));
+  return d;
 }
-chips($("#rain"), v => rain = v === "true");
-$("#temp").addEventListener("input", e => $("#tempval").textContent = e.target.value + " °C");
+const post = (p, b) => api(p, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(b)});
+const put = (p, b) => api(p, {method:"PUT", headers:{"Content-Type":"application/json"}, body: JSON.stringify(b)});
 
-function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+/* ---------------- Today card ---------------- */
+async function loadToday(showSpinner = true) {
+  if (showSpinner) $("#today").innerHTML = `<h2>Today</h2><p class="spin">Picking from your wardrobe…</p>`;
+  let q = new URLSearchParams();
+  if (occasion) q.set("occasion", occasion);
+  if (manual) { q.set("temp", manual.temp); q.set("rain", manual.rain); }
+  if (forceNext) { q.set("force", "true"); forceNext = false; }
+  try { today = await api("/api/today?" + q); } catch (e) { $("#today").innerHTML = `<div class="warn">${esc(e.message)}</div>`; return; }
+  occasion = today.occasion; idx = 0; justWorn = false;
+  renderToday();
+}
 
-fetch("/api/status").then(r => r.json()).then(s => {
-  const occ = $("#occ");
-  s.occasions.forEach((o, i) => {
-    const b = document.createElement("button");
-    b.className = "chip"; b.dataset.v = o; b.textContent = labels[o] || o; b.setAttribute("aria-pressed", i === 0);
-    occ.appendChild(b);
+function wxLine() {
+  const w = today.weather;
+  if (w.source === "manual") return `<b>Manual: ${w.temp} °C, ${w.rain ? "rain" : "dry"}</b>`;
+  if (w.source === "auto") return `<b>${esc(w.label)}</b>`;
+  return `<b>Weather</b> <span class="muted">${esc(w.error || "")}</span>`;
+}
+
+function renderToday() {
+  const t = today, w = t.weather;
+  let h = `<div class="wx"><div>${wxLine()}</div><button class="link" id="wxtoggle">${w.source === "auto" ? "Change" : "Set weather"}</button></div>`;
+  if (w.note) h += `<div class="muted">${esc(w.note)}</div>`;
+  if (w.source === "manual" && w.forecast_label) h += `<div class="muted">Forecast: ${esc(w.forecast_label.replace("Today in ", ""))}</div>`;
+  if (wxOpen || t.needs_weather) h += weatherEditor();
+  h += `<div class="occ"><div class="chips" id="occ">` + (status.occasions || []).map(o =>
+    `<button class="chip" data-v="${o}" aria-pressed="${o === t.occasion}">${o[0].toUpperCase() + o.slice(1)}</button>`).join("") + `</div></div>`;
+  if (t.needs_weather) {
+    h += `<p class="muted">Pick a temperature below to see today's outfit.</p>`;
+  } else if (t.worn_today && !t.suggestions.length) {
+    h += `<p class="ok">✓ Logged for today: ${t.worn_today.items.map(i => esc(i.name)).join(" + ")}</p>` +
+         `<div class="row"><button class="btn second" id="undo">Undo</button><button class="btn second" id="another2">Suggest something else</button></div>`;
+  } else if (!t.suggestions.length) {
+    h += `<div class="warn">${esc(t.warning || "No outfit in this wardrobe fits that weather and occasion.")}</div>`;
+  } else {
+    const s = t.suggestions[idx];
+    if (t.warning) h += `<div class="warn">${esc(t.warning)}</div>`;
+    if (t.worn_today) h += `<div class="muted">You already logged today's outfit; tapping "Wear this" replaces it.</div>`;
+    h += `<div class="pieces">` + s.items.map(i => `<div class="piece"><img src="${i.thumb}" alt="${esc(i.name)}"><div>${esc(i.name)}</div></div>`).join("") + `</div>`;
+    h += `<p class="reason">${esc(s.reason)}</p>`;
+    if (s.note) h += `<div class="rot"><b>Rotation:</b> ${esc(s.note)}</div>`;
+    h += `<span class="tag">${idx === 0 ? "top pick" : "alternative " + idx} · ${s.source === "model" ? "picked by the model" : "rules-only pick"}${s.relaxed ? " · loosest match" : ""}</span>`;
+    if (justWorn) h += `<p class="ok">✓ Logged. Enjoy.</p>`;
+    h += `<div class="row"><button class="btn primary" id="wear">Wear this</button><button class="btn second" id="skip">Show another</button></div>`;
+  }
+  $("#today").innerHTML = `<h2 style="margin-bottom:6px">Today</h2>` + h;
+  bindToday();
+}
+
+function weatherEditor() {
+  const m = manual || {temp: 16, rain: false};
+  return `<div class="wxedit">
+    <label class="muted">Temperature (override)</label>
+    <div class="temp"><input id="temp" type="range" min="-5" max="38" value="${m.temp}"><span class="tempval" id="tempval">${m.temp} °C</span></div>
+    <div class="chips" id="rainchips"><button class="chip" data-v="false" aria-pressed="${!m.rain}">Dry</button><button class="chip" data-v="true" aria-pressed="${m.rain}">Rain</button></div>
+    <div class="row"><button class="btn second" id="usemanual">Use this</button>${today.has_location ? `<button class="btn second" id="useforecast">Use forecast</button>` : ""}</div>
+    <div class="field" style="margin-top:12px"><label>City for the automatic forecast (set once; Open-Meteo, no key)</label>
+      <div class="row" style="margin-top:0"><input type="text" id="city" placeholder="e.g. Shanghai" style="flex:1"><button class="btn second" id="findcity" style="flex:0 0 auto">Find</button></div>
+      <div id="cityres" class="chips" style="margin-top:6px"></div></div></div>`;
+}
+
+function bindToday() {
+  const on = (s, f) => { const e = $(s); if (e) e.onclick = f; };
+  on("#wxtoggle", () => { wxOpen = !wxOpen; renderToday(); });
+  document.querySelectorAll("#occ .chip").forEach(c => c.onclick = () => { occasion = c.dataset.v; loadToday(); });
+  const temp = $("#temp");
+  if (temp) {
+    let rain = (manual || {}).rain || false;
+    temp.oninput = () => $("#tempval").textContent = temp.value + " °C";
+    document.querySelectorAll("#rainchips .chip").forEach(c => c.onclick = () => { rain = c.dataset.v === "true";
+      document.querySelectorAll("#rainchips .chip").forEach(x => x.setAttribute("aria-pressed", x === c)); });
+    on("#usemanual", () => { manual = {temp: +temp.value, rain}; sessionStorage.setItem("manualWx", JSON.stringify(manual)); wxOpen = false; loadToday(); });
+    on("#useforecast", () => { manual = null; sessionStorage.removeItem("manualWx"); wxOpen = false; loadToday(); });
+    on("#findcity", findCity);
+    $("#city").onkeydown = e => { if (e.key === "Enter") findCity(); };
+  }
+  on("#wear", async () => {
+    const s = today.suggestions[idx];
+    try { await post("/api/wear", {items: s.items.map(i => i.id), occasion: today.occasion}); } catch (e) { alert(e.message); return; }
+    today.worn_today = {items: s.items, occasion: today.occasion}; today.suggestions = [];
+    renderToday();
+    loadWardrobe();
   });
-  chips(occ, v => occasion = v);
-  occasion = s.occasions[0];
-  // shareable presets: /?temp=12&rain=1&occasion=commute&auto=1
-  const q = new URLSearchParams(location.search);
-  if (q.get("temp")) { $("#temp").value = q.get("temp"); $("#tempval").textContent = q.get("temp") + " °C"; }
-  if (q.get("rain") === "1") { rain = true; $("#rain").querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === "true")); }
-  if (s.occasions.includes(q.get("occasion"))) { occasion = q.get("occasion"); occ.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === occasion)); }
-  if (q.get("auto") === "1") $("#go").click();
-  const host = s => new URL(s).hostname;
-  $("#status").textContent = `Styling with ${s.text_model} (${host(s.text_host)}) · photos read by ${s.vision_model} · privacy: ${s.privacy} · ${s.items - s.undescribed}/${s.items} pieces ready`;
-});
+  on("#skip", async () => {
+    const s = today.suggestions[idx];
+    try { await post("/api/skip", {items: s.items.map(i => i.id), occasion: today.occasion}); } catch (e) { alert(e.message); return; }
+    if (idx + 1 < today.suggestions.length) { idx++; renderToday(); } else { loadToday(); }
+  });
+  on("#undo", async () => { await api("/api/wear", {method: "DELETE"}); await loadWardrobe(); loadToday(); });
+  on("#another2", () => { forceNext = true; loadToday(); });
+}
 
-$("#go").addEventListener("click", async () => {
-  const btn = $("#go"); btn.disabled = true; btn.textContent = "Thinking…";
-  $("#out").innerHTML = "";
+async function findCity() {
+  const q = $("#city").value.trim(); if (!q) return;
+  $("#cityres").innerHTML = `<span class="spin">Searching…</span>`;
   try {
-    const r = await fetch("/api/suggest", {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({temp: +$("#temp").value, rain, occasion})});
-    if (!r.ok) throw new Error("server said " + r.status);
-    const d = await r.json();
-    let html = "";
-    if (d.undescribed) html += `<div class="warn">${d.undescribed} photos have not been described yet (run <code>todays-outfit describe</code>).</div>`;
-    if (d.warning) html += `<div class="warn">${esc(d.warning)}</div>`;
-    d.suggestions.forEach((s, n) => {
-      html += `<div class="outfit"><div class="pieces">` + s.items.map(i =>
-        `<div class="piece"><img src="${i.image}" alt="${esc(i.name)}"><div>${esc(i.name)}</div></div>`).join("") +
-        `</div><p class="reason">${esc(s.reason)}</p>` +
-        `<span class="tag">${s.source === "model" ? "picked by the model" : "rules-only pick"}${s.relaxed ? " · loosest match" : ""}</span></div>`;
+    const res = await api("/api/geocode?q=" + encodeURIComponent(q));
+    $("#cityres").innerHTML = res.length ? res.map((r, k) => `<button class="chip" data-k="${k}">${esc(r.name)}</button>`).join("") : `<span class="muted">No match.</span>`;
+    document.querySelectorAll("#cityres .chip").forEach(c => c.onclick = async () => {
+      const r = res[+c.dataset.k];
+      try { await put("/api/settings/location", r); } catch (e) { alert(e.message); return; }
+      manual = null; sessionStorage.removeItem("manualWx"); wxOpen = false; loadToday();
     });
-    $("#out").innerHTML = html;
-  } catch (e) {
-    $("#out").innerHTML = `<div class="warn">Something went wrong: ${esc(e.message)}</div>`;
-  } finally { btn.disabled = false; btn.textContent = "What should I wear?"; }
-});
+  } catch (e) { $("#cityres").innerHTML = `<span class="warn">${esc(e.message)}</span>`; }
+}
+
+/* ---------------- Wardrobe grid ---------------- */
+async function loadWardrobe() { items = await api("/api/wardrobe"); renderWardrobe(); }
+
+function ago(it) {
+  if (it.last_worn === null) return it.never_logged ? "never worn" : "";
+  const d = it.days_since; return `worn ${it.wear_count}× · ${d === 0 ? "today" : d === 1 ? "yesterday" : d + " days ago"}`;
+}
+
+function renderWardrobe() {
+  const counts = {all: items.length};
+  items.forEach(i => counts[i.category] = (counts[i.category] || 0) + 1);
+  $("#filters").innerHTML = [["all", "All"], ...CATS].filter(([k]) => counts[k]).map(([k, n]) =>
+    `<button class="chip" data-v="${k}" aria-pressed="${filter === k}">${n} ${counts[k]}</button>`).join("");
+  document.querySelectorAll("#filters .chip").forEach(c => c.onclick = () => { filter = c.dataset.v; renderWardrobe(); });
+  const hasHist = items.some(i => i.last_worn);
+  const recent = items.filter(i => i.days_since !== null && i.days_since <= 13).length;
+  const stale = items.filter(i => i.badge && i.unworn_days >= 14).length;
+  $("#wsum").textContent = !items.length ? "" : hasHist ? `${recent} of ${items.length} worn in the last 14 days` + (stale ? ` · ${stale} not worn in 14+ days` : "") : `${items.length} pieces · no wear logged yet`;
+  const sortBy = $("#sort").value;
+  let list = items.filter(i => filter === "all" || i.category === filter);
+  list.sort((a, b) => sortBy === "name" ? a.name.localeCompare(b.name)
+    : sortBy === "recent" ? (a.days_since ?? 9999) - (b.days_since ?? 9999) : (b.unworn_days - a.unworn_days) || a.name.localeCompare(b.name));
+  if (!items.length) {
+    $("#grid").innerHTML = `<div class="empty" style="grid-column:1/-1">Your wardrobe is empty.<br>Tap <b>Add clothes</b> and photograph what you own.<br><span class="muted">(To try the app first: start it with <code>--demo</code>.)</span></div>`;
+    return;
+  }
+  $("#grid").innerHTML = list.map(i => `<button class="tile" data-id="${esc(i.id)}">` +
+    (i.badge ? `<span class="badge ${i.badge_level}">${esc(i.badge)}</span>` : "") +
+    `<img loading="lazy" src="${i.thumb}" alt="${esc(i.name)}"><div class="cap"><b>${esc(i.name)}</b>${esc(ago(i))}</div></button>`).join("");
+  document.querySelectorAll(".tile").forEach(t => t.onclick = () => openItem(t.dataset.id));
+}
+$("#sort").onchange = renderWardrobe;
+
+/* ---------------- Item detail / edit / delete ---------------- */
+function fieldsForm(f, idp) {
+  const seasons = new Set(f.season || []);
+  return `
+    <div class="field"><label>Name (optional)</label><input type="text" id="${idp}name" value="${esc(f.name || "")}" placeholder="${esc((f.color || "") + " " + (f.type || ""))}"></div>
+    <div class="two">
+      <div class="field"><label>Category</label><select id="${idp}category">${CATS.map(([k, n]) => `<option value="${k}" ${f.category === k ? "selected" : ""}>${n}</option>`).join("")}</select></div>
+      <div class="field"><label>Type</label><input type="text" id="${idp}type" value="${esc(f.type)}" placeholder="e.g. jeans"></div>
+      <div class="field"><label>Colour</label><input type="text" id="${idp}color" value="${esc(f.color)}"></div>
+      <div class="field"><label>Material</label><input type="text" id="${idp}material" value="${esc(f.material)}"></div>
+      <div class="field"><label>Warmth (1 light – 5 heavy)</label><select id="${idp}warmth">${[1,2,3,4,5].map(n => `<option ${+f.warmth === n ? "selected" : ""}>${n}</option>`).join("")}</select></div>
+      <div class="field"><label>Formality (1 lounge – 5 formal)</label><select id="${idp}formality">${[1,2,3,4,5].map(n => `<option ${+f.formality === n ? "selected" : ""}>${n}</option>`).join("")}</select></div>
+    </div>
+    <div class="field"><label>Seasons</label><div class="seasons" id="${idp}season">${SEASONS.map(s => `<button type="button" class="chip" data-v="${s}" aria-pressed="${seasons.has(s)}">${s}</button>`).join("")}</div></div>
+    <div class="field"><label>Notes</label><input type="text" id="${idp}notes" value="${esc(f.notes)}"></div>`;
+}
+function readForm(idp) {
+  const g = k => $("#" + idp + k).value;
+  return {name: g("name").trim(), category: g("category"), type: g("type").trim(), color: g("color").trim(), material: g("material").trim(),
+          warmth: +g("warmth"), formality: +g("formality"), notes: g("notes").trim(),
+          season: [...document.querySelectorAll(`#${idp}season .chip`)].filter(c => c.getAttribute("aria-pressed") === "true").map(c => c.dataset.v)};
+}
+function bindSeasons(idp) {
+  document.querySelectorAll(`#${idp}season .chip`).forEach(c => c.onclick = () => c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") !== "true"));
+}
+
+function openItem(id) {
+  const it = items.find(i => i.id === id); if (!it) return;
+  $("#itembody").innerHTML = `<header><h2>${esc(it.name)}</h2><button class="link" id="iclose">Close</button></header>
+    <img class="big" src="${it.image}" alt="${esc(it.name)}">
+    <p class="muted" style="margin:8px 0">${it.last_worn ? `Last worn ${it.last_worn} · worn ${it.wear_count}× in the log` : (it.never_logged ? "No wear logged since the log began." : "No wear logged yet.")}${it.badge ? ` · <b>${esc(it.badge)}</b>` : ""}</p>
+    <div class="row" style="margin:0 0 12px"><button class="btn primary" id="iwore">I wore this today</button></div>
+    ${fieldsForm(it, "e_")}
+    <div id="ierr"></div>
+    <div class="row"><button class="btn primary" id="isave">Save changes</button><button class="btn danger" id="idel">Delete</button></div>`;
+  $("#itemsheet").classList.add("open"); bindSeasons("e_");
+  $("#iclose").onclick = () => $("#itemsheet").classList.remove("open");
+  const fail = e => $("#ierr").innerHTML = `<div class="warn">${esc(e.message)}</div>`;
+  $("#iwore").onclick = async () => { try { await post("/api/wear", {items: [id], merge: true, occasion: occasion}); } catch (e) { return fail(e); }
+    $("#itemsheet").classList.remove("open"); await loadWardrobe(); loadToday(false); };
+  $("#isave").onclick = async () => { try { await put("/api/items/" + encodeURIComponent(id), readForm("e_")); } catch (e) { return fail(e); }
+    $("#itemsheet").classList.remove("open"); await loadWardrobe(); loadToday(false); };
+  $("#idel").onclick = async () => { if (!confirm(`Delete "${it.name}" from your wardrobe? Its photo and its wear log entries are removed.`)) return;
+    try { await api("/api/items/" + encodeURIComponent(id), {method: "DELETE"}); } catch (e) { return fail(e); }
+    $("#itemsheet").classList.remove("open"); await loadWardrobe(); loadToday(false); };
+}
+
+/* ---------------- Add clothes ---------------- */
+let draftN = 0;
+$("#addbtn").onclick = () => {
+  const m = status.describe_mode;
+  $("#addinfo").textContent = m === "cloud" ? `Each photo is described by ${status.vision_model} at ${new URL(status.vision_host).hostname} (a 512-px copy is sent; privacy mode: ${status.privacy}). You review the result before saving.`
+    : m === "local" ? `Photos are described by ${status.vision_model} on this machine (${new URL(status.vision_host).hostname}); nothing leaves it.`
+    : `Privacy mode "${status.privacy}" keeps photos on this machine and the vision model is not local, so nothing is sent: fill the fields in by hand.`;
+  $("#addsheet").classList.add("open");
+};
+$("#addclose").onclick = () => { $("#addsheet").classList.remove("open"); loadWardrobe(); loadToday(false); };
+$("#pick").onclick = () => $("#fpick").click();
+$("#snap").onclick = () => $("#fsnap").click();
+for (const id of ["#fpick", "#fsnap"]) $(id).onchange = async e => {
+  const files = [...e.target.files]; e.target.value = "";
+  for (const f of files) await addDraft(f);     // one at a time: easy on the phone and on the vision endpoint
+};
+
+async function addDraft(file) {
+  const n = ++draftN, idp = "d" + n + "_";
+  const box = document.createElement("div"); box.className = "panel"; box.id = "draft" + n;
+  box.innerHTML = `<div class="draft"><img class="photo" src="${URL.createObjectURL(file)}" alt=""><div class="f"><span class="spin">${status.describe_mode === "manual" ? "Uploading…" : "Describing this photo…"}</span></div></div>`;
+  $("#drafts").prepend(box);
+  let st;
+  try {
+    st = await api("/api/upload?describe=" + (status.describe_mode !== "manual"), {method: "POST", headers: {"Content-Type": file.type || "application/octet-stream"}, body: file});
+  } catch (e) { box.querySelector(".f").innerHTML = `<div class="warn">${esc(e.message)}</div>`; return; }
+  box.querySelector(".photo").src = "/staged/" + st.staging_id;
+  box.querySelector(".f").innerHTML = (st.describe_error ? `<div class="warn">${esc(st.describe_error)}</div>` : `<div class="muted" style="margin-bottom:6px">Described automatically. Please check.</div>`) +
+    (st.duplicate_of ? `<div class="warn">This looks like a photo you already added (${esc(st.duplicate_of)}).</div>` : "") +
+    fieldsForm(st.fields, idp) + `<div id="${idp}err"></div><div class="row"><button class="btn primary" id="${idp}save">Save piece</button><button class="btn second" id="${idp}drop">Discard</button></div>`;
+  bindSeasons(idp);
+  $("#" + idp + "drop").onclick = async () => { await api("/api/staged/" + st.staging_id, {method: "DELETE"}); box.remove(); };
+  $("#" + idp + "save").onclick = async () => {
+    try { await post("/api/items", {staging_id: st.staging_id, fields: readForm(idp)}); }
+    catch (e) { $("#" + idp + "err").innerHTML = `<div class="warn">${esc(e.message)}</div>`; return; }
+    box.innerHTML = `<div class="ok">✓ Saved: ${esc(readForm(idp).name || readForm(idp).color + " " + readForm(idp).type)}</div>`;
+    loadWardrobe();
+  };
+}
+
+/* ---------------- boot ---------------- */
+(async () => {
+  status = await api("/api/status");
+  const host = s => new URL(s).hostname, local = h => ["localhost", "127.0.0.1", "::1"].includes(h);
+  status.describe_mode = local(host(status.vision_host)) ? "local" : status.privacy === "off" ? "cloud" : "manual";
+  $("#status").textContent = `Styling with ${status.text_model} (${host(status.text_host)}) · photos read by ${status.vision_model} · privacy: ${status.privacy}`;
+  if (status.readonly) { $("#ro").hidden = false; $("#ro").textContent = "This is the bundled read-only example wardrobe: you can look, but logging and adding are disabled. Start the app with --demo for a writable copy, or with your own data folder."; }
+  const q = new URLSearchParams(location.search);
+  if (status.occasions.includes(q.get("occasion"))) occasion = q.get("occasion");
+  await loadWardrobe();
+  loadToday();
+  $("#foot").textContent = "Wear history and settings stay in local files next to your wardrobe. The forecast comes from open-meteo.com (only the city's coordinates are sent).";
+})();
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "todays-outfit"
-version = "0.1.0"
+version = "0.2.0"
 description = "Wardrobe stylist that suggests outfits from clothes you already own, powered by open-weight models via any OpenAI-compatible endpoint."
 readme = "README.md"
 requires-python = ">=3.11"
