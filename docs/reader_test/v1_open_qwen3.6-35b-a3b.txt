@@ -1,0 +1,7 @@
+model: Qwen/Qwen3.6-35B-A3B
+mode: open
+
+(a) The author built a simple CLI/web tool that uses open-weight AI to generate outfit combinations based on weather and a specific wardrobe inventory, filtering out items like suede during rain.
+(b) Developers interested in practical LLM applications, Hacktoberfest participants, or anyone who enjoys building small, personal utility tools.
+(c) Yes, the concrete example of the output is compelling and the "suede rule" adds a nice touch of real-world logic that makes the project feel grounded and useful.
+(d) The "[TODO]" placeholder in the text is a major red flag; it looks unfinished and suggests the author didn't proofread before submitting, which undermines trust in the rest of the post.

@@ -1,0 +1,10 @@
+model: zai-org/GLM-4.5-Air
+mode: open
+
+(a) The author built an outfit picker tool for their wife that suggests clothing based on weather and occasion, using simple rules to filter inappropriate items (like suede in rain) before AI makes the final selection.
+
+(b) This appears to be for developers who enjoy practical, personal projects that solve everyday problems, particularly those interested in combining simple rule-based systems with AI.
+
+(c) Yes, I'd keep reading because it's a clever approach to a common problem and demonstrates an interesting hybrid approach of combining deterministic rules with AI.
+
+(d) Nothing is particularly confusing or off-putting in this first screen - the concept is clearly explained and the example is helpful.

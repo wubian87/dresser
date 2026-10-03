@@ -1,0 +1,10 @@
+model: deepseek-ai/DeepSeek-V4-Flash
+mode: open
+
+(a) The author built a small outfit-picking tool for their wife that takes weather and occasion as input, then uses a rule-based filter (like banning suede in rain) before letting an AI choose and explain outfits from a small example wardrobe. The post shows sample output for a cold rainy commute and explains the core design: rules constrain, AI only selects and describes.
+
+(b) This is for developers interested in practical, small-scale AI/CLI projects, or anyone who likes the idea of a personal utility tool with a clear rule-vs-AI split.
+
+(c) Yes, I’d keep reading — the “rules before AI” angle is a refreshing, honest take, and the example output is concrete enough to make me curious about the implementation details.
+
+(d) The wardrobe is only 21 generated drawings, not her real clothes, which makes the “for my wife” framing feel a bit hollow. Also, the optional comment about her reaction is left as a placeholder, which reads as unfinished.

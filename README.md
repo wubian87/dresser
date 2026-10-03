@@ -24,14 +24,12 @@ $ todays-outfit suggest --temp 12 --rain --occasion commute
 
 I built it for my wife, from the wardrobe she already has. It is not a shopping app and it never suggests buying anything. You photograph your clothes once, a vision model describes each piece, and from then on a morning question ("12 degrees, rain, I have to be at the office") gets 1-3 complete outfits. Anyone with a closet and an OpenAI-compatible endpoint can use it.
 
-## What she said
-
-> **TODO (owner fills in after she tries it): her actual words, good and bad. Left blank on purpose; nothing here is invented.**
+<!-- OPTIONAL (owner): add a "## What she said" section here ONLY with her real words, good and bad, after she has tried it. Otherwise leave it out. -->
 
 ## Verify it in one command
 
 ```bash
-git clone <TODO repo url> && cd wardrobe-stylist
+git clone REPO_URL && cd wardrobe-stylist
 ./demo.sh        # or: make demo
 ```
 

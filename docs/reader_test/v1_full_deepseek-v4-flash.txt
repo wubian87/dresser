@@ -1,0 +1,24 @@
+model: deepseek-ai/DeepSeek-V4-Flash
+mode: full
+
+**Scores**
+
+**Writing Quality: 5**  
+The prose is clear, honest, and technically precise, but the post is unfinished. Multiple `TODO` placeholders (wife's reaction, repo URL, screenshots, team info) break the reading flow and undermine the credibility of a contest submission. The structure is logical, but the missing sections make it feel like a draft.
+
+**Relevance to Theme: 10**  
+This is a perfect fit: a tool built specifically for the author's wife, addressing her daily morning question. The personal motivation is clear, and the practical, self-hosted approach reinforces the "for a friend" spirit.
+
+**Creativity: 7**  
+The idea of combining deterministic rule-based filtering with open-weight vision/language models for outfit selection is thoughtful. The privacy-first design and model benchmarking add depth. However, the core concept (weather-based outfit suggestion) isn't entirely novel, and the execution relies on standard components.
+
+**Technical Execution: 6**  
+The post describes a working system with tests, fallbacks, and a privacy guard, which shows solid engineering. But the lack of a repo link, missing screenshots, and untested local path leave the implementation unverifiable. The limited evaluation on 21 synthetic images also tempers confidence.
+
+**Top 3 Weaknesses**
+
+1. **Incomplete submission** – Many sections are placeholders (`TODO: her real reaction`, `TODO: repo URL`, missing images, missing team info). This is a critical omission for a contest entry and makes it difficult to fully evaluate the work.
+
+2. **Missing human element** – The wife's reaction is explicitly left empty, so the "for a friend" story lacks the personal anecdote that would bring it to life. The reader never learns if the tool actually helped her.
+
+3. **No accessible demo or code** – The demo requires cloning a repo that doesn't exist yet, and there is no live link or screenshot. Readers cannot verify the claims or try the tool themselves, hurting both credibility and engagement.
