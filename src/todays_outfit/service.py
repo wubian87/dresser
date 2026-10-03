@@ -52,6 +52,8 @@ class Settings:
 
 
 class Stylist:
+    interactive_timeout = 45.0      # seconds the "Add clothes" form waits for the vision model before asking you to type
+
     def __init__(self, cfg: Config, wardrobe_path, cache_path="cache/descriptions.json", *, today=None,
                  weather: wx.WeatherService | None = None, readonly: bool | None = None):
         self.cfg = cfg
@@ -331,8 +333,11 @@ class Stylist:
         rec = self.cache.get(h, self.cfg.vision.model)
         if rec:
             return dict(rec["desc"]), None
+        client = self.vision
+        if isinstance(client, LLMClient):     # someone is waiting on a phone: give up sooner than the batch `describe`
+            client = LLMClient(client.ep, client.privacy, timeout=self.interactive_timeout)
         try:
-            desc, secs = describe_image(self.vision, path)
+            desc, secs = describe_image(client, path)
         except PrivacyError as e:
             return None, f"{e}. Fill the fields in by hand."
         except LLMError as e:

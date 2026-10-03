@@ -156,3 +156,14 @@ def test_cli_add_wear_and_wardrobe(tmp_path, monkeypatch, capsys):
     assert main(base + ["wear", "nope"]) == 1
     assert main(base + ["add", str(tmp_path / "missing.png"), "--category", "top", "--no-describe"]) == 1
     assert main(base + ["add", str(p), "--no-describe"]) == 1            # needs --category
+
+
+def test_add_form_uses_a_shorter_vision_timeout_than_batch_describe(tmp_path, monkeypatch):
+    from todays_outfit import service
+    seen = []
+    monkeypatch.setattr(service, "describe_image", lambda client, path: (seen.append(client.timeout), (FakeVision().desc, 0.1))[1])
+    st = make_stylist(tmp_path, demo=False)
+    st.vision = Stylist(st.cfg, st.path, tmp_path / "c.json").vision        # real client class (120 s default)
+    assert st.vision.timeout == 120.0
+    st.stage_photo(photo_bytes())
+    assert seen == [Stylist.interactive_timeout] and Stylist.interactive_timeout < 60
