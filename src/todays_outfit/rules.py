@@ -31,6 +31,7 @@ class Outfit:
     score: float
     notes: list[str] = field(default_factory=list)
     relaxed: bool = False
+    base_score: float = 0.0     # score from the rules alone, before any history adjustment
 
     @property
     def ids(self) -> list[str]:
@@ -98,11 +99,14 @@ def _score(core, outer, shoes, temp_c, rain, occasion, band) -> tuple[float, lis
 
 
 def build_outfits(items: list[dict], temp_c: float, rain: bool, occasion: str,
-                  limit: int = 12) -> list[Outfit]:
+                  limit: int = 12, adjust=None) -> list[Outfit]:
     """Return up to `limit` scored candidate outfits that obey the hard rules.
 
     If the hard rules leave nothing (small wardrobe), constraints are relaxed step by step and
     outfits are flagged `relaxed=True` so the UI can say so honestly.
+
+    `adjust(pieces) -> float` (optional) is added to the score of every candidate that already passed the hard
+    rules (used for wear-history rotation). It can reorder candidates, never admit one the rules rejected.
     """
     if occasion not in OCCASIONS:
         raise ValueError(f"occasion must be one of {OCCASIONS}")
@@ -152,7 +156,8 @@ def build_outfits(items: list[dict], temp_c: float, rain: bool, occasion: str,
                     s, notes = _score(core, outer, sh, temp_c, rain, occasion, band)
                     if level:
                         s -= 2 * level
-                    outs.append(Outfit(pieces, s, notes, relaxed=level > 0))
+                    outs.append(Outfit(pieces, s + (adjust(pieces) if adjust else 0.0), notes, relaxed=level > 0,
+                                       base_score=s))
         if outs:
             return _diverse_top(sorted(outs, key=lambda o: -o.score), limit)
     return []

@@ -42,6 +42,7 @@ class Config:
     text: Endpoint
     privacy: str = "off"
     language: str = "English"
+    weather: dict = field(default_factory=dict)   # optional [weather]: city = "..." or lat/lon (+ name); default none = manual
 
 
 def _endpoint(kind: str, section: dict, llm: dict) -> Endpoint:
@@ -74,6 +75,7 @@ def load_config(path: str | os.PathLike | None = None, privacy: str | None = Non
         text=_endpoint("text", data.get("text", {}), llm),
         privacy=privacy or llm.get("privacy", "off"),
         language=llm.get("language", "English"),
+        weather=dict(data.get("weather", {})),
     )
     if cfg.privacy not in PRIVACY_MODES:
         raise ValueError(f"privacy must be one of {PRIVACY_MODES}")

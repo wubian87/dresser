@@ -230,7 +230,7 @@ def main():
         c.done(it["id"]).save(OUT / f"{it['id']}.png", optimize=True)
         wardrobe.append({"id": it["id"], "image": f"{it['id']}.png"})
         truth[it["id"]] = {k: it[k] for k in ("cat", "type", "color", "warmth", "formality", "season", "material")}
-    (OUT / "wardrobe.json").write_text(json.dumps({"_note": "EXAMPLE DATA: synthetic illustrations, not real clothes", "items": wardrobe}, indent=2))
+    (OUT / "wardrobe.json").write_text(json.dumps({"_note": "EXAMPLE DATA: synthetic illustrations, not real clothes", "_readonly": True, "items": wardrobe}, indent=2))
     (OUT / "ground_truth.json").write_text(json.dumps(truth, indent=2))
     # contact sheet for docs
     cols = 5
