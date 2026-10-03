@@ -1,6 +1,8 @@
-# Today's Outfit
+# Dresser
 
-**Your wardrobe, finally in use: it remembers what you wore, rotates the pieces you forget, and picks today's outfit from the clothes you already own.**
+Dresser, a private wardrobe that picks today's outfit so you don't have to think.
+
+It remembers what you wore, rotates the pieces you forget, and picks only from the clothes you already own.
 
 <p>
 <img src="docs/screenshot_today.png" width="230" alt="Today: one quiet weather line, one card with the pick, Wear this / Show another, three tabs"> 
@@ -9,9 +11,9 @@
 </p>
 <p><img src="docs/screenshot_add_link.png" width="230" alt="Add clothes > Paste a link: a real public product page (Allbirds) read, picture shown, fields pre-filled for review"></p>
 
-*Phone-sized screenshots of the real web page (headless Chrome, 390 px wide) on the bundled **example** wardrobe (drawings) with an **invented** two-week wear log. The forecast, the model pick and the product-page import are real calls made on 2026-10-04 (the screenshot run's pick differs from the command-line run below: the model's choice varies from run to run). Left to right: Today, Wardrobe (Autumn room), Settings (Details opened), and Add clothes > Paste a link on a real public shop page.*
+*Phone-sized screenshots of the real web page (headless Chrome, 390 px wide) on the bundled **example** wardrobe (drawings) with an generated two-week wear log. The forecast, the model pick and the product-page import are real calls made on 2026-10-04 (the screenshot run's pick differs from the command-line run below: the model's choice varies from run to run). Left to right: Today, Wardrobe (Autumn room), Settings (Details opened), and Add clothes > Paste a link on a real public shop page.*
 
-A real run on the command line (2026-10-04, `todays-outfit --demo today --occasion casual`; all runs, unedited, in [`docs/today_run.txt`](docs/today_run.txt)). It rains all day, and the rain rule keeps canvas and suede shoes out, which is why the example wardrobe's yellow rain boots are picked:
+A real run on the command line (2026-10-04, `dresser --demo today --occasion casual`; all runs, unedited, in [`docs/today_run.txt`](docs/today_run.txt)). It rains all day, and the rain rule keeps canvas and suede shoes out, which is why the example wardrobe's yellow rain boots are picked:
 
 ```
 Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: casual, room: autumn
@@ -27,17 +29,19 @@ Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: casual, room: autumn
 
 The model wrote the reason. The "Rotation:" line is **not** model text: it is computed from the wear log, so it is only ever shown when it is true.
 
+## Where it comes from
+
+My wife is the everyday user of a wardrobe app (yichu) that I built for her earlier; we designed it together. This repository is **Dresser**, newly written for this challenge. The original app is only the inspiration and the source of the requirements; no code or private data from it is in this repo.
+
 ## The problem it targets
 
-This is the problem I set out to solve, stated as a design hypothesis (a starting assumption, not a measurement and not anyone's quote): every morning you stand in front of a full closet, wear the same few favourites, half of the clothes are never worn, picking takes time, and you cannot remember what you wore last time. So the **wardrobe is the hero**, not a one-off question-and-answer box:
+This is the problem Dresser is designed around. It is an assumption I started from, not a measurement and not anyone's quote: every morning you stand in front of a full closet, wear the same few favourites, many of the clothes stay unworn, picking takes time, and you cannot remember what you wore last time. So the **wardrobe is the centre**, not a one-off question-and-answer box:
 
 1. Your clothes live in the app (photo + editable description), shown as a grid with how long each piece has been sitting unworn.
 2. One tap on "Wear this" writes the day into a local history. Nothing else has to be remembered.
 3. The page opens on a **Today** card: the day's forecast is fetched automatically, and the pick avoids what you just wore and gently pulls long-unworn pieces back in.
 
-I built it for my wife, from the wardrobe she already has. It is not a shopping app and never suggests buying anything.
-
-<!-- OPTIONAL (owner): add a "## What she said" section here ONLY with her real words, good and bad, after she has tried it. Otherwise leave it out. -->
+It is not a shopping app and never suggests buying anything.
 
 ## What it does
 
@@ -45,7 +49,7 @@ The app is one calm column with three tabs. Everything that is not about choosin
 
 - **Today.** A quiet weather line on top (*Shanghai 19-22 °C, rain 100% · Autumn*; tap it to override the temperature or rain by hand), four occasion words (commute, casual, date, formal), and one card: the day's pick with a one-sentence reason, one computed rotation line, **Wear this** and **Show another**. *Wear this* writes the day to `history.json` (undo is one tap). *Show another* shows the next candidate and remembers that you passed on that exact combination (ranked lower for about two weeks, a nudge not a ban).
 - **Wardrobe.** The *current season room* only (below): a two-column grid with the quiet text "not worn in N days", category pills, a collapsible tag filter and sort. Tap a piece to edit it (fields, rooms, tags), log it as worn today, or delete it. The round **+** opens Add clothes.
-- **Add clothes.** **Photos**: choose several from the gallery or take one; a vision model pre-fills category, type, colour, material, warmth, formality; **you review every field before saving**. **Paste a link**: a public product page (below). If the privacy mode forbids sending the photo, or the model is unreachable (the form waits 75 s), the form opens with whatever could be filled in and you type the rest. CLI: `todays-outfit add photo1.jpg photo2.jpg`.
+- **Add clothes.** **Photos**: choose several from the gallery or take one; a vision model pre-fills category, type, colour, material, warmth, formality; **you review every field before saving**. **Paste a link**: a public product page (below). If the privacy mode forbids sending the photo, or the model is unreachable (the form waits 75 s), the form opens with whatever could be filled in and you type the rest. CLI: `dresser add photo1.jpg photo2.jpg`.
 - **Settings.** Season room (Automatic, or Spring/Summer/Autumn/Winter), city for the automatic forecast, and the folded Details (privacy mode, models and hosts, pieces ready, cache, data folder, version).
 - **Automatic weather.** Set a city once (Open-Meteo geocoding). Offline it shows the last forecast saved for today, or asks you to type a temperature. Still the *input* to the pick inside the room.
 - **Still there:** rule filter first, model second, fallback to rules on any failure; three privacy modes; one-line cloud/local switch; the yichu importer.
@@ -54,7 +58,7 @@ The app is one calm column with three tabs. Everything that is not about choosin
 
 The wardrobe is split into Spring, Summer, Autumn and Winter rooms, like the old yichu app that kept winter and summer apart. **Only the current room is shown in Wardrobe and used for choosing outfits**; switching the season in Settings switches the room (the other pieces are still there, the Wardrobe header says "N in other rooms").
 
-- **Which room is current:** *Automatic* by default, suggested from today's date (meteorological seasons: Mar-May spring, Jun-Aug summer, Sep-Nov autumn, Dec-Feb winter), flipped when your city's latitude is negative (southern hemisphere; with no city it assumes north). Or pick a season yourself; that choice is saved and wins until you set Automatic again. CLI: `todays-outfit season [spring|summer|autumn|winter|auto]`, `--season X` or `--season all` on `today`, `suggest`, `wardrobe`.
+- **Which room is current:** *Automatic* by default, suggested from today's date (meteorological seasons: Mar-May spring, Jun-Aug summer, Sep-Nov autumn, Dec-Feb winter), flipped when your city's latitude is negative (southern hemisphere; with no city it assumes north). Or pick a season yourself; that choice is saved and wins until you set Automatic again. CLI: `dresser season [spring|summer|autumn|winter|auto]`, `--season X` or `--season all` on `today`, `suggest`, `wardrobe`.
 - **Which rooms a piece is in:** from warmth, by a fixed rule table, then two keyword overrides. A piece can be in several rooms; you can edit the rooms of every piece.
 
 | Warmth (1 light - 5 heavy) | Rooms |
@@ -73,7 +77,7 @@ The vision model's own "season" guess is deliberately ignored: the rooms follow 
 
 Every piece gets suggested tags (lowercase words such as `work`, `casual`, `rain-ready`, `layering`, `neutral`).
 
-1. **Stage 1, deterministic, always on** ([`tags.py`](src/todays_outfit/tags.py)): from formality (1-2 `casual`, 3 `smart-casual`, 4-5 `work`, 5 `formal`, dresses/heels/skirts at 4+ `dressy`), rain rules (rain-proof shoes and outer layers `rain-ready`; suede/canvas-type shoes `not-for-rain`), category/type (`layering` for outer layers, cardigans, hoodies...), colour (`neutral` or `colourful`), warmth (`warm` at 4+, `light`), material/look (`denim`, `knit`, `wool`, `leather`, `linen`, `silk`, `cotton`, `sporty`).
+1. **Stage 1, deterministic, always on** ([`tags.py`](src/dresser/tags.py)): from formality (1-2 `casual`, 3 `smart-casual`, 4-5 `work`, 5 `formal`, dresses/heels/skirts at 4+ `dressy`), rain rules (rain-proof shoes and outer layers `rain-ready`; suede/canvas-type shoes `not-for-rain`), category/type (`layering` for outer layers, cardigans, hoodies...), colour (`neutral` or `colourful`), warmth (`warm` at 4+, `light`), material/look (`denim`, `knit`, `wool`, `leather`, `linen`, `silk`, `cotton`, `sporty`).
 2. **Stage 2, optional model suggestions:** on the piece's form, **More ideas from the model** asks the text model for up to 5 *new* short tags (never repeating stage 1). They appear as dashed chips; tap to accept, tap an accepted chip to remove it; you can also type your own. Stage 2 respects the privacy mode and never runs unless you ask.
 3. **Use:** filter the Wardrobe by tag. The style step uses tags lightly: a piece tagged for the chosen occasion (`work` for commute, `casual`, `dressy` for date, `formal`) adds +0.25 to an outfit's rule score (at most +1.0 per outfit), and the first six tags go into the model's prompt. Tags never override the weather or dress-code rules.
 
@@ -82,7 +86,7 @@ Every piece gets suggested tags (lowercase words such as `work`, `casual`, `rain
 In **Add clothes > Paste a link**: the server fetches the public page, reads `og:image`, `og:title`, `og:description` and any JSON-LD `Product` data (name, colour, material, images), downloads the main picture, sends that picture (plus the page title as a hint) to the vision model, and opens the usual review form pre-filled. You edit, then save. The page's title becomes the piece's name.
 
 - **Privacy:** `local-only` refuses outright (no web request is made); `images-local` fetches the page but does not send the picture to a cloud vision model: the fields are filled from the page title by simple keyword rules and the form says so. If the vision model times out, the same title-only fallback applies.
-- **Safety:** only `http`/`https`, ports 80/443/8080/8443, no credentials in the URL; the host is resolved and every address must be public (loopback, private, link-local, multicast, reserved and IPv4-mapped IPv6 are refused); each redirect (at most 4) is re-checked; 10 s timeout, 2 MB page cap, 12 MB picture cap; honest user agent (`TodaysOutfit/0.3 ... single page fetch`), no cookies, no login, no JavaScript. Known gap: the address is checked and then the HTTP client resolves again, so a malicious DNS server could in theory answer differently the second time (DNS rebinding). For a single-user app on localhost I accepted that; do not expose this endpoint to untrusted users.
+- **Safety:** only `http`/`https`, ports 80/443/8080/8443, no credentials in the URL; the host is resolved and every address must be public (loopback, private, link-local, multicast, reserved and IPv4-mapped IPv6 are refused); each redirect (at most 4) is re-checked; 10 s timeout, 2 MB page cap, 12 MB picture cap; honest user agent (`Dresser/0.3 ... single page fetch`), no cookies, no login, no JavaScript. Known gap: the address is checked and then the HTTP client resolves again, so a malicious DNS server could in theory answer differently the second time (DNS rebinding). For a single-user app on localhost I accepted that; do not expose this endpoint to untrusted users.
 - **It only works on pages that put the product picture in the HTML.** Real attempts on 2026-10-03 from my machine (all 16 URLs, one row each with the reason, are in [`docs/link_import_probe.md`](docs/link_import_probe.md); the raw output of the last probe is in [`docs/link_import_run.txt`](docs/link_import_run.txt); reproduce with `tools/link_import_probe.py URL...`):
 
 | Page | Result |
@@ -94,7 +98,7 @@ In **Add clothes > Paste a link**: the server fetches the public page, reads `og
 | zara.com | refused by the shop: HTTP 403 |
 | patagonia.com | page loads but has no picture in the HTML: "build the page with JavaScript" message |
 | taobao.com / tmall.com | no product picture in the HTML (JavaScript or login): clear message, upload a screenshot instead |
-| xiaohongshu.com | a made-up note id returned a "page gone" page whose only picture is a 4.5 KB logo: rejected as "tiny, not a product photo". **I did not have a real Xiaohongshu post link, so a real post is untested.** |
+| xiaohongshu.com | an invented note id returned a "page gone" page whose only picture is a 4.5 KB logo: rejected as "tiny, not a product photo". **I did not have a real Xiaohongshu post link, so a real post is untested.** |
 | muji.com, gap.com, l.l.bean, asos.com, uniqlo.com/us, hm.com, bonobos.com | HTTP 403 / no picture in HTML / no answer within 10 s from my network / my box's DNS answered a blocked address (H&M) / my guessed URL was a 404 (Bonobos); none usable |
 
 So: simple server-rendered shops work; big chains and the Chinese marketplaces mostly do not. When it fails the sheet shows the reason and an **Upload a picture instead** button. The page title also becomes the name, which is often a long marketing string ("The Box-Cut Tee in Essential Cotton | White | No Pocket - XXS"): shorten it in the form.
@@ -102,22 +106,22 @@ So: simple server-rendered shops work; big chains and the Chinese marketplaces m
 ## Try it
 
 ```bash
-git clone https://github.com/wubian87/wardrobe-stylist && cd wardrobe-stylist
+git clone https://github.com/wubian87/dresser && cd dresser
 ./demo.sh        # or: make demo
 ```
 
-This installs into a local `.venv`, runs the tests, and prints suggestions from the **bundled example wardrobe** (21 synthetic illustrations in `sample_wardrobe/`, with the vision model's real descriptions already cached; the demo history is made from the current season room), including one run on a writable demo copy with a **synthetic** 14-day history so the rotation line shows. It works **offline and without an API key**: with no key the app falls back to the deterministic rules and says so.
+This installs into a local `.venv`, runs the tests, and prints suggestions from the **bundled example wardrobe** (21 drawn illustrations in `sample_wardrobe/`, with the vision model's real descriptions already cached; the demo history is made from the current season room), including one run on a writable demo copy with a **generated** 14-day history so the rotation line shows. It works **offline and without an API key**: with no key the app falls back to the deterministic rules and says so.
 
 ```bash
 export SILICONFLOW_API_KEY=...             # your own key; the app only ever reads this variable
-python -m todays_outfit --demo serve       # the page on http://127.0.0.1:8000 with the example wardrobe + synthetic history (try wearing/adding)
-python -m todays_outfit serve              # YOUR wardrobe in ./data (created empty): open Wardrobe, tap + and photograph what you own (or paste a product link)
-python -m todays_outfit serve --host 0.0.0.0   # reachable from a phone on your LAN (there is no login: only do this on a network you trust)
+python -m dresser --demo serve       # the page on http://127.0.0.1:8000 with the example wardrobe + generated history (try wearing/adding)
+python -m dresser serve              # YOUR wardrobe in ./data (created empty): open Wardrobe, tap + and photograph what you own (or paste a product link)
+python -m dresser serve --host 0.0.0.0   # reachable from a phone on your LAN (there is no login: only do this on a network you trust)
 ```
 
 State lives in plain files next to `wardrobe.json` (default `./data/`, git-ignored): `images/`, `history.json`, `settings.json` (last occasion, city), `weather_cache.json`. The bundled `sample_wardrobe/` is read-only: the app refuses to write into it (use `--demo`).
 
-CLI: `todays-outfit today` (auto forecast), `today --temp 14 --rain`, `wear <ids>`, `wardrobe` (current room; last worn / count / badge), `season [name|auto]`, `add <photos>`, `suggest --temp 12 --rain --occasion commute [--season autumn|--season all] [--no-rotation]`.
+CLI: `dresser today` (auto forecast), `today --temp 14 --rain`, `wear <ids>`, `wardrobe` (current room; last worn / count / badge), `season [name|auto]`, `add <photos>`, `suggest --temp 12 --rain --occasion commute [--season autumn|--season all] [--no-rotation]`.
 
 ## How it works (short)
 
@@ -136,7 +140,7 @@ Scores come from the rules (typical good candidates are within about 1-3 points 
 
 ## Does rotation do anything? A simulation, not a study
 
-Simulation on the **autumn room** of the example wardrobe (19 of the 21 pieces; the simulated weather is autumn-like and the app only styles from the current room), rules only (no model, no network), 50 random runs per setting: 14 days of a **made-up** "habit user" (leans on one favourite per category), then 14 more days of random autumn-like weather under three policies that all start from that same history. [`tools/simulate_rotation.py`](tools/simulate_rotation.py) reproduces it exactly; full tables with min-max ranges in [`docs/rotation_simulation.md`](docs/rotation_simulation.md). Means over 50 runs (the small occasion-tag nudge is included since tags are on by default):
+Simulation on the **autumn room** of the example wardrobe (19 of the 21 pieces; the simulated weather is autumn-like and the app only styles from the current room), rules only (no model, no network), 50 random runs per setting: 14 days of a **simulated** "habit user" (leans on one favourite per category), then 14 more days of random autumn-like weather under three policies that all start from that same history. [`tools/simulate_rotation.py`](tools/simulate_rotation.py) reproduces it exactly; full tables with min-max ranges in [`docs/rotation_simulation.md`](docs/rotation_simulation.md). Means over 50 runs (the small occasion-tag nudge is included since tags are on by default):
 
 | 14 days, 19 pieces | habit user (mild) | habit user (strong) | app top pick, no rotation | app top pick, **with rotation** |
 |---|---|---|---|---|
@@ -146,7 +150,7 @@ Simulation on the **autumn room** of the example wardrobe (19 of the 21 pieces; 
 | Days in an outfit already worn in the window | 3.7 | 5.0 | 6.5 | **1.6** |
 | Mean rule score of the outfit worn | 10.3 | 10.3 | 10.7 | 10.0 |
 
-Read it carefully: the "no rotation" arm takes the same best outfit whenever the weather repeats, which is why it repeats so much; one piece (the black flats, which the vision model labelled a belt) was never usable in any run, so 18 of 19 is the ceiling; rotation costs about 0.7 rule-score points on average (the price of not repeating); and the made-up habit user did *not* leave half the closet unworn (it wears 70-75% of the pieces in a fortnight), so this says **nothing** about how much of a real closet sits unused or whether a real person would follow the picks. (The with-rotation column is the mild-habit run; the strong-habit run gave 16.8 / 4.3 / 0.2 / 1.5.)
+Read it carefully: the "no rotation" arm takes the same best outfit whenever the weather repeats, which is why it repeats so much; one piece (the black flats, which the vision model labelled a belt) was never usable in any run, so 18 of 19 is the ceiling; rotation costs about 0.7 rule-score points on average (the price of not repeating); and the simulated habit user wore 70-75% of the pieces in a fortnight anyway (weather and the rules already force some variety), so this says **nothing** about how much of a real closet sits unused or whether a real person would follow the picks. (The with-rotation column is the mild-habit run; the strong-habit run gave 16.8 / 4.3 / 0.2 / 1.5.)
 
 
 ## Cloud or local: one line
@@ -197,36 +201,34 @@ I picked 30B-A3B: best warmth/colour numbers and only ~1.3 s slower than the 8B.
 
 A whole `suggest` call (rules + one model request) took about 3 s wall-clock (four runs in 11-12 s).
 
-## Honest limitations
+## Limitations
 
-- **Everything measured is on synthetic data.** The 21 example "clothes" are my drawings, the 14-day histories are generated, and the rotation numbers are a simulation with a made-up habit user who always accepts the top pick. No real wardrobe, photo set or person has been measured. Real flat-lays and phone photos are harder than my drawings; expect lower accuracy.
-- **The pain point is a hypothesis.** "Half the closet is never worn, picking takes time, can't remember what was worn" is what the design assumes. I have no data that it holds for any particular person, and I do not claim that the app fixes it.
-- **The vision model misreads things.** On the example set it called the denim jacket and the trench coat "blazers", the black flats "a belt" (so they are never used) and the tan suede loafers "a brown sandal". Mis-categorised pieces silently drop out or land in odd combinations. That is why the Add form shows every field for editing and every field can be overridden in `wardrobe.json`. During this build the vision endpoint was slow at times (a single photo took about 14 s once, and one real end-to-end test hit its 120 s timeout and passed on a rerun); the Add form therefore gives up after 75 s and lets you type. While building the link import the vision endpoint was slower still for a while (a single photo took 30 s, and two attempts at the link screenshot hit the form's timeout before one succeeded), which is why the title-only fallback exists.
-- **Language-model reasons are fluent, not guaranteed true.** Material words ("silk", "waterproof") are guesses. The grounding check only catches garments named in a reason that are not in the outfit, and the history check only catches a fixed list of phrases; neither checks taste. (The first screen's example says ankle boots "provide waterproofing": that is the model's claim, not verified.)
-- **The rules still have little taste.** They respect weather and dress code but accepted khaki shorts with a jacket at 14 °C and once paired a shirt with shorts and heels for a date.
-- **Rotation only knows what you tap.** If you do not log a day, the log is wrong, and "not worn in N days" with it. A piece that has never been logged is dated from when logging began.
-- **Link import is narrow.** It reads only what a shop puts in its HTML. Taobao, Tmall, Xiaohongshu, JD and similar need JavaScript or a login (not attempted, by design); many Western chains return HTTP 403 to non-browser clients (I send an honest user agent and do not pretend to be a browser). The product name may be a long marketing title, and the vision model sees the shop's styled photo (model on a person, dark background), which is harder than a flat-lay. DNS rebinding is not fully mitigated (see above). Real tests: 4 of the 16 pages I tried worked (table above and `docs/link_import_probe.md`; a few failures are my network or guessed URLs, not the shops).
-- **The season rooms and tags are rules I wrote, not learned.** A piece the vision model gives warmth 3 lands in spring, autumn and winter whether or not that is right for your climate; the room table, the tag rules and the +0.25 tag nudge are untuned. If the vision model misreads a type (the "brown sandal" that is a loafer), the keyword override puts it in the wrong rooms until you edit it. Model tag suggestions are fluent guesses (a real call for the beige blazer returned `professional`, `business-casual`, `smart`, `versatile`, `tailored`; for the navy dress it added `v-neck`, which the app cannot know; four rows in [`docs/tag_suggestions_run.md`](docs/tag_suggestions_run.md), reproduce with `tools/tag_check.py`): useful as prompts, not as facts.
-- **The weights and thresholds are untuned** (rotation penalties, 50% rain threshold, 7-day badge, midpoint temperature) and fixed in code, not settings.
+- **Measured on example data only.** The 21 example clothes are my drawings, the 14-day histories are generated, and the rotation numbers come from a simulation in which a simulated user always accepts the top pick. Real phone photos are harder than drawings, so expect lower accuracy.
+- **The problem statement is an assumption.** I have no data that "many clothes stay unworn and picking takes time" holds for any particular person, and I do not claim the app fixes it.
+- **The vision model misreads things.** On the example set it called the denim jacket and the trench coat "blazers", the black flats "a belt" (so they are never used) and the tan suede loafers "a brown sandal". That is why the Add form shows every field for editing. The vision endpoint was sometimes slow (14-30 s for one photo, and one end-to-end test hit its 120 s timeout once); the form gives up after 75 s and lets you type.
+- **Model reasons are fluent, not guaranteed true.** Material words ("silk", "waterproof") are guesses. The checks only catch garments that are not in the outfit and a fixed list of history phrases; they do not judge taste.
+- **The rules have little taste.** They respect weather and dress code but accepted khaki shorts with a jacket at 14 °C and once paired a shirt with shorts and heels for a date. Season rooms, tags and all weights and thresholds are rules I wrote, fixed in code and untuned.
+- **Rotation only knows what you tap.** If you do not log a day, the log (and "not worn in N days") is wrong.
+- **Link import is narrow.** It reads only what a shop puts in its HTML; many shops answer 403 or need JavaScript or a login (4 of the 16 pages I tried worked; see the table above). DNS rebinding is not fully mitigated (see above).
+- **Tested on one real phone, with gaps.** I ran the page on a Samsung phone (Chrome, dark mode) in rules-only mode, so model-written text was not tried on the phone; photo upload, the camera button and light mode were not tried there. Other tests ran in headless Chrome and with mocked or real HTTP.
+- **Local models: untested** (see the table above). The Open-Meteo free tier is rate-limited (I got one 429); the retry and the manual fallback exist because of it.
 - **No login, one user.** Anyone who can reach the port can read and change the wardrobe; the default binds to localhost.
-- **Tested in headless Chrome (phone-sized viewport; the dark colour scheme only on the Today screen) and with mocked/real HTTP, not on a real phone.** The camera button is a plain `<input type=file capture>`; I have not seen it on a device.
-- **Local models: untested here** (see the table above). The Open-Meteo free tier is rate-limited (I got a 429 once while taking screenshots; the retry and the manual fallback exist because of it).
-- The yichu importer's default table and column names are guesses and have **not** been run against a real yichu database.
+- The yichu importer's default table and column names are guesses and have not been run against a real yichu database.
 
 ## Bring your own wardrobe
 
-Normally: `python -m todays_outfit serve`, tap **+** in Wardrobe, or `todays-outfit add photos/*.jpg`. `wardrobe.json` is plain JSON, `{"items": [{"id": "...", "image": "images/x.jpg", "category": "top", "type": "t-shirt", "color": "white", ...}]}`; an item that only has `id` and `image` gets its fields from the cached vision description, and any field you write overrides it (`"warmth": 4`, `"name": "Mum's camel coat"`). To import from a "yichu"-style self-hosted wardrobe app (FastAPI + SQLite + uploads folder, which is my own), see [`src/todays_outfit/sources/yichu.py`](src/todays_outfit/sources/yichu.py):
+Normally: `python -m dresser serve`, tap **+** in Wardrobe, or `dresser add photos/*.jpg`. `wardrobe.json` is plain JSON, `{"items": [{"id": "...", "image": "images/x.jpg", "category": "top", "type": "t-shirt", "color": "white", ...}]}`; an item that only has `id` and `image` gets its fields from the cached vision description, and any field you write overrides it (`"warmth": 4`, `"name": "Mum's camel coat"`). To import from a "yichu"-style self-hosted wardrobe app (FastAPI + SQLite + uploads folder; it is the app I wrote earlier for my wife), see [`src/dresser/sources/yichu.py`](src/dresser/sources/yichu.py):
 
 ```bash
-python -m todays_outfit import-yichu --db db.sqlite --uploads ./uploads --table items --image-col image_path --out my/wardrobe.json
-python -m todays_outfit --wardrobe my/wardrobe.json describe
+python -m dresser import-yichu --db db.sqlite --uploads ./uploads --table items --image-col image_path --out my/wardrobe.json
+python -m dresser --wardrobe my/wardrobe.json describe
 ```
 
-The database is opened read-only; photos are referenced in place (deleting such a piece in the app never deletes the original photo; only photos the app stored itself in `images/` are removed). For this contest I did not use any private photos and the adapter is tested only with a synthetic SQLite file.
+The database is opened read-only; photos are referenced in place (deleting such a piece in the app never deletes the original photo; only photos the app stored itself in `images/` are removed). For this contest I did not use any private photos and the adapter is tested only with a generated SQLite file.
 
 ## Tests
 
-`pytest` runs 202 offline tests (rule filter, JSON parsing, grounding and history-claim checks, fallback paths, privacy guard, config switch, importer, wear history, rotation, simulation, weather with mocked HTTP incl. cache/offline/429, photo re-encoding, add/edit/delete, CLI, web API incl. upload and read-only mode, **season rooms** (date/hemisphere, rule table, room filtering of the grid and of styling, saved override), **tags** (stage-1 table, junk input, occasion nudge, stage 2 with mocked models: parse, dedupe, failure, privacy), **link import** with mocked shop pages (og/JSON-LD parsing, redirects, size cap, 403/404/429/login/JS-only pages, tiny-logo rejection, 25 SSRF cases, privacy modes, title-only fallback, API errors) and the structure of the page) plus 3 real SiliconFlow end-to-end tests (describe a photo, style an outfit, suggest tags) that are skipped without a key. Last run (2026-10-04): **205 passed** (log: [`docs/test_run.txt`](docs/test_run.txt)); an earlier run in the same session failed only the real describe test on a 120 s ReadTimeout from the vision endpoint, which is why that test now waits up to 170 s and retries once. About 6,200 lines of Python and HTML including tests and tools. `docs/examples.txt`, `docs/today_run.txt`, `docs/link_import_run.txt` and the four screenshots come from real runs (real Open-Meteo, real models, real shop pages); `tools/screenshots.py` and `tools/link_import_probe.py` reproduce them.
+`pytest` runs 207 offline tests (rule filter, JSON parsing, grounding and history-claim checks, fallback paths, privacy guard, config switch, importer, wear history, rotation, simulation, weather with mocked HTTP incl. cache/offline/429, photo re-encoding, add/edit/delete, CLI, web API incl. upload and read-only mode, **season rooms** (date/hemisphere, rule table, room filtering of the grid and of styling, saved override), **tags** (stage-1 table, junk input, occasion nudge, stage 2 with mocked models: parse, dedupe, failure, privacy), **link import** with mocked shop pages (og/JSON-LD parsing, redirects, size cap, 403/404/429/login/JS-only pages, tiny-logo rejection, 25 SSRF cases, privacy modes, title-only fallback, API errors) and the structure of the page) plus 3 real SiliconFlow end-to-end tests (describe a photo, style an outfit, suggest tags) that are skipped without a key. Last run (2026-10-04): **205 passed** (log: [`docs/test_run.txt`](docs/test_run.txt)); an earlier run in the same session failed only the real describe test on a 120 s ReadTimeout from the vision endpoint, which is why that test now waits up to 170 s and retries once. About 6,200 lines of Python and HTML including tests and tools. `docs/examples.txt`, `docs/today_run.txt`, `docs/link_import_run.txt` and the four screenshots come from real runs (real Open-Meteo, real models, real shop pages); `tools/screenshots.py` and `tools/link_import_probe.py` reproduce them.
 
 ## Credits and license
 

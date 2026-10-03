@@ -1,4 +1,4 @@
-# Real run, 2026-10-03 20:38 Beijing time (UTC+8): example wardrobe (synthetic drawings), real SiliconFlow models, manual weather, one run per season room.
+# Real run, 2026-10-03 20:38 Beijing time (UTC+8): example wardrobe (example drawings), real SiliconFlow models, manual weather, one run per season room.
 $ todays-outfit suggest --temp 12 --rain --occasion commute --season autumn
 commute, 12 °C, rain  ->  model mode (12 rule-approved candidates)
 
