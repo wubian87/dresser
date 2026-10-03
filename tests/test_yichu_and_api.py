@@ -31,31 +31,16 @@ def test_import_rejects_sql_injection_identifiers(tmp_path):
         import_yichu("x", "y", "z", table="items; drop table items")
 
 
-def test_web_api_rules_fallback(monkeypatch, items):
+def test_web_api_rules_fallback(tmp_path):
     """API works end to end with a model that always fails: rules-only fallback, never a 500."""
-    class Dummy:
-        def __init__(self):
-            self.items = [dict(i, image_path=__file__, desc={}) for i in items]
-            self.cfg = type("C", (), {"vision": type("E", (), {"model": "v", "base_url": "http://localhost/v1"})(),
-                                      "text": type("E", (), {"model": "t", "base_url": "http://localhost/v1"})(), "privacy": "off"})()
-
-        def described(self):
-            return self.items
-
-        def undescribed(self):
-            return []
-
-        def suggest(self, t, r, o):
-            from todays_outfit.style import suggest
-            res = suggest(self.items, t, r, o, None)   # no model -> rules-only path
-            res["undescribed"] = 0
-            return res
-
-    api._state["s"] = Dummy()
-    c = TestClient(api.app)
-    assert c.get("/api/status").json()["occasions"] == ["commute", "casual", "date", "formal"]
-    r = c.post("/api/suggest", json={"temp": 14, "rain": True, "occasion": "commute"})
-    assert r.status_code == 200 and r.json()["mode"] == "rules" and r.json()["suggestions"]
-    assert c.post("/api/suggest", json={"temp": 14, "rain": True, "occasion": "beach"}).status_code == 422
-    assert c.get("/").status_code == 200
-    api._state.clear()
+    from conftest import make_stylist
+    api._state["s"] = make_stylist(tmp_path)          # text model returns garbage -> rules fallback
+    try:
+        c = TestClient(api.app)
+        assert c.get("/api/status").json()["occasions"] == ["commute", "casual", "date", "formal"]
+        r = c.post("/api/suggest", json={"temp": 14, "rain": True, "occasion": "commute"})
+        assert r.status_code == 200 and r.json()["mode"] == "rules" and r.json()["suggestions"]
+        assert c.post("/api/suggest", json={"temp": 14, "rain": True, "occasion": "beach"}).status_code == 422
+        assert c.get("/").status_code == 200
+    finally:
+        api._state.clear()
