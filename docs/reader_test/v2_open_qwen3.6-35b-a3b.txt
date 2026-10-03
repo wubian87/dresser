@@ -1,7 +1,0 @@
-model: Qwen/Qwen3.6-35B-A3B
-mode: open
-
-(a) The author built a CLI/web tool that suggests outfits based on weather and occasion, using hard-coded rules (like no suede in rain) to filter items before an AI picks from the remaining valid options.
-(b) It’s for developers who like building niche utility tools, specifically those interested in the intersection of deterministic logic and LLMs.
-(c) Yes, because the "rules first, AI second" architecture is a practical, trustworthy approach to a common problem, and the personal context adds nice flavor.
-(d) The screenshot shows "example drawings" rather than real photos, which makes it feel slightly less grounded than a real-world app, and the title's specific temperature detail is a bit niche for a general hook.
