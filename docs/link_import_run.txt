@@ -1,0 +1,52 @@
+/workspace/wardrobe-stylist/.venv/lib/python3.13/site-packages/PIL/Image.py:1136: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+link import probe, 2026-10-03, privacy=off, vision=Qwen/Qwen3-VL-30B-A3B-Instruct
+
+WORKED  https://www.allbirds.com/products/mens-tree-runners  (16.3s)
+  page title : Men's Tree Runner - Jet Black (White Sole)
+  filled     : shoes / sneaker / black / eucalyptus fiber / warmth 2 / formality 2
+  rooms      : spring, summer, autumn
+  tags       : casual, neutral, sporty
+  vision note: vision model read the picture
+
+WORKED  https://www.everlane.com/products/womens-organic-cotton-box-cut-tee-white  (13.6s)
+  page title : The Box-Cut Tee in Essential Cotton | White | No Pocket - XXS
+  filled     : top / t-shirt / white / cotton / warmth 1 / formality 2
+  rooms      : spring, summer
+  tags       : casual, neutral, light, cotton
+  vision note: vision model read the picture
+
+WORKED  https://www.uniqlo.com/jp/ja/products/E422992-000  (17.6s)
+  page title : ユニクロ公式 | クルーネックTシャツ(男女兼用)
+  filled     : top / t-shirt / light gray / cotton / warmth 2 / formality 2
+  rooms      : spring, summer, autumn
+  tags       : casual, neutral, light, cotton
+  vision note: vision model read the picture
+
+WORKED  https://www.nike.com/t/air-force-1-07-mens-shoes-jBrhbr/CW2288-111  (21.1s)
+  page title : Nike Air Force 1 '07 Men's Shoes - White/White - Size 5
+  filled     : shoes / sneakers / white / leather / warmth 2 / formality 2
+  rooms      : spring, summer, autumn
+  tags       : casual, neutral, leather, sporty
+  vision note: vision model read the picture
+
+FAILED  https://www.zara.com/us/en/linen-blend-shirt-p00000000.html
+  kind=blocked  (0.2s)
+  message shown to the user: www.zara.com refused the automated request (HTTP 403).
+
+FAILED  https://www.patagonia.com/product/mens-better-sweater-fleece-jacket/25528.html
+  kind=no-data  (0.3s)
+  message shown to the user: I found no product picture in the HTML of www.patagonia.com. Many shops build the page with JavaScript, which this tool does not run. Save the product image and upload it instead.
+
+FAILED  https://item.taobao.com/item.htm?id=1
+  kind=no-data  (0.8s)
+  message shown to the user: I found no product picture in the HTML of item.taobao.com. Shops like this render products with JavaScript or require a login. Save the product image and upload it instead.
+
+FAILED  https://www.xiaohongshu.com/explore/64a000000000000000000000
+  kind=no-data  (2.7s)
+  message shown to the user: The only picture on that page is tiny (a logo or placeholder, not a product photo).
+
+FAILED  http://127.0.0.1:8000/api/status
+  kind=refused  (0.0s)
+  message shown to the user: Only the standard web ports (80, 443, 8080, 8443) are accepted.
+

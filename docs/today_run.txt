@@ -1,17 +1,17 @@
-# Real run, 2026-10-03 (about 19:35 Beijing time, UTC+8): example wardrobe + SYNTHETIC 14-day history (demo_data), real Open-Meteo forecast, real SiliconFlow model
+# Real run, 2026-10-03 20:38 Beijing time (UTC+8): example wardrobe, autumn room, + SYNTHETIC 14-day history (demo_data), real Open-Meteo forecast for Shanghai, real SiliconFlow model
 $ todays-outfit --demo today --occasion commute
-Today in Shanghai: 18-23 °C, rain 84%  ->  occasion: commute
+Today in Shanghai: 18-23 °C, rain 98%  ->  occasion: commute, room: autumn
 
-  Top pick: white t-shirt + black trousers + brown ankle boots
-    Brown ankle boots provide essential waterproofing and warmth for rainy weather. The white t-shirt and black trousers create a clean, versatile look that remains stylish yet practical for a wet commute.
-    Rotation: Brings back white t-shirt (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
-
-  Alternative 1: white t-shirt + maroon skirt + brown ankle boots
-    Brown ankle boots keep feet dry and warm in the rain. The maroon skirt adds a pop of color to the white t-shirt, creating a chic, weather-appropriate outfit for the commute.
-    Rotation: Brings back white t-shirt (no wear logged in 14 days), maroon skirt (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
-
-  Alternative 2: light blue button-down shirt + black trousers + black high heels
-    Right weight for 20.5 °C and within the commute dress code; no rain-sensitive shoes (rule-based pick).
+  Top pick: yellow maxi dress + beige blazer + yellow rain boots
+    The wool blazer adds warmth to the light silk dress, while yellow rain boots keep you dry and stylish during the commute.
     Rotation: Nothing in it was worn in the last 3 days.
 
-Wearing the top pick? todays-outfit wear white-tee black-trousers brown-ankle-boots
+  Alternative 1: yellow maxi dress + beige blazer + brown ankle boots
+    A structured wool blazer elevates the casual ankle boots, creating a polished look that balances professional formality with practical comfort for rainy weather.
+    Rotation: Nothing in it was worn in the last 3 days.
+
+  Alternative 2: navy blue maxi dress + brown ankle boots
+    Navy pleated fabric offers slightly more warmth than yellow silk, and brown leather ankle boots provide sturdy, smart-casual footing for wet commute conditions.
+    Rotation: Brings back navy blue maxi dress (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
+
+Wearing the top pick? todays-outfit wear yellow-sundress beige-trench yellow-rain-boots

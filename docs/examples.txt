@@ -1,48 +1,49 @@
-$ todays-outfit suggest --temp 12 --rain --occasion commute
+# Real run, 2026-10-03 20:38 Beijing time (UTC+8): example wardrobe (synthetic drawings), real SiliconFlow models, manual weather, one run per season room.
+$ todays-outfit suggest --temp 12 --rain --occasion commute --season autumn
 commute, 12 °C, rain  ->  model mode (12 rule-approved candidates)
 
-  Outfit 1: gray sweater + black trousers + yellow rain boots
-    The warm gray wool knit sweater pairs perfectly with black trousers for a cozy, professional commute. Yellow rain boots keep feet dry in the rain while adding a cheerful pop of color.
+  Outfit 1: light blue button-down shirt + black trousers + beige blazer + brown ankle boots
+    The beige blazer and brown ankle boots provide excellent warmth for the 12°C rain while maintaining a smart-casual commute look. The light blue shirt adds a fresh pop of color to the neutral ensemble.
 
-  Outfit 2: light blue button-down shirt + black trousers + beige blazer + brown ankle boots
-    This ensemble balances style and comfort with a light blue shirt, black trousers, and a beige blazer. Brown ankle boots offer superior warmth and stability for wet, chilly commuting conditions.
+  Outfit 2: gray sweater + black trousers + yellow rain boots
+    This gray wool sweater offers superior warmth for the chilly, rainy commute. Paired with black trousers and practical yellow rain boots, it balances comfort, weather protection, and smart-casual professionalism.
 
-  Outfit 3: navy blue maxi dress + black blazer + yellow rain boots
-    The navy pleated maxi dress and black wool blazer create a polished, formal look suitable for work. Yellow rain boots provide essential waterproof protection against the rain while maintaining comfort.
+  Outfit 3: white t-shirt + black trousers + black blazer + yellow rain boots
+    The black blazer elevates the white t-shirt and trousers for a polished commute look. Yellow rain boots ensure you stay dry in the rain, adding a cheerful, practical touch to the neutral base.
 
-$ todays-outfit suggest --temp 26 --occasion date
+$ todays-outfit suggest --temp 26 --occasion date --season summer
 date, 26 °C, dry  ->  model mode (12 rule-approved candidates)
 
   Outfit 1: yellow maxi dress + black high heels
-    The yellow silk blend maxi dress flatters the warm 26 C weather, while black leather heels elevate the look for a romantic date night.
+    The yellow silk maxi dress is elegant and light for the warm weather. Black leather heels elevate the look perfectly for a romantic date night.
 
-  Outfit 2: white t-shirt + maroon skirt + black high heels
-    The maroon cotton skirt and white t-shirt offer a breezy, comfortable vibe for the heat, while black heels add just enough polish for a date.
+  Outfit 2: yellow maxi dress + white sneaker
+    This yellow silk dress offers a chic, dressy vibe suitable for the evening. Pairing it with white sneakers creates a trendy, comfortable, and playful contrast.
 
-  Outfit 3: yellow maxi dress + white sneaker
-    This yellow silk blend maxi dress keeps you cool in the heat, and white canvas sneakers provide a chic, relaxed comfort perfect for a casual date.
+  Outfit 3: light blue button-down shirt + black trousers + black high heels
+    The light blue cotton shirt and black trousers create a sophisticated smart-casual silhouette. Black leather heels add the necessary polish for a stylish date evening.
 
-$ todays-outfit suggest --temp 4 --occasion casual
-casual, 4 °C, dry  ->  model mode (9 rule-approved candidates)
+$ todays-outfit suggest --temp 4 --occasion casual --season winter
+casual, 4 °C, dry  ->  model mode (5 rule-approved candidates)
 
-  Outfit 1: gray sweater + blue jeans + olive green jacket + brown ankle boots
-    The olive green jacket and brown ankle boots provide excellent warmth for the 4°C chill. This combination pairs perfectly with the cozy gray sweater and blue jeans for a stylish, casual look.
+  Outfit 1: gray sweater + blue jeans + beige cardigan + brown ankle boots
+    The wool sweater and cardigan provide excellent warmth for the 4°C chill, while the jeans and ankle boots keep the look comfortably casual and stylish.
 
-  Outfit 2: gray sweater + blue jeans + beige cardigan + white sneaker
-    Layering the beige cardigan over the gray sweater adds necessary warmth for the cool temperature. The white sneakers keep the outfit relaxed and casual, matching the denim jeans perfectly.
+  Outfit 2: gray sweater + maroon skirt + olive green jacket + brown ankle boots
+    The olive jacket offers superior warmth and a casual vibe, pairing perfectly with the cozy sweater and skirt for a chic, weather-appropriate ensemble.
 
-  Outfit 3: gray sweater + maroon skirt + mustard yellow hoodie + brown ankle boots
-    The mustard yellow hoodie offers a cozy layer against the 4°C air, while brown ankle boots add warmth. This outfit balances comfort and casual style with the maroon skirt and sweater.
+  Outfit 3: gray sweater + black trousers + mustard yellow hoodie + brown ankle boots
+    This outfit layers a warm sweater with a hoodie for extra cold protection, while the trousers and boots maintain a neat, smart-casual aesthetic.
 
-$ todays-outfit suggest --temp 20 --occasion formal
+$ todays-outfit suggest --temp 20 --occasion formal --season spring
 formal, 20 °C, dry  ->  model mode (5 rule-approved candidates)
 
   Outfit 1: yellow maxi dress + black blazer + black high heels
-    The black blazer adds warmth to the silk dress without sacrificing formality. This monochrome ensemble is elegant and perfectly suited for the cool 20 C evening.
+    The wool blend blazer adds necessary warmth to the light silk dress for 20°C. The black leather heels elevate the look, perfectly balancing comfort and formal elegance.
 
-  Outfit 2: yellow maxi dress + beige blazer + black high heels
-    The beige blazer provides a sophisticated contrast to the yellow dress. This combination offers a polished look that balances style with the mild temperature.
+  Outfit 2: navy blue maxi dress + black high heels
+    The pleated navy maxi dress offers slightly more warmth than yellow options while maintaining high formality. Paired with classic black heels, it creates a sophisticated, weather-appropriate ensemble.
 
-  Outfit 3: navy blue maxi dress + black high heels
-    The navy pleated dress offers slightly more warmth than the yellow option. Its rich color and fabric create a timeless, formal appearance ideal for the occasion.
+  Outfit 3: yellow maxi dress + beige blazer + black high heels
+    The beige wool blazer provides ideal layering for 20°C without overheating. Its neutral tone complements the yellow dress, creating a polished, professional aesthetic suitable for formal occasions.
 

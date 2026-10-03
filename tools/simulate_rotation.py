@@ -29,7 +29,7 @@ SEEDS = range(50)
 STRENGTHS = {"mild habit (favourite piece ~4x as likely)": 1.4, "strong habit (~12x)": 2.5}
 ARMS = [("habit", "made-up habit user keeps choosing as before"), ("no_rot", "app top pick, no rotation"),
         ("rotation", "app top pick, with rotation")]
-METRICS = [("share_of_wardrobe_worn", "Pieces worn at least once in 14 days (of 21)", "pieces"),
+METRICS = [("share_of_wardrobe_worn", "Pieces worn at least once in 14 days", "pieces"),
            ("share_of_reachable_worn", "... of the pieces the rules allow in that weather", "pct"),
            ("max_repeats_one_piece", "Most times one piece was worn in 14 days", "num"),
            ("piece_repeats_vs_previous_day", "Piece-days repeated from the previous day", "num"),
@@ -45,13 +45,14 @@ def fmt(v, kind, size):
 
 def main() -> None:
     cfg = load_config(ROOT / "config.example.toml")
-    items = Stylist(cfg, ROOT / "sample_wardrobe" / "wardrobe.json", ROOT / "cache" / "descriptions.json").described()
+    st = Stylist(cfg, ROOT / "sample_wardrobe" / "wardrobe.json", ROOT / "cache" / "descriptions.json")
+    items = st.room("autumn")          # the simulated weather is autumn-like, so the app would style from the autumn room
     size = len(items)
     policy = RotationPolicy()
-    out = {"note": "SIMULATION on the example wardrobe (21 synthetic illustrations), rules-only, not data about any person",
+    out = {"note": "SIMULATION on the autumn room of the example wardrobe (synthetic illustrations), rules-only, not data about any person",
            "wardrobe_size": size, "seeds": len(SEEDS), "policy": policy.__dict__, "results": {}}
     md = ["# Rotation simulation (example data, rules only)", "",
-          "**This is a simulation, not a user study.** The wardrobe is the 21 synthetic illustrations in `sample_wardrobe/`; "
+          f"**This is a simulation, not a user study.** The wardrobe is the autumn room ({size} of the 21 synthetic illustrations in `sample_wardrobe/`; the weather below is autumn-like, and the app only styles from the current room); "
           "the \"habit user\" is a made-up picker; the app arms always accept the app's top pick. Reproduce: "
           "`python tools/simulate_rotation.py`. No language model and no network are used, so the numbers are exactly repeatable.", "",
           f"Setup per run: 14 days of habit history, then 14 new days of weather (random, autumn-like 5-26 °C, ~30% rainy days, "
