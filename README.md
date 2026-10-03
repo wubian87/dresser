@@ -98,7 +98,7 @@ So: simple server-rendered shops work; big chains and the Chinese marketplaces m
 ## Try it
 
 ```bash
-git clone REPO_URL && cd wardrobe-stylist
+git clone https://github.com/wubian87/wardrobe-stylist && cd wardrobe-stylist
 ./demo.sh        # or: make demo
 ```
 

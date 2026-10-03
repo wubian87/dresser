@@ -38,12 +38,12 @@ It never suggests buying anything.
 
 ## Demo
 
-- **Try it with no account and no API key:** `git clone REPO_URL && cd wardrobe-stylist && ./demo.sh`. It installs, runs the tests, and prints suggestions from the bundled example wardrobe, including one on a demo copy with a synthetic wear history so you can see the rotation line. Without a key it runs on the rules alone and says so. For the web page: `python -m todays_outfit --demo serve`.
+- **Try it with no account and no API key:** `git clone https://github.com/wubian87/wardrobe-stylist && cd wardrobe-stylist && ./demo.sh`. It installs, runs the tests, and prints suggestions from the bundled example wardrobe, including one on a demo copy with a synthetic wear history so you can see the rotation line. Without a key it runs on the rules alone and says so. For the web page: `python -m todays_outfit --demo serve`.
 - **Screenshots** of the phone-sized page (example wardrobe, synthetic history, real forecast and model):
 
 <!-- SCREENSHOT (owner): upload docs/screenshot_today.png (Today), docs/screenshot_wardrobe.png (Autumn room), docs/screenshot_settings.png (season room + folded details) and docs/screenshot_add_link.png (Paste a link on a real public shop page) in the DEV editor and paste them here. -->
 
-- **Code:** REPO_URL (MIT licence, English README; first commit 2026-10-03 18:23 Beijing time, inside the challenge window).
+- **Code:** https://github.com/wubian87/wardrobe-stylist (MIT licence, English README; first commit 2026-10-03 18:23 Beijing time, inside the challenge window).
 
 ## How it works
 

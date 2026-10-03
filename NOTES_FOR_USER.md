@@ -24,7 +24,7 @@ Do these before submitting. Deadline: **Mon 2026-10-05 14:59 Beijing time (06:59
 Article and README read fine **without** the optional items; optional items are invisible `<!-- OPTIONAL ... -->` comments.
 
 **Mandatory (1 thing):**
-- **Repo URL**: replace every `REPO_URL` (2 places in `ARTICLE.md`, 1 in `README.md`) with your public GitHub URL.
+- **Repo URL**: done, `REPO_URL` was replaced with https://github.com/wubian87/wardrobe-stylist in `ARTICLE.md` and `README.md`.
 
 **Optional but worth it (only true things):**
 - Her real mornings / her real reaction, in her words, good and bad: one or two sentences at the OPTIONAL comment near the top of `ARTICLE.md` (and a "What she said" section in `README.md`). The article never claims she tried it. The pain-point paragraph is explicitly "design hypothesis"; if she has told you things that confirm or contradict it, that is the single most valuable edit.
