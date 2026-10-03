@@ -21,7 +21,10 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-OVERRIDABLE = ("category", "type", "color", "material", "warmth", "formality", "season", "notes")
+from .seasons import clean_seasons, infer_seasons
+from .tags import clean_tags, infer_tags
+
+OVERRIDABLE = ("category", "type", "color", "material", "warmth", "formality", "season", "notes", "tags")
 RUNTIME_KEYS = {"image_path", "hash", "desc"}   # never written back to wardrobe.json
 IMAGES_DIR = "images"
 
@@ -59,6 +62,14 @@ def merged(item: dict) -> dict | None:
         if k in item:
             out[k] = item[k]
     out["name"] = item.get("name") or f"{out['color']} {out['type']}"
+    # rooms and tags: the piece's own (edited/reviewed) list if it has one, else the deterministic inference.
+    # The vision model's season guess is not used: rooms follow the rule table in seasons.py.
+    own_seasons = clean_seasons(item.get("season"))
+    out["season"] = own_seasons or infer_seasons(out)
+    out["season_auto"] = not own_seasons
+    out["tags_auto"] = infer_tags(out)                    # what the rules suggest (the form offers these back)
+    out["tags_edited"] = "tags" in item                   # True once the user saved their own tag list
+    out["tags"] = clean_tags(item["tags"]) if "tags" in item else out["tags_auto"]
     if item.get("added"):
         out["added"] = item["added"]
     return out
@@ -126,6 +137,8 @@ def clean_fields(raw: dict) -> dict:
     name = str(raw.get("name", "")).strip()[:60]
     if name:
         out["name"] = name
+    out["season"] = clean_seasons(raw.get("season")) or infer_seasons(out)       # empty -> rule table
+    out["tags"] = clean_tags(raw["tags"]) if "tags" in raw else infer_tags(out)
     return out
 
 

@@ -87,11 +87,17 @@ class Cache:
         self.path.write_text(json.dumps(self.data, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
-def describe_image(client: LLMClient, image_path: Path) -> tuple[dict, float]:
-    """Describe one photo. Returns (normalized description, seconds). Retries once on bad JSON."""
+def describe_image(client: LLMClient, image_path: Path, hint: str | None = None) -> tuple[dict, float]:
+    """Describe one photo. Returns (normalized description, seconds). Retries once on bad JSON.
+
+    `hint`: optional text from a shop page (title/description); the model is told to trust the photo over it."""
+    text = PROMPT
+    if hint:
+        text += ("\nThe shop page that this photo came from calls it: " + json.dumps(hint[:300], ensure_ascii=False) +
+                 ". Use this as a hint for type and material, but trust the photo for colour and category.")
     msg = [{"role": "user", "content": [
         {"type": "image_url", "image_url": {"url": image_to_data_url(image_path)}},
-        {"type": "text", "text": PROMPT},
+        {"type": "text", "text": text},
     ]}]
     last = None
     t0 = time.perf_counter()

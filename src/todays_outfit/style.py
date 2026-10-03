@@ -23,7 +23,8 @@ class Suggestion:
 
 
 def _describe_item(i: dict) -> str:
-    return f"{i['name']} [{i['category']}, warmth {i['warmth']}/5, formality {i['formality']}/5, {i.get('material') or 'material n/a'}]"
+    tags = f", tags: {', '.join(i['tags'][:6])}" if i.get("tags") else ""
+    return f"{i['name']} [{i['category']}, warmth {i['warmth']}/5, formality {i['formality']}/5, {i.get('material') or 'material n/a'}{tags}]"
 
 
 def build_prompt(cands: list[Outfit], temp_c: float, rain: bool, occasion: str, language: str, n: int) -> str:

@@ -17,6 +17,10 @@ OCCASION_RULES = {
     "formal": {"item": (3, 5), "mean": (3.8, 5.0), "ideal": 4.6},
 }
 
+# tags that earn a small bonus (+0.25 per matching piece, at most +1.0) for an occasion; pieces without tags earn nothing
+OCCASION_TAGS = {"commute": {"work", "smart-casual"}, "casual": {"casual"}, "date": {"dressy", "date"}, "formal": {"formal"}}
+TAG_BONUS, TAG_BONUS_MAX = 0.25, 1.0
+
 # materials that suffer in the rain
 RAIN_BAD = ("suede", "canvas", "satin", "silk", "velvet", "mesh", "fabric", "felt")
 RAIN_GOOD_SHOES = ("rain boot", "rubber", "wellington", "waterproof")
@@ -91,6 +95,12 @@ def _score(core, outer, shoes, temp_c, rain, occasion, band) -> tuple[float, lis
         if outer and any(k in _text(outer) for k in RAIN_GOOD_OUTER):
             score += 1.0
             notes.append("water-resistant layer")
+    # tags: a light nudge toward pieces the user (or the tag rules) marked for this occasion
+    want = OCCASION_TAGS.get(occasion, set())
+    hits = sum(1 for i in pieces if want & set(i.get("tags") or ()))
+    if hits:
+        score += min(TAG_BONUS_MAX, TAG_BONUS * hits)
+        notes.append("tagged for this occasion")
     # sprung formality: a very formal shoe with a very casual top feels off
     spread = max(i["formality"] for i in pieces) - min(i["formality"] for i in pieces)
     if spread >= 3:
