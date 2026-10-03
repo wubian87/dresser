@@ -391,7 +391,7 @@ function openAdd(mode) {
   $$("#seg button").forEach(b => b.onclick = () => { addMode = b.dataset.m; $$("#seg button").forEach(x => x.setAttribute("aria-pressed", x === b)); $("#pane-photos").hidden = addMode !== "photos"; $("#pane-link").hidden = addMode !== "link"; });
   $("#pick").onclick = () => $("#fpick").click(); $("#snap").onclick = () => $("#fsnap").click();
   for (const id of ["#fpick", "#fsnap"]) $(id).onchange = async e => { const files = [...e.target.files]; e.target.value = ""; for (const f of files) await addDraft(f); };
-  const go = () => addFromLink($("#url").value.trim());
+  const go = () => { $("#url").blur(); addFromLink($("#url").value.trim()); };   // blur: close the phone keyboard so the result is visible
   $("#fetchlink").onclick = go; $("#url").onkeydown = e => { if (e.key === "Enter") go(); };
 }
 function draftBox() {
@@ -407,6 +407,7 @@ async function addDraft(file) {
 }
 async function addFromLink(url) {
   if (!url) return;
+  $$("#drafts .draft.failed").forEach(b => b.remove());   // earlier failed attempts are not worth keeping on screen
   const [box, p] = draftBox();
   box.innerHTML = `<p class="spin">Reading the page… (up to a minute with the vision model)</p>`;
   $("#fetchlink").disabled = true;
@@ -414,11 +415,13 @@ async function addFromLink(url) {
     const st = await post("/api/import-link", {url});
     reviewDraft(box, p, st, st.source);
   } catch (e) {
+    box.classList.add("failed");
     box.innerHTML = `<div class="note"><b>Could not use that link.</b><br>${esc(e.message)}</div>
       <button class="btn quiet" id="${p}toup" style="margin-top:8px">Upload a picture instead</button>`;
     $("#" + p + "toup").onclick = () => { box.remove(); addMode = "photos"; $("#seg button[data-m=photos]").click(); };
   }
   $("#fetchlink").disabled = false;
+  box.scrollIntoView({block: "nearest", behavior: "smooth"});
 }
 function reviewDraft(box, p, st, src) {
   const ts = formState(st.fields, p);

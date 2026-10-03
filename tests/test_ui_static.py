@@ -38,3 +38,10 @@ def test_page_and_command_line_round_the_temperature_the_same_way(tmp_path):
     w = st.weather_info()
     assert w["label"] == "Today in Shanghai: 18-23 °C, rain 98%" and (w["low_r"], w["high_r"]) == (18, 23)
     assert "w.low_r ??" in HTML and "w.high_r ??" in HTML
+
+
+def test_link_import_closes_keyboard_and_drops_old_failures():
+    """Found on a real phone: the on-screen keyboard hid the result, and old failed cards piled up under a new one."""
+    html = (Path(__file__).resolve().parent.parent / "src" / "todays_outfit" / "static" / "index.html").read_text(encoding="utf-8")
+    assert '$("#url").blur()' in html
+    assert '.draft.failed' in html and 'classList.add("failed")' in html
