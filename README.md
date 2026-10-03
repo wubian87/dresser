@@ -18,7 +18,7 @@ $ todays-outfit suggest --temp 12 --rain --occasion commute
     ...Yellow rain boots provide essential waterproof protection against the rain...
 ```
 
-(Full output of four scenarios: [`docs/examples.txt`](docs/examples.txt). Phone-sized screenshots: [`docs/screenshot_rainy_commute.png`](docs/screenshot_rainy_commute.png), [`docs/screenshot_warm_date.png`](docs/screenshot_warm_date.png). Suede loafers and canvas sneakers never show up on that rainy day; that is a hard rule, not a suggestion from the model.)
+(Full output of four scenarios: [`docs/examples.txt`](docs/examples.txt). Phone-sized screenshots: [`docs/screenshot_rainy_commute.png`](docs/screenshot_rainy_commute.png), [`docs/screenshot_warm_date.png`](docs/screenshot_warm_date.png). Suede and canvas shoes are filtered out on rainy days by a hard rule before the model sees anything.)
 
 ## Who it's for
 
