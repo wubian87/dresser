@@ -1,0 +1,89 @@
+{
+  "_note": "EXAMPLE DATA: synthetic illustrations, not real clothes",
+  "items": [
+    {
+      "id": "white-tee",
+      "image": "white-tee.png"
+    },
+    {
+      "id": "blue-oxford-shirt",
+      "image": "blue-oxford-shirt.png"
+    },
+    {
+      "id": "grey-knit-sweater",
+      "image": "grey-knit-sweater.png"
+    },
+    {
+      "id": "mustard-hoodie",
+      "image": "mustard-hoodie.png"
+    },
+    {
+      "id": "cream-cardigan",
+      "image": "cream-cardigan.png"
+    },
+    {
+      "id": "black-blazer",
+      "image": "black-blazer.png"
+    },
+    {
+      "id": "beige-trench",
+      "image": "beige-trench.png"
+    },
+    {
+      "id": "olive-puffer",
+      "image": "olive-puffer.png"
+    },
+    {
+      "id": "denim-jacket",
+      "image": "denim-jacket.png"
+    },
+    {
+      "id": "blue-jeans",
+      "image": "blue-jeans.png"
+    },
+    {
+      "id": "black-trousers",
+      "image": "black-trousers.png"
+    },
+    {
+      "id": "khaki-shorts",
+      "image": "khaki-shorts.png"
+    },
+    {
+      "id": "burgundy-skirt",
+      "image": "burgundy-skirt.png"
+    },
+    {
+      "id": "navy-dress",
+      "image": "navy-dress.png"
+    },
+    {
+      "id": "yellow-sundress",
+      "image": "yellow-sundress.png"
+    },
+    {
+      "id": "white-sneakers",
+      "image": "white-sneakers.png"
+    },
+    {
+      "id": "brown-ankle-boots",
+      "image": "brown-ankle-boots.png"
+    },
+    {
+      "id": "black-heels",
+      "image": "black-heels.png"
+    },
+    {
+      "id": "tan-suede-loafers",
+      "image": "tan-suede-loafers.png"
+    },
+    {
+      "id": "yellow-rain-boots",
+      "image": "yellow-rain-boots.png"
+    },
+    {
+      "id": "black-flats",
+      "image": "black-flats.png"
+    }
+  ]
+}

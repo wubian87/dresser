@@ -1,0 +1,18 @@
+# Copy to config.toml. Switching between cloud and local = change the `preset` line.
+# NEVER put an API key in this file: only the *name* of the environment variable is stored.
+
+[llm]
+preset = "siliconflow"          # "siliconflow" (cloud, open-weight models) or "local" (Ollama / llama.cpp)
+privacy = "off"                 # "off" | "images-local" (photos only go to localhost) | "local-only" (nothing leaves localhost)
+language = "English"            # language of the outfit reasons, e.g. "English", "中文"
+
+# Optional per-step overrides. Anything in [vision] / [text] wins over the preset.
+[vision]
+model = "Qwen/Qwen3-VL-8B-Instruct"       # any OpenAI-compatible vision model
+# preset = "local"                         # e.g. describe photos on your own machine...
+# base_url = "http://localhost:11434/v1"
+# model = "qwen2.5vl:7b"
+
+[text]
+model = "Qwen/Qwen3.5-27B"                # picks the best outfit among rule-approved candidates
+# preset = "siliconflow"                   # ...and use the cloud only for the text-only step
