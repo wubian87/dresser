@@ -166,7 +166,8 @@ function wxText() {
   if (w.source === "manual") return `<b>${w.temp} °C, ${w.rain ? "rain" : "dry"}</b> (set by you) · ${sea}`;
   if (w.source === "auto") {
     const city = (w.city || "").split(",")[0];
-    return `<b>${esc(city)} ${Math.round(w.low)}-${Math.round(w.high)} °C, rain ${w.rain_prob}%</b> · ${sea}`;
+    const lo = w.low_r ?? Math.round(w.low), hi = w.high_r ?? Math.round(w.high);      // same rounding as the command line
+    return `<b>${esc(city)} ${lo === hi ? lo : lo + "-" + hi} °C, rain ${w.rain_prob}%</b> · ${sea}`;
   }
   return `<b>Set the weather</b> · ${sea}`;
 }

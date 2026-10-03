@@ -28,3 +28,13 @@ def test_all_api_routes_used_by_the_page_exist():
     routes = {r.path for r in app.routes}
     for used in set(re.findall(r'["`](/api/[a-z\-/]+)', HTML)):
         assert used.rstrip("/") in routes or any(r.startswith(used.rstrip("/")) for r in routes), used
+
+
+def test_page_and_command_line_round_the_temperature_the_same_way(tmp_path):
+    """A forecast low of 18.5 is printed 18 by the CLI label (Python rounds half to even); the page must show the same."""
+    from conftest import MockWeather, forecast_json, make_stylist
+    st = make_stylist(tmp_path, mock=MockWeather(forecast_json(hi=22.8, lo=18.5, prob=98)))
+    st.set_location(__import__("todays_outfit.weather", fromlist=["Location"]).Location("Shanghai, China", 31.2, 121.5))
+    w = st.weather_info()
+    assert w["label"] == "Today in Shanghai: 18-23 °C, rain 98%" and (w["low_r"], w["high_r"]) == (18, 23)
+    assert "w.low_r ??" in HTML and "w.high_r ??" in HTML

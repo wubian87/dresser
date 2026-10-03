@@ -289,6 +289,7 @@ class Stylist:
             return {"source": "none", "city": loc.name, "error": f"{e}. Type the temperature by hand."}
         city = loc.name.split(",")[0]
         info = {"source": "auto", "city": loc.name, "label": fc.label(city), "high": fc.high, "low": fc.low,
+                "high_r": round(fc.high), "low_r": round(fc.low),        # the rounded numbers the label shows, so page and CLI agree
                 "rain_prob": fc.rain_prob, "temp": fc.temp, "rain": fc.rain, "forecast_day": fc.day,
                 "cached": fc.from_cache, "fetched": wx.fmt_time(fc.fetched_at) if fc.fetched_at else None}
         if fc.stale:

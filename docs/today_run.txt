@@ -1,17 +1,58 @@
-# Real run, 2026-10-03 20:38 Beijing time (UTC+8): example wardrobe, autumn room, + SYNTHETIC 14-day history (demo_data), real Open-Meteo forecast for Shanghai, real SiliconFlow model
-$ todays-outfit --demo today --occasion commute
-Today in Shanghai: 18-23 °C, rain 98%  ->  occasion: commute, room: autumn
+# Real runs, 2026-10-04 00:18 Beijing time (UTC+8): example wardrobe (drawings), autumn room, + an INVENTED 14-day wear log (demo_data), real Open-Meteo forecast for Shanghai, real SiliconFlow model.
+# The model's choice can vary from run to run. Casual was run 3 times (same top pick each time) and commute once, back to back; every output is kept below, unedited. The article shows casual run 1.
 
-  Top pick: yellow maxi dress + beige blazer + yellow rain boots
-    The wool blazer adds warmth to the light silk dress, while yellow rain boots keep you dry and stylish during the commute.
+$ todays-outfit --demo today --occasion casual     # casual run 1
+Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: casual, room: autumn
+
+  Top pick: white t-shirt + blue jeans + yellow rain boots
+    Yellow rain boots keep your feet dry in the rain, while the white tee and blue jeans offer a relaxed, casual vibe perfect for the mild 20.5°C weather.
     Rotation: Nothing in it was worn in the last 3 days.
 
-  Alternative 1: yellow maxi dress + beige blazer + brown ankle boots
-    A structured wool blazer elevates the casual ankle boots, creating a polished look that balances professional formality with practical comfort for rainy weather.
+  Alternative 1: white t-shirt + blue jeans + brown ankle boots
+    Right weight for 20.5 °C and within the casual dress code; no rain-sensitive shoes; tagged for this occasion (rule-based pick).
+    Rotation: Nothing in it was worn in the last 3 days.
+
+Wearing the top pick? todays-outfit wear white-tee blue-jeans yellow-rain-boots
+
+$ todays-outfit --demo today --occasion casual     # casual run 2
+Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: casual, room: autumn
+
+  Top pick: white t-shirt + blue jeans + yellow rain boots
+    Yellow rain boots keep your feet dry in the rain while matching the casual vibe. The white tee and blue jeans provide a comfortable, classic look for the mild 20.5°C weather.
+    Rotation: Nothing in it was worn in the last 3 days.
+
+  Alternative 1: white t-shirt + blue jeans + brown ankle boots
+    Right weight for 20.5 °C and within the casual dress code; no rain-sensitive shoes; tagged for this occasion (rule-based pick).
+    Rotation: Nothing in it was worn in the last 3 days.
+
+Wearing the top pick? todays-outfit wear white-tee blue-jeans yellow-rain-boots
+
+$ todays-outfit --demo today --occasion casual     # casual run 3
+Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: casual, room: autumn
+
+  Top pick: white t-shirt + blue jeans + yellow rain boots
+    Yellow rain boots keep your feet dry in the rain while adding a pop of color. Paired with a casual white tee and blue jeans, this look is perfectly practical and cheerful for the wet weather.
+    Rotation: Nothing in it was worn in the last 3 days.
+
+  Alternative 1: white t-shirt + blue jeans + brown ankle boots
+    Right weight for 20.5 °C and within the casual dress code; no rain-sensitive shoes; tagged for this occasion (rule-based pick).
+    Rotation: Nothing in it was worn in the last 3 days.
+
+Wearing the top pick? todays-outfit wear white-tee blue-jeans yellow-rain-boots
+
+$ todays-outfit --demo today --occasion commute     # commute run 1
+Today in Shanghai: 19-22 °C, rain 100%  ->  occasion: commute, room: autumn
+
+  Top pick: yellow maxi dress + beige blazer + brown ankle boots
+    The beige blazer adds professional polish to the yellow dress, while brown ankle boots offer warmth and style without the bulk of rain gear, perfect for 20.5C.
+    Rotation: Nothing in it was worn in the last 3 days.
+
+  Alternative 1: yellow maxi dress + beige blazer + yellow rain boots
+    Yellow rain boots match the dress for a cohesive pop of color, while the wool blazer provides necessary warmth and structure for a rainy, professional commute.
     Rotation: Nothing in it was worn in the last 3 days.
 
   Alternative 2: navy blue maxi dress + brown ankle boots
-    Navy pleated fabric offers slightly more warmth than yellow silk, and brown leather ankle boots provide sturdy, smart-casual footing for wet commute conditions.
-    Rotation: Brings back navy blue maxi dress (no wear logged in 14 days). Nothing in it was worn in the last 3 days.
+    The navy pleated dress pairs elegantly with brown ankle boots for a smart, weather-appropriate look. This combination balances professionalism with comfort for a rainy day.
+    Rotation: Brings back navy blue maxi dress (no wear logged in 15 days). Nothing in it was worn in the last 3 days.
 
-Wearing the top pick? todays-outfit wear yellow-sundress beige-trench yellow-rain-boots
+Wearing the top pick? todays-outfit wear yellow-sundress beige-trench brown-ankle-boots
