@@ -9,8 +9,8 @@ cd "$(dirname "$0")"
 .venv/bin/python -m pytest -q
 CFG=()
 [ -f config.toml ] || CFG=(--config config.example.toml)
-.venv/bin/python -m todays_outfit "${CFG[@]}" suggest --temp 12 --rain --occasion commute
-.venv/bin/python -m todays_outfit "${CFG[@]}" suggest --temp 26 --occasion date
+.venv/bin/python -m todays_outfit "${CFG[@]}" suggest --temp 12 --rain --occasion commute --season autumn
+.venv/bin/python -m todays_outfit "${CFG[@]}" suggest --temp 26 --occasion date --season summer
 # Same wardrobe, now with a SYNTHETIC 14-day wear history (writable copy in ./demo_data): the pick avoids what was just
 # worn, and the "Rotation:" line under each outfit is computed from that log. Manual weather, rules only: works offline.
 .venv/bin/python -m todays_outfit "${CFG[@]}" --demo today --temp 14 --rain --occasion commute --rules-only

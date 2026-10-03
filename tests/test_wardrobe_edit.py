@@ -166,4 +166,4 @@ def test_add_form_uses_a_shorter_vision_timeout_than_batch_describe(tmp_path, mo
     st.vision = Stylist(st.cfg, st.path, tmp_path / "c.json").vision        # real client class (120 s default)
     assert st.vision.timeout == 120.0
     st.stage_photo(photo_bytes())
-    assert seen == [Stylist.interactive_timeout] and Stylist.interactive_timeout < 60
+    assert seen == [Stylist.interactive_timeout] and Stylist.interactive_timeout < 120

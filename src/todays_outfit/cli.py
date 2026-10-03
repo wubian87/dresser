@@ -9,6 +9,7 @@ from pathlib import Path
 from .config import load_config
 from .llm import PrivacyError
 from .rules import OCCASIONS
+from .seasons import SEASONS
 from .service import NotFound, ReadOnlyError, Stylist
 from .wardrobe import save_wardrobe
 
@@ -62,16 +63,21 @@ def main(argv=None):
     s.add_argument("--rules-only", action="store_true", help="skip the language model")
     s.add_argument("--no-rotation", action="store_true", help="ignore the wear history")
     s.add_argument("--json", action="store_true")
+    s.add_argument("--season", choices=[*SEASONS, "all"], help="room to style from (default: the current season room)")
     t = sub.add_parser("today", help="today's pick: automatic forecast (Open-Meteo) + your last-used occasion")
     t.add_argument("--occasion", choices=OCCASIONS, help="default: the last one you used")
     t.add_argument("--temp", type=float, help="override the forecast with a temperature (°C)")
     t.add_argument("--rain", action="store_true", help="with --temp: it rains")
     t.add_argument("--rules-only", action="store_true")
+    t.add_argument("--season", choices=[*SEASONS, "all"], help="room to style from (default: the current season room)")
+    se = sub.add_parser("season", help="show the current season room, or set it (auto = follow the date)")
+    se.add_argument("set", nargs="?", choices=[*SEASONS, "auto"])
     w = sub.add_parser("wear", help="record what you wore (default: today)")
     w.add_argument("items", nargs="*", help="piece ids (see `wardrobe`)")
     w.add_argument("--date", help="YYYY-MM-DD, default today")
     w.add_argument("--undo", action="store_true", help="remove the entry for that day")
-    sub.add_parser("wardrobe", help="list your pieces with last-worn date and wear count")
+    wd = sub.add_parser("wardrobe", help="list the pieces of the current room with last-worn date and wear count")
+    wd.add_argument("--season", choices=[*SEASONS, "all"])
     ad = sub.add_parser("add", help="add clothes from photos: the vision model describes them, you can override fields")
     ad.add_argument("photos", nargs="+")
     ad.add_argument("--category", choices=["top", "bottom", "dress", "outer", "shoes", "accessory"])
@@ -145,7 +151,7 @@ def _run(a, cfg, st: Stylist) -> int:
     if a.cmd == "suggest":
         if st.undescribed():
             print(f"warning: {len(st.undescribed())} photos not described yet; run `describe` first.", file=sys.stderr)
-        res = st.suggest(a.temp, a.rain, a.occasion, use_model=not a.rules_only, rotate=not a.no_rotation)
+        res = st.suggest(a.temp, a.rain, a.occasion, use_model=not a.rules_only, rotate=not a.no_rotation, season=a.season)
         if a.json:
             print(json.dumps({**res, "suggestions": [{"items": [i["id"] for i in s.items], "reason": s.reason, "note": s.note,
                                                       "source": s.source} for s in res["suggestions"]]}, ensure_ascii=False, indent=1))
@@ -153,13 +159,13 @@ def _run(a, cfg, st: Stylist) -> int:
             print(_fmt(res, a.temp, a.rain, a.occasion))
         return 0
     if a.cmd == "today":
-        v = st.today_view(a.occasion, a.temp, a.rain if a.temp is not None else None, use_model=not a.rules_only)
+        v = st.today_view(a.occasion, a.temp, a.rain if a.temp is not None else None, use_model=not a.rules_only, season=a.season)
         w = v["weather"]
         if v.get("needs_weather"):
             print(f"{w.get('error', 'No weather.')}\nSet a city once in config.toml ([weather] city = \"...\") or the web page, "
                   "or run: today --temp 15 [--rain]", file=sys.stderr)
             return 1
-        print(f"{w['label']}  ->  occasion: {v['occasion']}" + (f"  ({w['note']})" if w.get("note") else ""))
+        print(f"{w['label']}  ->  occasion: {v['occasion']}, room: {v['season']}" + (f"  ({w['note']})" if w.get("note") else ""))
         if v["worn_today"]:
             print("You already logged today: " + " + ".join(i["name"] for i in v["worn_today"]["items"]))
         if v["warning"]:
@@ -173,6 +179,12 @@ def _run(a, cfg, st: Stylist) -> int:
             ids = " ".join(i["id"] for i in v["suggestions"][0]["items"])
             print(f"\nWearing the top pick? todays-outfit wear {ids}")
         return 0
+    if a.cmd == "season":
+        if a.set:
+            st.set_season(a.set)
+        i = st.season_info()
+        print(f"room: {i['current']}" + (f"  (you chose it; the date suggests {i['auto']})" if i["override"] else f"  (from the date, {i['hemisphere']} hemisphere)"))
+        return 0
     if a.cmd == "wear":
         day = date.fromisoformat(a.date) if a.date else None
         if a.undo:
@@ -185,8 +197,9 @@ def _run(a, cfg, st: Stylist) -> int:
         print(f"logged {e['date']}: " + ", ".join(e["items"]))
         return 0
     if a.cmd == "wardrobe":
-        rows = sorted(st.wardrobe_view(), key=lambda r: (-r["unworn_days"], r["name"]))
-        print(f"{len(rows)} pieces" + ("  (read-only example wardrobe)" if st.readonly else ""))
+        room = a.season or st.season_info()["current"]
+        rows = sorted(st.wardrobe_view(room), key=lambda r: (-r["unworn_days"], r["name"]))
+        print(f"{len(rows)} pieces in the {room} room ({len(st.described())} in all)" + ("  (read-only example wardrobe)" if st.readonly else ""))
         for r in rows:
             last = r["last_worn"] or "never"
             print(f"  {r['id']:<22} {r['category']:<9} {r['name']:<28} last worn {last:<10} worn {r['wear_count']}x"

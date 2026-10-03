@@ -3,12 +3,15 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 import threading
 import time
 import uuid
 from datetime import date
+from urllib.parse import urlparse
 from pathlib import Path
 
+from . import linkimport as li
 from . import weather as wx
 from .config import Config
 from .describe import Cache, describe_all, describe_image, file_hash
@@ -16,6 +19,8 @@ from .history import History
 from .llm import LLMClient, LLMError, PrivacyError
 from .rotation import Rotation
 from .rules import OCCASIONS
+from .seasons import SEASONS, clean_seasons, hemisphere, in_room, infer_seasons, suggest_season
+from .tags import infer_tags, suggest_with_model
 from .style import suggest
 from .wardrobe import (IMAGES_DIR, bytes_hash, clean_fields, is_described, is_example, load_wardrobe, merged, new_item,
                        photo_to_jpeg, read_extra, save_wardrobe, unique_id)
@@ -52,7 +57,7 @@ class Settings:
 
 
 class Stylist:
-    interactive_timeout = 45.0      # seconds the "Add clothes" form waits for the vision model before asking you to type
+    interactive_timeout = 75.0      # seconds the "Add clothes" form waits for the vision model before asking you to type
 
     def __init__(self, cfg: Config, wardrobe_path, cache_path="cache/descriptions.json", *, today=None,
                  weather: wx.WeatherService | None = None, readonly: bool | None = None):
@@ -71,6 +76,8 @@ class Stylist:
         # the read-only example wardrobe must not be written to: keep its forecast cache under cache/ (gitignored)
         self.weather = weather or wx.WeatherService((Path(cache_path).parent if self.readonly else self.dir) / "weather_cache.json")
         self._today = today
+        self.link_client_factory = li.make_client
+        self.link_resolver = socket.getaddrinfo
         self.lock = threading.RLock()
         self.version = 0
         self._today_cache: dict = {}
@@ -124,25 +131,57 @@ class Stylist:
                     pass
         return Rotation(self.history, self.today_date(), added)
 
+    # ---------- season rooms ----------
+    def season_info(self) -> dict:
+        """The current room: the user's override if set, else suggested from today's date (and the location's hemisphere)."""
+        loc = self.location()
+        auto = suggest_season(self.today_date(), loc.lat if loc else None)
+        over = self.settings.data.get("season")
+        over = over if over in SEASONS else None
+        return {"current": over or auto, "auto": auto, "override": over, "hemisphere": hemisphere(loc.lat if loc else None),
+                "options": list(SEASONS)}
+
+    def set_season(self, value: str) -> dict:
+        """`value` is a season name, or "auto" to follow the date."""
+        if value != "auto" and value not in SEASONS:
+            raise ValueError(f"season must be 'auto' or one of {SEASONS}")
+        self._writable()
+        with self.lock:
+            if value == "auto":
+                self.settings.data.pop("season", None)
+            else:
+                self.settings.data["season"] = value
+            self.settings.save()
+            self._bump()
+        return self.season_info()
+
+    def room(self, season: str | None = None) -> list[dict]:
+        """Described pieces in a room (default: the current one). season="all" returns everything."""
+        items = self.described()
+        season = season or self.season_info()["current"]
+        return items if season == "all" else [m for m in items if in_room(m, season)]
+
     def suggest(self, temp_c: float, rain: bool, occasion: str, use_model: bool = True, rotate: bool = True,
-                pad: bool = False) -> dict:
-        res = suggest(self.described(), temp_c, rain, occasion, self.text if use_model else None, self.cfg.language,
+                pad: bool = False, season: str | None = None) -> dict:
+        """Styling uses only the pieces in the current season room (or `season`; "all" disables the room filter)."""
+        res = suggest(self.room(season), temp_c, rain, occasion, self.text if use_model else None, self.cfg.language,
                       rotation=self.rotation() if rotate else None, pad_with_rules=pad)
         res["undescribed"] = len(self.undescribed())
         return res
 
     # ---------- wardrobe view with wear stats ----------
-    def wardrobe_view(self) -> list[dict]:
+    def wardrobe_view(self, season: str | None = None) -> list[dict]:
+        """Pieces of the current room (season="all": every room) with wear stats."""
         rot, today = self.rotation(), self.today_date()
         has_history = bool(self.history.wears)
         out = []
-        for m in self.described():
+        for m in self.room(season):
             st = rot.stats.get(m["id"])
             days = st.days_since(today) if st else None
             unworn = rot.unworn_days(m["id"])
             badge = f"not worn in {unworn} days" if has_history and unworn >= BADGE_DAYS else None
             out.append({**{k: m.get(k) for k in ("id", "name", "category", "type", "color", "material", "warmth", "formality",
-                                                 "season", "notes", "added")},
+                                                 "season", "notes", "added", "tags", "season_auto", "tags_auto", "tags_edited")},
                         "image": f"/images/{m['id']}", "thumb": f"/thumb/{m['id']}",
                         "last_worn": st.last_worn.isoformat() if st and st.last_worn else None,
                         "wear_count": st.wear_count if st else 0, "days_since": days, "unworn_days": unworn,
@@ -256,9 +295,35 @@ class Stylist:
             info["note"] = f"Offline: showing the forecast saved at {info['fetched']}."
         return info
 
+    def rooms_view(self) -> dict:
+        """Piece counts per season room (for 'N pieces in other rooms') and tag counts in the current room."""
+        items = self.described()
+        cur = self.season_info()["current"]
+        counts = {sea: sum(1 for m in items if in_room(m, sea)) for sea in SEASONS}
+        tags: dict[str, int] = {}
+        for m in items:
+            if in_room(m, cur):
+                for t in m.get("tags") or []:
+                    tags[t] = tags.get(t, 0) + 1
+        return {"current": cur, "counts": counts, "total": len(items), "in_room": counts[cur],
+                "tags": [{"tag": t, "n": n} for t, n in sorted(tags.items(), key=lambda kv: (-kv[1], kv[0]))]}
+
+    def settings_view(self) -> dict:
+        """Everything the Settings tab shows: the choices (season, city, occasion) and, folded away, the technical details."""
+        from . import __version__
+        loc = self.location()
+        return {"season": self.season_info(), "occasion": self.occasion(),
+                "location": None if loc is None else {"name": loc.name, "lat": loc.lat, "lon": loc.lon},
+                "details": {"text_model": self.cfg.text.model, "text_host": self.cfg.text.base_url,
+                            "vision_model": self.cfg.vision.model, "vision_host": self.cfg.vision.base_url,
+                            "privacy": self.cfg.privacy, "pieces": len(self.items), "pieces_ready": len(self.items) - len(self.undescribed()),
+                            "cached_descriptions": len(self.cache.data), "data_dir": str(self.dir), "readonly": self.readonly,
+                            "version": __version__, "today": self.today_date().isoformat()}}
+
     # ---------- the Today card ----------
     def today_view(self, occasion: str | None = None, temp: float | None = None, rain: bool | None = None,
-                   use_model: bool = True, refresh_weather: bool = False, force: bool = False) -> dict:
+                   use_model: bool = True, refresh_weather: bool = False, force: bool = False,
+                   season: str | None = None) -> dict:
         today = self.today_date()
         occ = occasion if occasion in OCCASIONS else self.occasion()
         if occasion in OCCASIONS and occasion != self.settings.data.get("occasion") and not self.readonly:
@@ -273,12 +338,15 @@ class Stylist:
             w = self.weather_info(refresh_weather)
         wt = self.history.wear_on(today)
         by_id = {m["id"]: m for m in self.described()}
+        sea = season or self.season_info()["current"]
+        room = {m["id"] for m in self.room(sea)}
         worn = None
         if wt:
             worn = {"items": [self._card(by_id[i]) for i in wt["items"] if i in by_id], "occasion": wt.get("occasion")}
         out = {"date": today.isoformat(), "occasion": occ, "weather": w, "worn_today": worn, "suggestions": [],
                "mode": "none", "warning": None, "candidates": 0, "undescribed": len(self.undescribed()),
-               "wardrobe_size": len(by_id), "readonly": self.readonly, "has_location": self.location() is not None}
+               "wardrobe_size": len(room), "readonly": self.readonly, "has_location": self.location() is not None,
+               "season": sea, "outside_room": len(by_id) - len(room)}
         if worn and not force:      # already logged today: no need to ask a model for another outfit
             return out
         if w["source"] == "none":
@@ -287,10 +355,14 @@ class Stylist:
         if not by_id:
             out["warning"] = "Your wardrobe is empty: add some clothes first."
             return out
-        key = (today, occ, w["temp"], w["rain"], self.version, use_model)
+        if not room:
+            out["warning"] = (f"Nothing in your {sea} room yet ({len(by_id)} pieces live in other rooms). "
+                              "Add clothes, or switch the season in Settings.")
+            return out
+        key = (today, occ, w["temp"], w["rain"], self.version, use_model, sea)
         res = self._today_cache.get(key)
         if res is None:
-            res = self.suggest(w["temp"], w["rain"], occ, use_model=use_model, pad=True)
+            res = self.suggest(w["temp"], w["rain"], occ, use_model=use_model, pad=True, season=sea)
             if len(self._today_cache) > 20:
                 self._today_cache.clear()
             self._today_cache[key] = res
@@ -310,10 +382,13 @@ class Stylist:
     def staging(self) -> Path:
         return self.dir / "staging"
 
-    def stage_photo(self, data: bytes, describe: bool = True) -> dict:
+    def stage_photo(self, data: bytes, describe: bool = True, hint: str | None = None, guess: dict | None = None,
+                    name: str = "") -> dict:
         """Save one uploaded photo as a re-encoded JPEG in staging and (optionally) auto-describe it.
 
-        Returns {"staging_id", "fields", "describe_error", "duplicate_of"}. `fields` is what the form shows for review."""
+        `hint` (text from a shop page) is given to the vision model; `guess` (deterministic fields from that text) fills
+        what the model leaves empty, or everything if no model could run. Returns
+        {"staging_id", "fields", "describe_error", "duplicate_of"}. `fields` is what the form shows for review."""
         self._writable()
         jpg = photo_to_jpeg(data)
         h = bytes_hash(jpg)
@@ -323,30 +398,86 @@ class Stylist:
         path = self.staging / f"{sid}.jpg"
         path.write_bytes(jpg)
         dup = next((i["id"] for i in self.items if i.get("hash") == h), None)
-        fields, err = self._describe_path(path, h) if describe else (None, "auto-describe skipped")
+        fields, err = self._describe_path(path, h, hint) if describe else (None, "auto-describe skipped")
+        base = {"category": "top", "type": "", "color": "", "material": "", "warmth": 3, "formality": 3, "season": [], "notes": ""}
         if fields is None:
-            fields = {"category": "top", "type": "", "color": "", "material": "", "warmth": 3, "formality": 3,
-                      "season": [], "notes": ""}
-        return {"staging_id": sid, "fields": {**fields, "name": ""}, "describe_error": err, "duplicate_of": dup}
+            fields = base
+            if guess:
+                fields = {**base, **guess}
+                err = (err or "").replace(" Fill the fields in by hand.", "") + " Filled from the page title only: please check."
+        elif guess:
+            for k in ("color", "material"):
+                if guess.get(k) and (not fields.get(k) or fields.get(k) == "unknown"):
+                    fields[k] = guess[k]
+        fields = {**fields, "name": name}
+        fields["season"] = infer_seasons(fields)          # rooms from the rule table, not from the model's guess
+        fields["tags"] = infer_tags(fields)
+        return {"staging_id": sid, "fields": fields, "describe_error": err, "duplicate_of": dup}
 
-    def _describe_path(self, path: Path, h: str) -> tuple[dict | None, str | None]:
-        rec = self.cache.get(h, self.cfg.vision.model)
+    def import_link(self, url: str, *, client=None, resolver=None) -> dict:
+        """'Paste a product link': read the public page (title, description, picture), then behave like an upload.
+
+        Raises linkimport.LinkError (message is safe to show) when the page cannot be used."""
+        self._writable()
+        if self.cfg.privacy == "local-only":
+            raise li.LinkError("privacy=local-only: not contacting any web site. Save the product image and upload it instead.", "refused")
+        resolver = resolver or self.link_resolver
+        own = client is None
+        client = client or self.link_client_factory()
+        try:
+            prod = li.read_page(url, client, resolver)
+            img_url, raw = li.download_image(prod, client, resolver)
+        finally:
+            if own:
+                client.close()
+        guess = li.guess_from_text(" ".join([prod.title, prod.description, prod.extra.get("category", ""),
+                                             prod.extra.get("color", ""), prod.extra.get("material", "")]))
+        if prod.extra.get("color"):
+            guess["color"] = prod.extra["color"].lower()[:30]
+        if prod.extra.get("material"):
+            guess["material"] = prod.extra["material"].lower()[:40]
+        try:
+            st = self.stage_photo(raw, True, hint=f"{prod.title}. {prod.description}"[:300], guess=guess, name=prod.title[:60])
+        except ValueError:
+            raise li.LinkError("The product picture is in a format I cannot read. Save it as JPG/PNG and upload it instead.", "no-data") from None
+        host = (urlparse(prod.url).hostname or "")
+        st["source"] = {"url": prod.url, "host": host, "title": prod.title, "description": prod.description}
+        return st
+
+    def suggest_tags(self, fields: dict, use_model: bool = False) -> dict:
+        """Tag and room suggestions for a form's current fields. Stage 1 always; stage 2 (model) only if asked."""
+        f = {k: fields.get(k) for k in ("category", "type", "color", "material", "warmth", "formality", "notes")}
+        f["category"] = f["category"] or "top"
+        out = {"auto": infer_tags(f), "seasons": infer_seasons(f), "model": [], "error": None}
+        if use_model:
+            client = self.text
+            try:
+                out["model"] = suggest_with_model(client, f, self.cfg.language)
+            except PrivacyError as e:
+                out["error"] = f"{e}"
+            except (LLMError, ValueError) as e:
+                out["error"] = f"The model could not suggest tags ({e})"[:200]
+        return out
+
+    def _describe_path(self, path: Path, h: str, hint: str | None = None) -> tuple[dict | None, str | None]:
+        rec = None if hint else self.cache.get(h, self.cfg.vision.model)       # a hinted answer is not the plain photo's answer
         if rec:
             return dict(rec["desc"]), None
         client = self.vision
         if isinstance(client, LLMClient):     # someone is waiting on a phone: give up sooner than the batch `describe`
             client = LLMClient(client.ep, client.privacy, timeout=self.interactive_timeout)
         try:
-            desc, secs = describe_image(client, path)
+            desc, secs = describe_image(client, path, hint) if hint else describe_image(client, path)
         except PrivacyError as e:
             return None, f"{e}. Fill the fields in by hand."
         except LLMError as e:
             return None, f"Auto-describe unavailable ({e}). Fill the fields in by hand."[:240]
         except ValueError as e:
             return None, f"{e}. Fill the fields in by hand."[:240]
-        with self.lock:
-            self.cache.put(h, self.cfg.vision.model, {"desc": desc, "seconds": round(secs, 2)})
-            self.cache.save()
+        if not hint:
+            with self.lock:
+                self.cache.put(h, self.cfg.vision.model, {"desc": desc, "seconds": round(secs, 2)})
+                self.cache.save()
         return desc, None
 
     def _clean_staging(self, max_age_s: int = 86400) -> None:
@@ -407,7 +538,7 @@ class Stylist:
         clean = clean_fields(fields)
         with self.lock:
             it = self.find(item_id)
-            for k in ("category", "type", "color", "material", "warmth", "formality", "season", "notes"):
+            for k in ("category", "type", "color", "material", "warmth", "formality", "season", "notes", "tags"):
                 it[k] = clean[k]
             if "name" in clean:
                 it["name"] = clean["name"]

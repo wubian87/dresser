@@ -11,6 +11,8 @@ from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 from . import weather as wx
+from .linkimport import LinkError
+from .seasons import SEASONS
 from .config import load_config
 from .rules import OCCASIONS
 from .service import NotFound, ReadOnlyError, Stylist
@@ -39,6 +41,11 @@ async def _ro(_, e):
     return JSONResponse({"detail": str(e)}, status_code=403)
 
 
+@app.exception_handler(LinkError)
+async def _le(_, e):
+    return JSONResponse({"detail": str(e), "kind": e.kind}, status_code=422)
+
+
 @app.exception_handler(ValueError)
 async def _ve(_, e):
     return JSONResponse({"detail": str(e)}, status_code=422)
@@ -60,6 +67,19 @@ class WearIn(BaseModel):
 class SkipIn(BaseModel):
     items: list[str]
     occasion: str | None = None
+
+
+class SeasonIn(BaseModel):
+    season: str
+
+
+class LinkIn(BaseModel):
+    url: str = Field(max_length=2000)
+
+
+class TagsIn(BaseModel):
+    fields: dict
+    model: bool = False
 
 
 class LocationIn(BaseModel):
@@ -91,8 +111,16 @@ def status():
 
 
 @app.get("/api/wardrobe")
-def wardrobe():
-    return stylist().wardrobe_view()
+def wardrobe(season: str | None = None):
+    """The current season room (default), one named room, or season=all."""
+    if season is not None and season != "all" and season not in SEASONS:
+        raise HTTPException(422, f"season must be 'all' or one of {SEASONS}")
+    return stylist().wardrobe_view(season)
+
+
+@app.get("/api/rooms")
+def rooms():
+    return stylist().rooms_view()
 
 
 @app.post("/api/describe")
@@ -144,9 +172,12 @@ def skip(body: SkipIn):
 # ---- settings / weather ----
 @app.get("/api/settings")
 def get_settings():
-    s = stylist()
-    loc = s.location()
-    return {"occasion": s.occasion(), "location": None if loc is None else {"name": loc.name, "lat": loc.lat, "lon": loc.lon}}
+    return stylist().settings_view()
+
+
+@app.put("/api/settings/season")
+def set_season(body: SeasonIn):
+    return stylist().set_season(body.season)
 
 
 @app.put("/api/settings/location")
@@ -180,6 +211,17 @@ async def upload(request: Request, describe: bool = True):
     if len(data) > MAX_UPLOAD:
         raise HTTPException(413, "photo is larger than 30 MB")
     return await run_in_threadpool(stylist().stage_photo, data, describe)
+
+
+@app.post("/api/import-link")
+async def import_link(body: LinkIn):
+    """'Paste a product link': a public page only. Failures come back as 422 {detail, kind} with a message to show."""
+    return await run_in_threadpool(stylist().import_link, body.url.strip())
+
+
+@app.post("/api/tags/suggest")
+async def suggest_tags(body: TagsIn):
+    return await run_in_threadpool(stylist().suggest_tags, body.fields, body.model)
 
 
 @app.delete("/api/staged/{sid}")
