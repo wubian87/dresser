@@ -1,4 +1,5 @@
 """The page is one static file; these checks pin the structure the redesign promised (not a browser test)."""
+import json
 import re
 from pathlib import Path
 
@@ -45,3 +46,29 @@ def test_link_import_closes_keyboard_and_drops_old_failures():
     html = (Path(__file__).resolve().parent.parent / "src" / "todays_outfit" / "static" / "index.html").read_text(encoding="utf-8")
     assert '$("#url").blur()' in html
     assert '.draft.failed' in html and 'classList.add("failed")' in html
+
+
+def test_add_sheet_text_follows_the_real_mode_not_the_config():
+    """No vision key -> the page must not claim a photo is read by the cloud model."""
+    assert '"nokey"' in HTML and "No vision key is set" in HTML
+    assert 'd.vision_key_ready === false' in HTML
+
+
+def test_touch_targets_are_at_least_40px_high():
+    for rule in (".occ button{", ".pill{", "details.more summary{", ".filters summary{"):
+        css = HTML[HTML.index(rule):].split("}")[0]
+        assert "min-height:40px" in css, rule
+
+
+def test_index_is_served_with_no_cache_and_status_reports_key_state(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+    from todays_outfit import api
+    from conftest import make_stylist
+    st = make_stylist(tmp_path)
+    monkeypatch.delenv(st.cfg.vision.api_key_env, raising=False)
+    assert st.settings_view()["details"]["vision_key_ready"] is False
+    monkeypatch.setenv(st.cfg.vision.api_key_env, "not-a-real-key-4711")
+    assert st.settings_view()["details"]["vision_key_ready"] is True
+    assert "4711" not in json.dumps(st.settings_view())      # the value is never exposed
+    r = TestClient(api.app).get("/")
+    assert r.status_code == 200 and r.headers["cache-control"] == "no-cache"

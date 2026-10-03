@@ -56,3 +56,20 @@ def test_rotation_simulation_beats_no_rotation_on_repeats(items):
     sc = lambda arm: sum(r["arms"][arm]["mean_rule_score"] for r in runs) / len(runs)  # noqa: E731
     assert sc("rotation") > sc("no_rot") - 1.5
     assert all(r["arms"]["rotation"]["relaxed_days"] == 0 for r in runs)
+
+
+def test_demo_opens_with_a_default_city_so_the_first_screen_has_weather(tmp_path):
+    """A fresh clone must not open on 'No forecast yet': the demo copy comes with Shanghai set (coordinates only)."""
+    cfg = load_config(ROOT / "config.example.toml")
+    p = init_demo(tmp_path / "d", cfg, tmp_path / "c.json", today=TODAY)
+    loc = Stylist(cfg, p, tmp_path / "c.json", today=lambda: TODAY).location()
+    assert loc is not None and "Shanghai" in loc.name
+    saved = json.loads((tmp_path / "d" / "settings.json").read_text())
+    assert saved["location"]["lat"] == 31.22222 and saved["occasion"] == "casual"
+    # a city the user chose is never overwritten, and the opt-out exists for tests
+    (tmp_path / "e").mkdir()
+    (tmp_path / "e" / "settings.json").write_text(json.dumps({"location": {"name": "X", "lat": 1.0, "lon": 2.0}}))
+    p2 = init_demo(tmp_path / "e", cfg, tmp_path / "c.json", today=TODAY)
+    assert Stylist(cfg, p2, tmp_path / "c.json", today=lambda: TODAY).location().name == "X"
+    p3 = init_demo(tmp_path / "f", cfg, tmp_path / "c.json", today=TODAY, with_location=False)
+    assert Stylist(cfg, p3, tmp_path / "c.json", today=lambda: TODAY).location() is None

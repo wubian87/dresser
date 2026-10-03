@@ -14,3 +14,7 @@ CFG=()
 # Same wardrobe, now with a SYNTHETIC 14-day wear history (writable copy in ./demo_data): the pick avoids what was just
 # worn, and the "Rotation:" line under each outfit is computed from that log. Manual weather, rules only: works offline.
 .venv/bin/python -m todays_outfit "${CFG[@]}" --demo today --temp 14 --rain --occasion commute --rules-only
+# With a network: the same demo copy, today's REAL forecast for the default demo city (Shanghai; only its coordinates are sent
+# to Open-Meteo). Without a network this prints a short message instead and the script still succeeds.
+.venv/bin/python -m todays_outfit "${CFG[@]}" --demo today --occasion casual --rules-only || echo "(no forecast: offline? the two runs above used a typed temperature)"
+echo "Web page: .venv/bin/python -m todays_outfit --demo serve   (then open http://127.0.0.1:8000)"

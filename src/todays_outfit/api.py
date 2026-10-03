@@ -271,4 +271,4 @@ def thumb(item_id: str):
 
 @app.get("/")
 def index():
-    return FileResponse(STATIC / "index.html")
+    return FileResponse(STATIC / "index.html", headers={"Cache-Control": "no-cache"})   # revalidate: a restarted server must not leave phones on the old page

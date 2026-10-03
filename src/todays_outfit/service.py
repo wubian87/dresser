@@ -309,6 +309,12 @@ class Stylist:
         return {"current": cur, "counts": counts, "total": len(items), "in_room": counts[cur],
                 "tags": [{"tag": t, "n": n} for t, n in sorted(tags.items(), key=lambda kv: (-kv[1], kv[0]))]}
 
+    @staticmethod
+    def _key_ready(ep) -> bool:
+        """True when the endpoint needs no key (local) or its environment variable is set. The key itself is never exposed."""
+        env = getattr(ep, "api_key_env", "")
+        return (not env) or bool(os.environ.get(env))
+
     def settings_view(self) -> dict:
         """Everything the Settings tab shows: the choices (season, city, occasion) and, folded away, the technical details."""
         from . import __version__
@@ -317,6 +323,7 @@ class Stylist:
                 "location": None if loc is None else {"name": loc.name, "lat": loc.lat, "lon": loc.lon},
                 "details": {"text_model": self.cfg.text.model, "text_host": self.cfg.text.base_url,
                             "vision_model": self.cfg.vision.model, "vision_host": self.cfg.vision.base_url,
+                            "vision_key_ready": self._key_ready(self.cfg.vision),
                             "privacy": self.cfg.privacy, "pieces": len(self.items), "pieces_ready": len(self.items) - len(self.undescribed()),
                             "cached_descriptions": len(self.cache.data), "data_dir": str(self.dir), "readonly": self.readonly,
                             "version": __version__, "today": self.today_date().isoformat()}}

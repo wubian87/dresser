@@ -96,7 +96,7 @@ def make_stylist(tmp_path, mock: MockWeather | None = None, text=None, vision=No
     cfg = cfg or load_config(ROOT / "config.example.toml")
     cache = tmp_path / "cache" / "descriptions.json"
     if demo:
-        path = init_demo(tmp_path / "data", cfg, cache, today=TODAY)
+        path = init_demo(tmp_path / "data", cfg, cache, today=TODAY, with_location=False)   # tests choose their own weather
     else:
         from todays_outfit.wardrobe import save_wardrobe
         path = tmp_path / "data" / "wardrobe.json"

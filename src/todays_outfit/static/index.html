@@ -32,7 +32,7 @@ input[type=range]{padding:0;min-height:32px;accent-color:var(--accent)}
 .wxline{display:block;width:100%;text-align:left;color:var(--mute);font-size:15px;padding:4px 0 2px}
 .wxline b{color:var(--fg);font-weight:600}
 .occ{display:flex;gap:20px;margin:18px 0 18px;overflow-x:auto}
-.occ button{color:var(--mute);padding:6px 0;font-size:16px;border-bottom:2px solid transparent}
+.occ button{color:var(--mute);padding:10px 0 9px;min-height:40px;font-size:16px;border-bottom:2px solid transparent}
 .occ button[aria-pressed=true]{color:var(--fg);font-weight:600;border-color:var(--fg)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px 18px 18px;box-shadow:var(--shadow)}
 .kicker{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:0 0 12px}
@@ -43,8 +43,8 @@ input[type=range]{padding:0;min-height:32px;accent-color:var(--accent)}
 .piece figcaption{font-size:13px;color:var(--mute);margin-top:6px;line-height:1.3}
 .reason{font-size:18px;line-height:1.45;margin:18px 2px 6px}
 .rot{font-size:14px;color:var(--mute);margin:0 2px 4px}
-details.more{margin-top:14px;font-size:14px;color:var(--mute)}
-details.more summary{cursor:pointer;list-style:none;display:inline-block;padding:6px 0}
+details.more{margin-top:8px;font-size:14px;color:var(--mute)}
+details.more summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;min-height:40px;padding:0 8px 0 0}
 details.more summary::-webkit-details-marker{display:none}
 details.more summary::after{content:" ›";}
 details[open].more summary::after{content:" ⌄"}
@@ -57,7 +57,7 @@ details[open].more summary::after{content:" ⌄"}
 @keyframes pulse{50%{opacity:.4}}
 /* Wardrobe */
 .pills{display:flex;gap:8px;overflow-x:auto;margin:0 -22px 12px;padding:2px 22px;scrollbar-width:none}
-.pill{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;color:var(--mute);background:var(--card)}
+.pill{flex:0 0 auto;min-height:40px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;color:var(--mute);background:var(--card)}
 .pill[aria-pressed=true]{background:var(--accent);color:var(--onaccent);border-color:var(--accent)}
 .pill.dash{border-style:dashed}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;margin-top:14px}
@@ -67,7 +67,7 @@ details[open].more summary::after{content:" ⌄"}
 .tile span{display:block;font-size:13px;color:var(--mute)}
 .fab{position:fixed;right:max(20px,calc(50vw - 260px));bottom:calc(84px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--onaccent);font-size:30px;line-height:1;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:5}
 .filters{margin:0 0 4px;font-size:15px}
-.filters summary{cursor:pointer;color:var(--mute);list-style:none}
+.filters summary{cursor:pointer;color:var(--mute);list-style:none;display:inline-flex;align-items:center;min-height:40px}
 .filters summary::-webkit-details-marker{display:none}
 .filters .chips{margin-top:10px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -364,13 +364,17 @@ let draftN = 0, addMode = "photos";
 function describeMode() {
   const d = cfgView.details || {}, host = s => { try { return new URL(s).hostname; } catch { return s; } };
   const local = ["localhost", "127.0.0.1", "::1"].includes(host(d.vision_host));
-  return local ? "local" : d.privacy === "off" ? "cloud" : "manual";
+  if (local) return "local";
+  if (d.privacy === "off" && d.vision_key_ready === false) return "nokey";
+  return d.privacy === "off" ? "cloud" : "manual";
 }
 function openAdd(mode) {
   addMode = mode || addMode;
   const d = cfgView.details || {}, dm = describeMode();
   const info = dm === "cloud" ? `A 512-px copy of each photo is read by ${d.vision_model} (${new URL(d.vision_host).hostname}). You review the result before saving.`
-    : dm === "local" ? `Photos are read on this machine; nothing leaves it.` : `Privacy mode “${d.privacy}”: photos stay here, so fill the fields in by hand.`;
+    : dm === "local" ? `Photos are read on this machine; nothing leaves it.`
+    : dm === "nokey" ? `No vision key is set, so photos stay here: fill the fields in by hand.`
+    : `Privacy mode “${d.privacy}”: photos stay here, so fill the fields in by hand.`;
   const linkInfo = d.privacy === "local-only" ? `Privacy mode “local-only” does not contact any web site, so links are off. Upload a picture instead.`
     : `Works with public product pages that show a picture without logging in. The page's title and picture are read; ${dm === "cloud" ? "the picture goes to the vision model" : "the picture stays here"}. Taobao, Xiaohongshu, JD and similar often block this: then upload a screenshot instead.`;
   $("#addbody").innerHTML = `<header><h1>Add clothes</h1><button class="link" id="addclose">Done</button></header>
@@ -399,9 +403,9 @@ function draftBox() {
 }
 async function addDraft(file) {
   const [box, p] = draftBox();
-  box.innerHTML = `<img class="photo" src="${URL.createObjectURL(file)}" alt=""><p class="spin">${describeMode() === "manual" ? "Uploading…" : "Reading this photo…"}</p>`;
+  box.innerHTML = `<img class="photo" src="${URL.createObjectURL(file)}" alt=""><p class="spin">${["manual", "nokey"].includes(describeMode()) ? "Uploading…" : "Reading this photo…"}</p>`;
   let st;
-  try { st = await api("/api/upload?describe=" + (describeMode() !== "manual"), {method: "POST", headers: {"Content-Type": file.type || "application/octet-stream"}, body: file}); }
+  try { st = await api("/api/upload?describe=" + !["manual", "nokey"].includes(describeMode()), {method: "POST", headers: {"Content-Type": file.type || "application/octet-stream"}, body: file}); }
   catch (e) { box.innerHTML = `<div class="note">${esc(e.message)}</div>`; return; }
   reviewDraft(box, p, st, null);
 }
