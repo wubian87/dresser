@@ -1,0 +1,350 @@
+{
+ "5ab2550b1d013a32:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "top",
+   "type": "t-shirt",
+   "color": "white",
+   "material": "cotton",
+   "warmth": 2,
+   "formality": 2,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "simple crew neck t-shirt"
+  },
+  "seconds": 15.16
+ },
+ "f5df5613ab4b66c7:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "top",
+   "type": "button-down shirt",
+   "color": "light blue",
+   "material": "cotton",
+   "warmth": 2,
+   "formality": 3,
+   "season": [
+    "spring",
+    "autumn"
+   ],
+   "notes": "long-sleeved with a collar and front buttons"
+  },
+  "seconds": 14.95
+ },
+ "a4ec049f00825e56:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "top",
+   "type": "sweater",
+   "color": "gray",
+   "material": "wool knit",
+   "warmth": 4,
+   "formality": 3,
+   "season": [
+    "autumn",
+    "winter"
+   ],
+   "notes": "vertical ribbed knit pattern"
+  },
+  "seconds": 14.86
+ },
+ "e9ec7b5181f5a753:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "hoodie",
+   "color": "mustard yellow",
+   "material": "cotton blend",
+   "warmth": 3,
+   "formality": 2,
+   "season": [
+    "spring",
+    "autumn",
+    "winter"
+   ],
+   "notes": "Features a front pocket and drawstring hood."
+  },
+  "seconds": 17.64
+ },
+ "37234cf456e55cd3:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "cardigan",
+   "color": "beige",
+   "material": "wool knit",
+   "warmth": 3,
+   "formality": 3,
+   "season": [
+    "spring",
+    "autumn",
+    "winter"
+   ],
+   "notes": "long-sleeved with vertical ribbing and front buttons"
+  },
+  "seconds": 16.62
+ },
+ "50ee1ea667f970da:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "blazer",
+   "color": "black",
+   "material": "wool blend",
+   "warmth": 3,
+   "formality": 4,
+   "season": [
+    "spring",
+    "autumn",
+    "winter"
+   ],
+   "notes": "features a notched lapel and two-button front"
+  },
+  "seconds": 16.33
+ },
+ "00cf9434fbac703a:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "blazer",
+   "color": "beige",
+   "material": "wool blend",
+   "warmth": 3,
+   "formality": 4,
+   "season": [
+    "spring",
+    "autumn"
+   ],
+   "notes": "single-breasted with notch lapel and two front pockets"
+  },
+  "seconds": 17.42
+ },
+ "0823d1c33305e8e3:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "jacket",
+   "color": "olive green",
+   "material": "nylon",
+   "warmth": 4,
+   "formality": 2,
+   "season": [
+    "autumn",
+    "winter"
+   ],
+   "notes": "quilted design with diagonal stitching on sleeves"
+  },
+  "seconds": 16.68
+ },
+ "f767291fdb81e544:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "outer",
+   "type": "blazer",
+   "color": "blue",
+   "material": "wool blend",
+   "warmth": 3,
+   "formality": 4,
+   "season": [
+    "spring",
+    "autumn"
+   ],
+   "notes": "features a notched lapel and three front buttons"
+  },
+  "seconds": 17.38
+ },
+ "29c0f2806a55a352:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "bottom",
+   "type": "jeans",
+   "color": "blue",
+   "material": "denim",
+   "warmth": 3,
+   "formality": 2,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "straight-leg fit with visible stitching"
+  },
+  "seconds": 16.45
+ },
+ "b84a266bdf246093:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "bottom",
+   "type": "trousers",
+   "color": "black",
+   "material": "synthetic",
+   "warmth": 3,
+   "formality": 3,
+   "season": [
+    "spring",
+    "autumn",
+    "winter"
+   ],
+   "notes": "straight-leg fit with a high waist and belt loops"
+  },
+  "seconds": 22.0
+ },
+ "e0c16e7f685b4d43:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "bottom",
+   "type": "shorts",
+   "color": "khaki",
+   "material": "canvas",
+   "warmth": 2,
+   "formality": 2,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "straight fit with belt loops"
+  },
+  "seconds": 17.15
+ },
+ "2ceeb84be2c6bb90:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "bottom",
+   "type": "skirt",
+   "color": "maroon",
+   "material": "cotton",
+   "warmth": 3,
+   "formality": 3,
+   "season": [
+    "spring",
+    "autumn"
+   ],
+   "notes": "pleated design"
+  },
+  "seconds": 15.66
+ },
+ "4804126702ff399f:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "dress",
+   "type": "maxi dress",
+   "color": "navy blue",
+   "material": "pleated fabric",
+   "warmth": 3,
+   "formality": 4,
+   "season": [
+    "spring",
+    "autumn"
+   ],
+   "notes": "Features a V-neck, three-quarter sleeves, and a gold belt at the waist."
+  },
+  "seconds": 15.71
+ },
+ "8ea90f6848c4ade4:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "dress",
+   "type": "maxi dress",
+   "color": "yellow",
+   "material": "silk blend",
+   "warmth": 2,
+   "formality": 4,
+   "season": [
+    "spring",
+    "summer"
+   ],
+   "notes": "V-neckline with pleated skirt"
+  },
+  "seconds": 16.54
+ },
+ "ed35fe56bc4023bc:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "shoes",
+   "type": "sneaker",
+   "color": "white",
+   "material": "canvas",
+   "warmth": 2,
+   "formality": 2,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "simple low-top design with a rubber sole"
+  },
+  "seconds": 15.42
+ },
+ "881a15112c5063a3:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "shoes",
+   "type": "ankle boots",
+   "color": "brown",
+   "material": "leather",
+   "warmth": 4,
+   "formality": 3,
+   "season": [
+    "autumn",
+    "winter"
+   ],
+   "notes": "solid brown color, no visible pattern"
+  },
+  "seconds": 14.52
+ },
+ "2f411f1848ab52a2:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "shoes",
+   "type": "high heels",
+   "color": "black",
+   "material": "leather",
+   "warmth": 2,
+   "formality": 4,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "Stiletto heel with a pointed toe design."
+  },
+  "seconds": 14.07
+ },
+ "6fad7cf5c591ce74:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "shoes",
+   "type": "sandal",
+   "color": "brown",
+   "material": "suede",
+   "warmth": 2,
+   "formality": 2,
+   "season": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "notes": "textured upper with a small gold buckle detail"
+  },
+  "seconds": 14.36
+ },
+ "d33bdfdb2f196404:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "shoes",
+   "type": "rain boots",
+   "color": "yellow",
+   "material": "rubber",
+   "warmth": 3,
+   "formality": 2,
+   "season": [
+    "autumn",
+    "winter"
+   ],
+   "notes": "Waterproof boot with a thick sole"
+  },
+  "seconds": 14.25
+ },
+ "eb6ec2265c2b150d:Qwen/Qwen3-VL-30B-A3B-Instruct": {
+  "desc": {
+   "category": "accessory",
+   "type": "belt",
+   "color": "black",
+   "material": "leather",
+   "warmth": 2,
+   "formality": 3,
+   "season": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "notes": "Features a silver oval buckle."
+  },
+  "seconds": 15.56
+ }
+}

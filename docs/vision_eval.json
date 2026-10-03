@@ -1,0 +1,2040 @@
+{
+ "date": "2026-10-03 18:37 CST",
+ "results": {
+  "Qwen/Qwen3-VL-8B-Instruct": {
+   "n": 21,
+   "failures": 0,
+   "latency_median_s": 3.11,
+   "latency_p90_s": 4.02,
+   "latency_mean_s": 3.26,
+   "accuracy": {
+    "cat": 0.81,
+    "type": 0.762,
+    "color": 0.905,
+    "warmth1": 0.667,
+    "form1": 0.857,
+    "material": 0.667
+   },
+   "rows": [
+    {
+     "id": "white-tee",
+     "pred": {
+      "category": "top",
+      "type": "t-shirt",
+      "color": "white",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Plain, no pattern or embellishment"
+     },
+     "s": 3.89,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "blue-oxford-shirt",
+     "pred": {
+      "category": "top",
+      "type": "button-up shirt",
+      "color": "light blue",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Classic collar, front button closure"
+     },
+     "s": 2.73,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "grey-knit-sweater",
+     "pred": {
+      "category": "top",
+      "type": "sweater",
+      "color": "gray",
+      "material": "wool knit",
+      "warmth": 4,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Ribbed texture, crew neck"
+     },
+     "s": 3.2,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "mustard-hoodie",
+     "pred": {
+      "category": "outer",
+      "type": "hoodie",
+      "color": "golden brown",
+      "material": "cotton knit",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "has front pocket and drawstring hood"
+     },
+     "s": 2.66,
+     "cat": false,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "cream-cardigan",
+     "pred": {
+      "category": "outer",
+      "type": "cardigan",
+      "color": "beige",
+      "material": "knit",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "button-front, vertical ribbed texture"
+     },
+     "s": 3.11,
+     "cat": false,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-blazer",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "black",
+      "material": "wool",
+      "warmth": 4,
+      "formality": 5,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Notched lapel, two-button front, flap pockets"
+     },
+     "s": 4.01,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "beige-trench",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "beige",
+      "material": "wool",
+      "warmth": 4,
+      "formality": 4,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Notched lapel, three buttons, flap pockets"
+     },
+     "s": 4.02,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "olive-puffer",
+     "pred": {
+      "category": "outer",
+      "type": "jacket",
+      "color": "olive green",
+      "material": "canvas",
+      "warmth": 4,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "has grid pattern and sleeve panels"
+     },
+     "s": 4.87,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "denim-jacket",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "blue",
+      "material": "wool",
+      "warmth": 4,
+      "formality": 4,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Notched lapel, three buttons, flap pockets"
+     },
+     "s": 4.02,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "blue-jeans",
+     "pred": {
+      "category": "bottom",
+      "type": "pants",
+      "color": "blue",
+      "material": "denim",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Straight-leg cut with belt loops"
+     },
+     "s": 3.45,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-trousers",
+     "pred": {
+      "category": "bottom",
+      "type": "trousers",
+      "color": "dark grey",
+      "material": "cotton blend",
+      "warmth": 4,
+      "formality": 4,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "straight-leg cut with belt loops"
+     },
+     "s": 3.34,
+     "cat": true,
+     "type": true,
+     "color": false,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "khaki-shorts",
+     "pred": {
+      "category": "bottom",
+      "type": "shorts",
+      "color": "beige",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer"
+      ],
+      "notes": "has belt loops at waistband"
+     },
+     "s": 3.07,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "burgundy-skirt",
+     "pred": {
+      "category": "bottom",
+      "type": "skirt",
+      "color": "maroon",
+      "material": "wool",
+      "warmth": 4,
+      "formality": 4,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "A-line silhouette with pleats"
+     },
+     "s": 2.82,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "navy-dress",
+     "pred": {
+      "category": "dress",
+      "type": "a-line dress",
+      "color": "navy blue",
+      "material": "wool blend",
+      "warmth": 4,
+      "formality": 4,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Features a gold belt at the waist."
+     },
+     "s": 3.47,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-sundress",
+     "pred": {
+      "category": "dress",
+      "type": "a-line dress",
+      "color": "yellow",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 3,
+      "season": [
+       "spring",
+       "summer"
+      ],
+      "notes": "V-neck, pleated skirt"
+     },
+     "s": 2.95,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "white-sneakers",
+     "pred": {
+      "category": "shoes",
+      "type": "sneaker",
+      "color": "light gray",
+      "material": "canvas",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Minimalist design with three stripes on side"
+     },
+     "s": 2.89,
+     "cat": true,
+     "type": true,
+     "color": false,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "brown-ankle-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "brown",
+      "material": "leather",
+      "warmth": 5,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Solid color, no pattern, sturdy sole"
+     },
+     "s": 2.57,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-heels",
+     "pred": {
+      "category": "shoes",
+      "type": "high heel",
+      "color": "black",
+      "material": "leather",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Stiletto heel, sleek silhouette"
+     },
+     "s": 2.53,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "tan-suede-loafers",
+     "pred": {
+      "category": "bottom",
+      "type": "trousers",
+      "color": "brown",
+      "material": "denim",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "has a button closure"
+     },
+     "s": 2.69,
+     "cat": false,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-rain-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "wellington boot",
+      "color": "yellow",
+      "material": "rubber",
+      "warmth": 5,
+      "formality": 1,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "waterproof, sturdy sole"
+     },
+     "s": 3.37,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-flats",
+     "pred": {
+      "category": "outer",
+      "type": "hoodie",
+      "color": "black",
+      "material": "cotton",
+      "warmth": 4,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "plain, no visible pattern or logo"
+     },
+     "s": 2.75,
+     "cat": false,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": false,
+     "material": false
+    }
+   ]
+  },
+  "Qwen/Qwen3-VL-30B-A3B-Instruct": {
+   "n": 21,
+   "failures": 0,
+   "latency_median_s": 4.36,
+   "latency_p90_s": 4.97,
+   "latency_mean_s": 5.64,
+   "accuracy": {
+    "cat": 0.905,
+    "type": 0.81,
+    "color": 1.0,
+    "warmth1": 1.0,
+    "form1": 0.905,
+    "material": 0.667
+   },
+   "rows": [
+    {
+     "id": "white-tee",
+     "pred": {
+      "category": "top",
+      "type": "t-shirt",
+      "color": "white",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "simple crew neck t-shirt"
+     },
+     "s": 5.43,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "blue-oxford-shirt",
+     "pred": {
+      "category": "top",
+      "type": "button-down shirt",
+      "color": "light blue",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "long-sleeved with a classic collar and front button closure"
+     },
+     "s": 4.62,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "grey-knit-sweater",
+     "pred": {
+      "category": "top",
+      "type": "sweater",
+      "color": "gray",
+      "material": "wool knit",
+      "warmth": 4,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "vertical ribbed texture"
+     },
+     "s": 3.96,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "mustard-hoodie",
+     "pred": {
+      "category": "top",
+      "type": "hoodie",
+      "color": "mustard yellow",
+      "material": "cotton blend",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "spring",
+       "winter"
+      ],
+      "notes": "Features a front pocket and drawstrings on the hood."
+     },
+     "s": 4.68,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "cream-cardigan",
+     "pred": {
+      "category": "outer",
+      "type": "cardigan",
+      "color": "beige",
+      "material": "wool knit",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "long-sleeved with vertical ribbing and front buttons"
+     },
+     "s": 4.36,
+     "cat": false,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-blazer",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "black",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "features a notched lapel and two front buttons"
+     },
+     "s": 4.97,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "beige-trench",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "beige",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "single-breasted with notch lapel and two front pockets"
+     },
+     "s": 4.81,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "olive-puffer",
+     "pred": {
+      "category": "outer",
+      "type": "jacket",
+      "color": "olive green",
+      "material": "nylon",
+      "warmth": 4,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "quilted design with diagonal stitching on sleeves"
+     },
+     "s": 4.75,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "denim-jacket",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "blue",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "classic single-breasted blazer with notch lapel and two front pockets"
+     },
+     "s": 33.52,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "blue-jeans",
+     "pred": {
+      "category": "bottom",
+      "type": "jeans",
+      "color": "blue",
+      "material": "denim",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "straight-leg fit with visible stitching"
+     },
+     "s": 4.79,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-trousers",
+     "pred": {
+      "category": "bottom",
+      "type": "trousers",
+      "color": "black",
+      "material": "cotton blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "straight-leg fit with a flat front"
+     },
+     "s": 3.66,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "khaki-shorts",
+     "pred": {
+      "category": "bottom",
+      "type": "shorts",
+      "color": "khaki",
+      "material": "canvas",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "features a belt with multiple belt loops"
+     },
+     "s": 3.08,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "burgundy-skirt",
+     "pred": {
+      "category": "bottom",
+      "type": "skirt",
+      "color": "maroon",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "pleated design"
+     },
+     "s": 4.18,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "navy-dress",
+     "pred": {
+      "category": "dress",
+      "type": "maxi dress",
+      "color": "navy blue",
+      "material": "pleated fabric",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features a V-neck, three-quarter sleeves, and a gold belt at the waist."
+     },
+     "s": 4.81,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-sundress",
+     "pred": {
+      "category": "dress",
+      "type": "maxi dress",
+      "color": "yellow",
+      "material": "silk blend",
+      "warmth": 2,
+      "formality": 4,
+      "season": [
+       "spring",
+       "summer"
+      ],
+      "notes": "V-neckline with pleated skirt"
+     },
+     "s": 3.82,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "white-sneakers",
+     "pred": {
+      "category": "shoes",
+      "type": "sneaker",
+      "color": "white",
+      "material": "rubber",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "simple low-top design with a flat sole"
+     },
+     "s": 3.71,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "brown-ankle-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "brown",
+      "material": "leather",
+      "warmth": 4,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "solid brown color, no visible pattern"
+     },
+     "s": 4.03,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-heels",
+     "pred": {
+      "category": "shoes",
+      "type": "high heels",
+      "color": "black",
+      "material": "leather",
+      "warmth": 2,
+      "formality": 4,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "stiletto heel with a pointed toe design"
+     },
+     "s": 3.67,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "tan-suede-loafers",
+     "pred": {
+      "category": "shoes",
+      "type": "sandal",
+      "color": "brown",
+      "material": "suede",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "textured upper with a small gold buckle detail"
+     },
+     "s": 2.73,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "yellow-rain-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "rain boots",
+      "color": "yellow",
+      "material": "rubber",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "waterproof design with a sturdy sole"
+     },
+     "s": 3.98,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-flats",
+     "pred": {
+      "category": "accessory",
+      "type": "belt",
+      "color": "black",
+      "material": "leather",
+      "warmth": 1,
+      "formality": 3,
+      "season": [
+       "spring",
+       "summer",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Smooth black belt with a silver buckle"
+     },
+     "s": 4.89,
+     "cat": false,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    }
+   ]
+  },
+  "Qwen/Qwen3-VL-32B-Instruct": {
+   "n": 21,
+   "failures": 0,
+   "latency_median_s": 5.95,
+   "latency_p90_s": 8.54,
+   "latency_mean_s": 6.76,
+   "accuracy": {
+    "cat": 0.952,
+    "type": 0.714,
+    "color": 0.952,
+    "warmth1": 0.905,
+    "form1": 0.857,
+    "material": 0.714
+   },
+   "rows": [
+    {
+     "id": "white-tee",
+     "pred": {
+      "category": "top",
+      "type": "t-shirt",
+      "color": "white",
+      "material": "cotton",
+      "warmth": 1,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Simple crew neck t-shirt with short sleeves, no visible pattern or embellishment."
+     },
+     "s": 6.52,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "blue-oxford-shirt",
+     "pred": {
+      "category": "top",
+      "type": "button-up shirt",
+      "color": "light blue",
+      "material": "cotton",
+      "warmth": 2,
+      "formality": 3,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Classic collar with front button closure, simple and clean design"
+     },
+     "s": 16.98,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "grey-knit-sweater",
+     "pred": {
+      "category": "top",
+      "type": "long-sleeve shirt",
+      "color": "gray",
+      "material": "wool knit",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features vertical ribbed texture and a crew neckline, suggesting a casual fit."
+     },
+     "s": 5.4,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "mustard-hoodie",
+     "pred": {
+      "category": "outer",
+      "type": "hoodie",
+      "color": "mustard",
+      "material": "fleece",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features a front pocket and drawstring hood, typical of casual sweatshirt design."
+     },
+     "s": 4.7,
+     "cat": false,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "cream-cardigan",
+     "pred": {
+      "category": "top",
+      "type": "button-up shirt",
+      "color": "cream",
+      "material": "cotton knit",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features vertical ribbed texture and front button closure with a rounded neckline."
+     },
+     "s": 8.54,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-blazer",
+     "pred": {
+      "category": "outer",
+      "type": "tuxedo jacket",
+      "color": "black",
+      "material": "wool",
+      "warmth": 3,
+      "formality": 5,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Features satin lapels and two-button front, typical of formal evening wear."
+     },
+     "s": 7.46,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "beige-trench",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "beige",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Single-breasted with notched lapels and two front flap pockets"
+     },
+     "s": 4.76,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "olive-puffer",
+     "pred": {
+      "category": "outer",
+      "type": "puffer jacket",
+      "color": "olive green",
+      "material": "nylon",
+      "warmth": 4,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Quilted design with horizontal and vertical stitching, likely insulated for cold weather."
+     },
+     "s": 4.84,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "denim-jacket",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "blue",
+      "material": "wool",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Single-breasted with notched lapels and four buttons, classic tailored fit"
+     },
+     "s": 4.46,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "blue-jeans",
+     "pred": {
+      "category": "bottom",
+      "type": "jeans",
+      "color": "blue",
+      "material": "denim",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Straight-leg fit with visible stitching and belt loops"
+     },
+     "s": 7.42,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-trousers",
+     "pred": {
+      "category": "bottom",
+      "type": "trousers",
+      "color": "black",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Straight-leg fit with belt loops, suitable for business or smart casual wear"
+     },
+     "s": 7.7,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "khaki-shorts",
+     "pred": {
+      "category": "bottom",
+      "type": "khaki shorts",
+      "color": "beige",
+      "material": "cotton twill",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Classic straight-leg fit with belt loops and front fly closure"
+     },
+     "s": 4.41,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "burgundy-skirt",
+     "pred": {
+      "category": "bottom",
+      "type": "skirt",
+      "color": "maroon",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "A-line skirt with vertical pleats and a straight hem, suitable for smart casual wear."
+     },
+     "s": 5.95,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "navy-dress",
+     "pred": {
+      "category": "dress",
+      "type": "a-line dress",
+      "color": "navy blue",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features a V-neck, three-quarter sleeves, and a gold belt accent at the waist with pleated skirt."
+     },
+     "s": 4.93,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-sundress",
+     "pred": {
+      "category": "dress",
+      "type": "a-line dress",
+      "color": "yellow",
+      "material": "satin",
+      "warmth": 2,
+      "formality": 4,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "V-neck with pleated skirt, fitted waist, elegant silhouette"
+     },
+     "s": 4.6,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "white-sneakers",
+     "pred": {
+      "category": "shoes",
+      "type": "sneaker",
+      "color": "light gray",
+      "material": "canvas",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Simple low-top sneaker with minimal detailing and flat sole"
+     },
+     "s": 4.41,
+     "cat": true,
+     "type": true,
+     "color": false,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "brown-ankle-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "brown",
+      "material": "leather",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "Simple solid brown ankle boots with a thick sole and slight heel."
+     },
+     "s": 4.88,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-heels",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "black",
+      "material": "leather",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Streamlined silhouette with a slight heel and clean lines, suitable for smart casual wear."
+     },
+     "s": 7.53,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": false,
+     "material": true
+    },
+    {
+     "id": "tan-suede-loafers",
+     "pred": {
+      "category": "shoes",
+      "type": "loafer",
+      "color": "brown",
+      "material": "leather",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Classic loafer with a small gold stud detail on the vamp."
+     },
+     "s": 8.03,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-rain-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "yellow",
+      "material": "rubber",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Bright yellow rubber ankle boots with a simple, waterproof design and a thick sole."
+     },
+     "s": 10.38,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-flats",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "black",
+      "material": "leather",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Features a rounded toe and low heel with a smooth, minimalist design."
+     },
+     "s": 8.12,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": true
+    }
+   ]
+  },
+  "zai-org/GLM-4.5V": {
+   "n": 21,
+   "failures": 0,
+   "latency_median_s": 9.23,
+   "latency_p90_s": 14.24,
+   "latency_mean_s": 9.81,
+   "accuracy": {
+    "cat": 0.905,
+    "type": 0.81,
+    "color": 0.952,
+    "warmth1": 0.905,
+    "form1": 0.857,
+    "material": 0.667
+   },
+   "rows": [
+    {
+     "id": "white-tee",
+     "pred": {
+      "category": "top",
+      "type": "t-shirt",
+      "color": "white",
+      "material": "cotton",
+      "warmth": 1,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer"
+      ],
+      "notes": "Plain white t-shirt with no patterns."
+     },
+     "s": 5.24,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "blue-oxford-shirt",
+     "pred": {
+      "category": "top",
+      "type": "button-up shirt",
+      "color": "light blue",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Button-up with collar and five buttons"
+     },
+     "s": 16.3,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "grey-knit-sweater",
+     "pred": {
+      "category": "top",
+      "type": "sweater",
+      "color": "gray",
+      "material": "wool knit",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "ribbed knit pattern with long sleeves"
+     },
+     "s": 8.97,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "mustard-hoodie",
+     "pred": {
+      "category": "top",
+      "type": "hoodie",
+      "color": "brown",
+      "material": "cotton knit",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "spring"
+      ],
+      "notes": "Features a hood, drawstrings, and a front pocket."
+     },
+     "s": 21.79,
+     "cat": true,
+     "type": true,
+     "color": false,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "cream-cardigan",
+     "pred": {
+      "category": "outer",
+      "type": "cardigan",
+      "color": "beige",
+      "material": "wool knit",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "Button-front with ribbed texture"
+     },
+     "s": 9.35,
+     "cat": false,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-blazer",
+     "pred": {
+      "category": "outer",
+      "type": "suit jacket",
+      "color": "black",
+      "material": "wool",
+      "warmth": 3,
+      "formality": 5,
+      "season": [
+       "autumn",
+       "winter",
+       "spring"
+      ],
+      "notes": "formal suit jacket with notched lapels and two buttons"
+     },
+     "s": 6.67,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "beige-trench",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "beige",
+      "material": "wool blend",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "Notched lapel, three-button front, two pockets"
+     },
+     "s": 7.18,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "olive-puffer",
+     "pred": {
+      "category": "top",
+      "type": "utility shirt",
+      "color": "olive green",
+      "material": "canvas",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "military-inspired utility design with paneling"
+     },
+     "s": 9.06,
+     "cat": false,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "denim-jacket",
+     "pred": {
+      "category": "outer",
+      "type": "blazer",
+      "color": "blue",
+      "material": "wool",
+      "warmth": 3,
+      "formality": 4,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "single-breasted with notched lapels and two front pockets"
+     },
+     "s": 11.92,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "blue-jeans",
+     "pred": {
+      "category": "bottom",
+      "type": "jeans",
+      "color": "blue",
+      "material": "denim",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "straight leg fit with front pockets"
+     },
+     "s": 9.23,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-trousers",
+     "pred": {
+      "category": "bottom",
+      "type": "trousers",
+      "color": "black",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "straight leg fit, no visible patterns"
+     },
+     "s": 12.96,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": false,
+     "material": false
+    },
+    {
+     "id": "khaki-shorts",
+     "pred": {
+      "category": "bottom",
+      "type": "shorts",
+      "color": "tan",
+      "material": "cotton",
+      "warmth": 1,
+      "formality": 2,
+      "season": [
+       "summer"
+      ],
+      "notes": "casual fit with belt loops"
+     },
+     "s": 5.22,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "burgundy-skirt",
+     "pred": {
+      "category": "bottom",
+      "type": "pleated skirt",
+      "color": "maroon",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "autumn"
+      ],
+      "notes": "pleated design"
+     },
+     "s": 14.24,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "navy-dress",
+     "pred": {
+      "category": "dress",
+      "type": "dress",
+      "color": "navy blue",
+      "material": "cotton",
+      "warmth": 3,
+      "formality": 3,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Features a gold belt, V-neck, short sleeves, and pleated skirt"
+     },
+     "s": 9.97,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": false
+    },
+    {
+     "id": "yellow-sundress",
+     "pred": {
+      "category": "dress",
+      "type": "dress",
+      "color": "yellow",
+      "material": "cotton",
+      "warmth": 1,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer"
+      ],
+      "notes": "V-neck design with pleated skirt"
+     },
+     "s": 5.13,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "white-sneakers",
+     "pred": {
+      "category": "shoes",
+      "type": "sneakers",
+      "color": "white",
+      "material": "canvas",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Casual sneaker with a low top and three decorative stripes"
+     },
+     "s": 8.21,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "brown-ankle-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "ankle boots",
+      "color": "brown",
+      "material": "leather",
+      "warmth": 4,
+      "formality": 2,
+      "season": [
+       "autumn",
+       "winter"
+      ],
+      "notes": "thick sole and sturdy construction"
+     },
+     "s": 6.88,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-heels",
+     "pred": {
+      "category": "shoes",
+      "type": "high heels",
+      "color": "black",
+      "material": "leather",
+      "warmth": 2,
+      "formality": 5,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "simple black high heel with a stiletto heel"
+     },
+     "s": 11.71,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "tan-suede-loafers",
+     "pred": {
+      "category": "shoes",
+      "type": "loafer",
+      "color": "brown",
+      "material": "suede",
+      "warmth": 2,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "Casual loafer with textured suede upper and small strap detail"
+     },
+     "s": 6.26,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "yellow-rain-boots",
+     "pred": {
+      "category": "shoes",
+      "type": "rain boots",
+      "color": "yellow",
+      "material": "rubber",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "autumn",
+       "winter"
+      ],
+      "notes": "waterproof rubber construction"
+     },
+     "s": 9.77,
+     "cat": true,
+     "type": true,
+     "color": true,
+     "warmth1": true,
+     "form1": true,
+     "material": true
+    },
+    {
+     "id": "black-flats",
+     "pred": {
+      "category": "shoes",
+      "type": "clogs",
+      "color": "black",
+      "material": "rubber",
+      "warmth": 3,
+      "formality": 2,
+      "season": [
+       "spring",
+       "summer",
+       "autumn"
+      ],
+      "notes": "rubber clogs with a circular opening"
+     },
+     "s": 9.99,
+     "cat": true,
+     "type": false,
+     "color": true,
+     "warmth1": false,
+     "form1": false,
+     "material": false
+    }
+   ]
+  }
+ }
+}

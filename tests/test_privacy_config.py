@@ -57,3 +57,10 @@ def test_missing_key_env_is_reported_without_leaking(monkeypatch):
     c = LLMClient(Endpoint("https://api.example.com/v1", "m", "SOME_KEY"))
     with pytest.raises(LLMError, match="SOME_KEY"):
         c.chat([{"role": "user", "content": "hi"}])
+
+
+def test_siliconflow_text_disables_thinking_by_default(tmp_path):
+    cfg = tmp_path / "c.toml"
+    cfg.write_text('[llm]\npreset = "siliconflow"\n')
+    c = load_config(cfg)
+    assert c.text.extra_body == {"enable_thinking": False} and c.vision.extra_body == {}

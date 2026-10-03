@@ -1,0 +1,17 @@
+$ todays-outfit --privacy local-only --wardrobe /tmp/sw/wardrobe.json --cache /tmp/sw/c.json describe   (cloud preset, no cached descriptions)
+refused: privacy=local-only: refusing to call non-local endpoint https://api.siliconflow.cn/v1
+21 photos, 21 to describe with Qwen/Qwen3-VL-30B-A3B-Instruct @ https://api.siliconflow.cn/v1 (privacy=local-only)
+
+$ todays-outfit --privacy local-only suggest --temp 12 --rain --occasion commute   (descriptions cached; text model is cloud)
+commute, 12 °C, rain  ->  rules mode (12 rule-approved candidates)
+
+  Outfit 1: navy blue maxi dress + black blazer + yellow rain boots
+    Right weight for 12 °C and within the commute dress code; no rain-sensitive shoes; rain-proof shoes (rule-based pick).
+
+  Outfit 2: navy blue maxi dress + beige blazer + yellow rain boots
+    Right weight for 12 °C and within the commute dress code; no rain-sensitive shoes; rain-proof shoes (rule-based pick).
+
+  Outfit 3: white t-shirt + black trousers + black blazer + yellow rain boots
+    Right weight for 12 °C and within the commute dress code; no rain-sensitive shoes; rain-proof shoes (rule-based pick).
+
+  note: privacy=local-only: refusing to call non-local endpoint https://api.siliconflow.cn/v1 - used rules only.

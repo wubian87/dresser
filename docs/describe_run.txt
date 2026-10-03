@@ -1,0 +1,22 @@
+21 photos, 21 to describe with Qwen/Qwen3-VL-30B-A3B-Instruct @ https://api.siliconflow.cn/v1 (privacy=off)
+  white-tee: white t-shirt (warmth 2, formality 2) 15.2s
+  blue-oxford-shirt: light blue button-down shirt (warmth 2, formality 3) 15.0s
+  grey-knit-sweater: gray sweater (warmth 4, formality 3) 14.9s
+  mustard-hoodie: mustard yellow hoodie (warmth 3, formality 2) 17.6s
+  cream-cardigan: beige cardigan (warmth 3, formality 3) 16.6s
+  black-blazer: black blazer (warmth 3, formality 4) 16.3s
+  beige-trench: beige blazer (warmth 3, formality 4) 17.4s
+  olive-puffer: olive green jacket (warmth 4, formality 2) 16.7s
+  denim-jacket: blue blazer (warmth 3, formality 4) 17.4s
+  blue-jeans: blue jeans (warmth 3, formality 2) 16.4s
+  black-trousers: black trousers (warmth 3, formality 3) 22.0s
+  khaki-shorts: khaki shorts (warmth 2, formality 2) 17.1s
+  burgundy-skirt: maroon skirt (warmth 3, formality 3) 15.7s
+  navy-dress: navy blue maxi dress (warmth 3, formality 4) 15.7s
+  yellow-sundress: yellow maxi dress (warmth 2, formality 4) 16.5s
+  white-sneakers: white sneaker (warmth 2, formality 2) 15.4s
+  brown-ankle-boots: brown ankle boots (warmth 4, formality 3) 14.5s
+  black-heels: black high heels (warmth 2, formality 4) 14.1s
+  tan-suede-loafers: brown sandal (warmth 2, formality 2) 14.4s
+  yellow-rain-boots: yellow rain boots (warmth 3, formality 2) 14.2s
+  black-flats: black belt (warmth 2, formality 3) 15.6s

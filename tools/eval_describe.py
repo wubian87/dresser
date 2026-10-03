@@ -18,7 +18,7 @@ from todays_outfit.describe import describe_image  # noqa: E402
 from todays_outfit.llm import LLMClient, LLMError  # noqa: E402
 
 MODELS = ["Qwen/Qwen3-VL-8B-Instruct", "Qwen/Qwen3-VL-30B-A3B-Instruct", "Qwen/Qwen3-VL-32B-Instruct", "zai-org/GLM-4.5V"]
-SYN = {"t-shirt": ["tee", "t shirt", "tshirt"], "button-up shirt": ["shirt", "button", "oxford", "blouse"],
+SYN = {"t-shirt": ["tee", "t shirt", "tshirt", "t-shirt"], "button-up shirt": ["shirt", "button", "oxford", "blouse"],
        "knit sweater": ["sweater", "jumper", "pullover", "knit"], "hoodie": ["hoodie", "sweatshirt"],
        "cardigan": ["cardigan"], "blazer": ["blazer", "jacket", "suit"], "trench coat": ["trench", "coat"],
        "puffer jacket": ["puffer", "padded", "down", "quilted", "jacket"], "denim jacket": ["denim", "jean jacket", "jacket"],
@@ -29,10 +29,25 @@ SYN = {"t-shirt": ["tee", "t shirt", "tshirt"], "button-up shirt": ["shirt", "bu
        "ballet flats": ["flat", "ballet", "slip-on", "shoe"]}
 
 
+COLOR_EQ = {"khaki": ("beige", "tan", "khaki"), "cream": ("beige", "cream", "ivory"), "tan": ("brown", "tan", "beige"),
+            "white": ("white",), "mustard yellow": ("mustard", "yellow", "golden")}
+
+
 def color_ok(pred, truth):
     p = pred.lower()
+    if truth in COLOR_EQ and any(w in p for w in COLOR_EQ[truth]):
+        return True
     return any(w in p for w in truth.lower().replace("light ", "").split()) or (truth == "mustard yellow" and "yellow" in p) \
         or (truth == "grey" and "gray" in p) or (truth == "blue" and "blue" in p) or (truth == "burgundy" and any(x in p for x in ("maroon", "wine", "red")))
+
+
+def score(d, gt):
+    return {"cat": d["category"] == gt["cat"],
+            "type": any(w in d["type"] for w in SYN[gt["type"]]),
+            "color": color_ok(d["color"], gt["color"]),
+            "warmth1": abs(d["warmth"] - gt["warmth"]) <= 1,
+            "form1": abs(d["formality"] - gt["formality"]) <= 1,
+            "material": any(w in d["material"] for w in gt["material"].replace(",", "").split()[:2])}
 
 
 def main():
@@ -52,13 +67,7 @@ def main():
                 rows.append({"id": iid, "error": str(e)[:120]})
                 continue
             lat.append(time.perf_counter() - t0)
-            rows.append({"id": iid, "pred": d, "s": round(lat[-1], 2),
-                         "cat": d["category"] == gt["cat"],
-                         "type": any(w in d["type"] for w in SYN[gt["type"]]),
-                         "color": color_ok(d["color"], gt["color"]),
-                         "warmth1": abs(d["warmth"] - gt["warmth"]) <= 1,
-                         "form1": abs(d["formality"] - gt["formality"]) <= 1,
-                         "material": any(w in d["material"] for w in gt["material"].replace(",", "").split()[:2])})
+            rows.append({"id": iid, "pred": d, "s": round(lat[-1], 2), **score(d, gt)})
             print(m, iid, "ok" if rows[-1]["cat"] else "CAT-MISS", f"{lat[-1]:.1f}s", flush=True)
         ok = [r for r in rows if "pred" in r]
         n = len(truth)

@@ -76,6 +76,12 @@ fetch("/api/status").then(r => r.json()).then(s => {
   });
   chips(occ, v => occasion = v);
   occasion = s.occasions[0];
+  // shareable presets: /?temp=12&rain=1&occasion=commute&auto=1
+  const q = new URLSearchParams(location.search);
+  if (q.get("temp")) { $("#temp").value = q.get("temp"); $("#tempval").textContent = q.get("temp") + " °C"; }
+  if (q.get("rain") === "1") { rain = true; $("#rain").querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === "true")); }
+  if (s.occasions.includes(q.get("occasion"))) { occasion = q.get("occasion"); occ.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.v === occasion)); }
+  if (q.get("auto") === "1") $("#go").click();
   const host = s => new URL(s).hostname;
   $("#status").textContent = `Styling with ${s.text_model} (${host(s.text_host)}) · photos read by ${s.vision_model} · privacy: ${s.privacy} · ${s.items - s.undescribed}/${s.items} pieces ready`;
 });

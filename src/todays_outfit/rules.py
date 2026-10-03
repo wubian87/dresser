@@ -52,8 +52,12 @@ def _text(item: dict) -> str:
 
 
 def rain_unfriendly(item: dict) -> bool:
-    t = _text(item)
-    return item.get("category") == "shoes" and any(w in t for w in RAIN_BAD) and not any(w in t for w in RAIN_GOOD_SHOES)
+    """Shoes made of rain-sensitive material. 'Good' keywords are looked up in type/material only, so a note like
+    'rubber sole' on a canvas sneaker does not make it rain-proof."""
+    if item.get("category") != "shoes":
+        return False
+    core = f"{item.get('type', '')} {item.get('material', '')}".lower()
+    return any(w in _text(item) for w in RAIN_BAD) and not any(w in core for w in RAIN_GOOD_SHOES)
 
 
 def color_family(item: dict) -> str:

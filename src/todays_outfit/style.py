@@ -4,6 +4,7 @@ The model can only choose among rule-approved candidates, and any failure falls 
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from .jsonparse import extract_json
@@ -34,7 +35,7 @@ def build_prompt(cands: list[Outfit], temp_c: float, rain: bool, occasion: str, 
         + "\n".join(lines)
         + f"\n\nPick the best {n} DIFFERENT outfits (fewer if fewer are good). For each, write a one or two sentence reason "
         f"(max 35 words) in {language}, naming concrete pieces and why they suit the weather/occasion and each other. "
-        "Do not invent clothes that are not listed. Answer with ONE JSON object only, no prose:\n"
+        "Only mention pieces that are part of that exact outfit; never mention other garments or alternatives. Answer with ONE JSON object only, no prose:\n"
         '{"outfits": [{"candidate": <number from the list>, "reason": "<text>"}]}'
     )
 
@@ -62,13 +63,35 @@ def parse_choice(text: str, n_candidates: int, max_out: int = 3) -> list[tuple[i
     return picked[:max_out]
 
 
+# Words a reason may use only if the outfit really contains such a garment. Catches the typical small-model
+# slip of praising a piece that is NOT in the outfit ("... better than heels", "cozy wool knit" for a shirt).
+GARMENT_GROUPS = [
+    ("sweater", "knit", "jumper", "pullover"), ("jeans", "denim"), ("cardigan",), ("hoodie", "sweatshirt"),
+    ("blazer", "jacket", "coat", "trench", "puffer", "parka"), ("trousers", "pants", "slacks"), ("shorts",),
+    ("skirt",), ("dress", "sundress"), ("shirt", "tee", "blouse", "button-down", "t-shirt"),
+    ("sneaker", "trainer"), ("boot",), ("heel", "pump", "stiletto"), ("loafer", "moccasin"),
+    ("flat", "ballet"), ("sandal",),
+]
+
+
+def ungrounded_terms(reason: str, items: list[dict]) -> list[str]:
+    """Garment words in `reason` that no piece of the outfit accounts for."""
+    have = " ".join(f"{i.get('name', '')} {i.get('type', '')}" for i in items).lower()
+    text = re.sub(r"dress(ed|ing|y| code)", "", reason.lower())
+    bad = []
+    for group in GARMENT_GROUPS:
+        mentioned = [w for w in group if re.search(rf"\b{re.escape(w)}(s|es)?\b", text)]
+        if mentioned and not any(w in have for w in group):
+            bad.append(mentioned[0])
+    return bad
+
+
 def rules_reason(o: Outfit, temp_c: float, rain: bool, occasion: str) -> str:
-    names = ", ".join(i["name"] for i in o.items)
-    bits = [f"{names}: warmth and dress code fit {occasion} at {temp_c:g} °C"]
-    if rain:
-        bits.append("and it avoids rain-sensitive shoes")
+    bits = [f"Right weight for {temp_c:g} °C and within the {occasion} dress code"]
+    if rain and "rain-proof shoes" not in o.notes:
+        bits.append("no rain-sensitive shoes")
     bits.extend(o.notes)
-    return "; ".join(bits) + " (rule-based pick)"
+    return "; ".join(bits) + " (rule-based pick)."
 
 
 def suggest(items: list[dict], temp_c: float, rain: bool, occasion: str,
@@ -84,13 +107,16 @@ def suggest(items: list[dict], temp_c: float, rain: bool, occasion: str,
             raw = client.chat([{"role": "user", "content": build_prompt(cands, temp_c, rain, occasion, language, n)}],
                               max_tokens=700, temperature=0.4)
             picks = parse_choice(raw, len(cands), n)
-            return {"suggestions": [Suggestion(cands[i].items, r, "model", cands[i].relaxed) for i, r in picks],
-                    "mode": "model", "candidates": len(cands), "warning": None,
-                    "latency": client.last_latency}
+            good = [(i, r) for i, r in picks if not ungrounded_terms(r, cands[i].items)]
+            if not good:
+                raise ValueError("every reason mentioned garments that are not in its outfit")
+            return {"suggestions": [Suggestion(cands[i].items, r, "model", cands[i].relaxed) for i, r in good],
+                    "mode": "model", "candidates": len(cands), "dropped_ungrounded": len(picks) - len(good),
+                    "warning": None, "latency": client.last_latency}
         except PrivacyError as e:
             warning = f"{e} - used rules only."
         except (LLMError, ValueError) as e:
-            warning = f"Model unavailable or invalid answer ({type(e).__name__}); used rules only."
+            warning = f"Model unavailable or invalid answer ({e}); used rules only."[:240]
     top = cands[:n]
     return {"suggestions": [Suggestion(o.items, rules_reason(o, temp_c, rain, occasion), "rules", o.relaxed) for o in top],
             "mode": "rules", "candidates": len(cands), "warning": warning}

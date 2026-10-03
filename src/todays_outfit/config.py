@@ -13,13 +13,15 @@ PRESETS: dict[str, dict] = {
     "siliconflow": {
         "base_url": "https://api.siliconflow.cn/v1",
         "api_key_env": "SILICONFLOW_API_KEY",
+        # Qwen3.5/3.6 "think" before answering by default; for a pick-from-a-list task that only costs seconds
+        "text_extra_body": {"enable_thinking": False},
     },
     # Ollama's OpenAI-compatible endpoint; llama.cpp's `llama-server` uses http://localhost:8080/v1
     "local": {"base_url": "http://localhost:11434/v1", "api_key_env": ""},
 }
 
 DEFAULT_MODELS = {
-    "siliconflow": {"vision": "Qwen/Qwen3-VL-8B-Instruct", "text": "Qwen/Qwen3.5-27B"},
+    "siliconflow": {"vision": "Qwen/Qwen3-VL-30B-A3B-Instruct", "text": "Qwen/Qwen3.6-35B-A3B"},
     "local": {"vision": "qwen2.5vl:7b", "text": "qwen3:8b"},
 }
 
@@ -55,7 +57,7 @@ def _endpoint(kind: str, section: dict, llm: dict) -> Endpoint:
         base_url=section.get("base_url", preset["base_url"]).rstrip("/"),
         model=model,
         api_key_env=section.get("api_key_env", preset["api_key_env"]),
-        extra_body=dict(section.get("extra_body", {})),
+        extra_body=dict(section.get("extra_body", preset.get("text_extra_body", {}) if kind == "text" else {})),
     )
 
 

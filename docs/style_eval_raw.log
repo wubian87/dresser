@@ -1,0 +1,17 @@
+Qwen/Qwen3.6-35B-A3B (thinking off) (12, True, 'commute') 2.8 True
+Qwen/Qwen3.6-35B-A3B (thinking off) (26, False, 'date') 2.3 True
+Qwen/Qwen3.6-35B-A3B (thinking off) (5, False, 'casual') 3.8 True
+Qwen/Qwen3.6-35B-A3B (thinking off) (20, False, 'formal') 2.4 True
+Qwen/Qwen3.6-35B-A3B (thinking off) (30, False, 'casual') 2.5 True
+Qwen/Qwen3.5-27B (thinking off) (12, True, 'commute') 14.0 True
+Qwen/Qwen3.5-27B (thinking off) (26, False, 'date') 11.9 True
+Qwen/Qwen3.5-27B (thinking off) (5, False, 'casual') 7.2 True
+Qwen/Qwen3.5-27B (thinking off) (20, False, 'formal') 12.6 True
+Qwen/Qwen3.5-27B (thinking off) (30, False, 'casual') 9.4 True
+Qwen/Qwen3.6-35B-A3B (thinking on, 4000 tokens) (12, True, 'commute') 22.4 True
+Qwen/Qwen3.6-35B-A3B (thinking on, 4000 tokens) (26, False, 'date') 20.8 True
+Qwen/Qwen3.6-35B-A3B (thinking on, 4000 tokens) (5, False, 'casual') 35.2 True
+Qwen/Qwen3.6-35B-A3B (thinking on, 4000 tokens) (20, False, 'formal') 20.1 True
+Qwen/Qwen3.6-35B-A3B (thinking on, 4000 tokens) (30, False, 'casual') 25.5 False
+Qwen/Qwen3.5-27B (thinking on, 4000 tokens) (12, True, 'commute') 180.8 False
+Qwen/Qwen3.5-27B (thinking on, 4000 tokens) (26, False, 'date') 181.2 False
