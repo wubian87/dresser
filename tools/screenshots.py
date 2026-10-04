@@ -1,6 +1,7 @@
 """Phone-sized screenshots of the real web app (headless Chrome via Playwright).
 
-Dev-only helper, not needed to run the app:   pip install playwright   (uses your installed Google Chrome)
+Dev-only helper, not needed to run the app (the screenshots committed in docs/ were taken on a real phone; this makes similar ones headlessly):
+    pip install playwright   (uses your installed Google Chrome)
     python tools/screenshots.py      # SERVER_PY=/path/to/app/python if the app lives in another venv
 
 It starts two throw-away servers (nothing in your own data folder is touched):

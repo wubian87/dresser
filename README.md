@@ -9,9 +9,9 @@ It remembers what you wore, rotates the pieces you forget, and picks only from t
 <img src="docs/screenshot_wardrobe.png" width="230" alt="Wardrobe: the Autumn room, category pills, a two-column grid"> 
 <img src="docs/screenshot_settings.png" width="230" alt="Settings: season room, city, and the technical details folded below">
 </p>
-<p><img src="docs/screenshot_add_link.png" width="230" alt="Add clothes > Paste a link: a real public product page (Allbirds) read, picture shown, fields pre-filled for review"></p>
+<p><img src="docs/screenshot_add_link.png" width="230" alt="Add clothes > Paste a link: a real public product page (Nike) read, picture shown, fields pre-filled from the title for review"></p>
 
-*Phone-sized screenshots of the real web page (headless Chrome, 390 px wide) on the bundled **example** wardrobe (drawings) with an generated two-week wear log. The forecast, the model pick and the product-page import are real calls made on 2026-10-04 (the screenshot run's pick differs from the command-line run below: the model's choice varies from run to run). Left to right: Today, Wardrobe (Autumn room), Settings (Details opened), and Add clothes > Paste a link on a real public shop page.*
+*Screenshots taken on a real Android phone (Chrome, dark mode, 2026-10-04) of the page running on the bundled **example** wardrobe (drawings) with a generated two-week wear log. The forecast is a real Open-Meteo call. No language-model key was set, so the picks are rule-based (the command-line run below did use the model). Left to right: Today, Wardrobe (Autumn room), Settings (top of the page; Details sits below), and Add clothes > Paste a link on a real Nike product page, read without the vision model: the form says "Filled from the page title only: please check".*
 
 A real run on the command line (2026-10-04, `dresser --demo today --occasion casual`; all runs, unedited, in [`docs/today_run.txt`](docs/today_run.txt)). It rains all day, and the rain rule keeps canvas and suede shoes out, which is why the example wardrobe's yellow rain boots are picked:
 
