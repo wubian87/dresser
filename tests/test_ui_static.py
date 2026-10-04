@@ -72,3 +72,12 @@ def test_index_is_served_with_no_cache_and_status_reports_key_state(tmp_path, mo
     assert "4711" not in json.dumps(st.settings_view())      # the value is never exposed
     r = TestClient(api.app).get("/")
     assert r.status_code == 200 and r.headers["cache-control"] == "no-cache"
+
+
+def test_quiet_product_name_is_shown_above_every_tab():
+    # one small header above the three views, so Today, Wardrobe and Settings all show the name
+    assert '<header class="brand"><b>Dresser</b><span>your private wardrobe</span></header>' in HTML
+    assert HTML.index('class="brand"') < HTML.index('id="v-today"') < HTML.index('id="v-wardrobe"')
+    assert "<title>Dresser</title>" in HTML
+    brand_css = [l for l in HTML.splitlines() if l.startswith(".brand{")][0]
+    assert "font-size:13px" in brand_css and "height:18px" in brand_css     # small, fixed, no tall banner

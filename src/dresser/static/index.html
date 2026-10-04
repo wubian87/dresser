@@ -11,7 +11,9 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue","PingFang SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-main{max-width:560px;margin:0 auto;padding:max(20px,env(safe-area-inset-top)) 22px 120px}
+main{max-width:560px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) 22px 120px}
+.brand{display:flex;align-items:baseline;gap:8px;height:18px;margin:0 0 2px;font-size:13px;line-height:18px;letter-spacing:.02em;color:var(--mute)}
+.brand b{font-weight:650;color:var(--fg);opacity:.75}.brand span{font-size:12px;opacity:.55}
 .view[hidden]{display:none}
 h1{font-size:30px;line-height:1.15;letter-spacing:-.02em;margin:6px 0 4px;font-weight:700}
 h2{font-size:19px;letter-spacing:-.01em;margin:0 0 6px}
@@ -107,6 +109,7 @@ details[open].more summary::after{content:" ⌄"}
 </head>
 <body>
 <main>
+  <header class="brand"><b>Dresser</b><span>your private wardrobe</span></header>
   <section id="v-today" class="view" aria-label="Today"></section>
   <section id="v-wardrobe" class="view" aria-label="Wardrobe" hidden></section>
   <section id="v-settings" class="view" aria-label="Settings" hidden></section>
